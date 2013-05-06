@@ -1,0 +1,15 @@
+--protected
+--private
+--verbose
+--main=README_FULL.md
+--output-dir=./yardoc/
+--asset ./doc
+--markup markdown
+--title=Algebrick
+--template default
+--template-path ./yard-template
+
+./lib/**/*.rb
+-
+MIT-LICENSE
+README.md
