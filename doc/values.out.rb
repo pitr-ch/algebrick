@@ -46,10 +46,10 @@ try = -> &b do
     e
   end
 end
-# => #<Proc:0x007f8e8c1dd1d0@/Users/pitr/Workspace/personal/algebrick/doc/values.in.rb:38 (lambda)>
+# => #<Proc:0x007fe0919089a8@/Users/pitr/Workspace/personal/algebrick/doc/values.in.rb:44 (lambda)>
 try.call { Leaf['a'] }
-# => #<TypeError: value (String) 'a' is not any kind of [Integer]>
+# => #<TypeError: value (String) 'a' is not #kind_of? any of Integer>
 try.call { Node[nil, Empty] }
-# => #<TypeError: value (NilClass) '' is not any kind of [Tree(Empty | Leaf | Node)]>
+# => #<TypeError: value (NilClass) '' is not #kind_of? any of Tree(Empty | Leaf | Node)>
 
 

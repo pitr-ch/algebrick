@@ -37,4 +37,3 @@ nobody = Null
 
 [peter, john, nobody].map &:email
 [peter, john, nobody].map &:deliver_personalized_email
-
