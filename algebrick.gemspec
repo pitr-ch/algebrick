@@ -8,7 +8,6 @@ Gem::Specification.new do |s|
   s.authors          = ['Petr Chalupa']
   s.email            = 'git@pitr.ch'
   s.homepage         = 'https://github.com/pitr-ch/algebrick'
-  #s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.extra_rdoc_files = %w(MIT-LICENSE)
   s.files            = Dir['lib/algebrick.rb']
   s.require_paths    = %w(lib)
@@ -23,6 +22,7 @@ Gem::Specification.new do |s|
     'pry'      => nil,
     'yard'     => nil,
     'kramdown' => nil,
+    'multi_json' => nil,
   }.each do |gem, version|
     s.add_development_dependency(gem, [version || '>= 0'])
   end

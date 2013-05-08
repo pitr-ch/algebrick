@@ -1,5 +1,7 @@
 # TODO method definition in variant type defines methods on variants based on match
 
+require 'set'
+
 class Module
   # Return any modules we +extend+
   def extended_modules
@@ -16,38 +18,34 @@ module Algebrick
     #  a_type_check :kind_of?, false, value, *types
     #end
 
-
-
     def is_kind_of!(value, *types)
-      types.any? { |t| value.kind_of? t } or
-          raise TypeError, "value (#{value.class}) '#{value}' is not any kind of #{types.inspect}"
-      value
+      a_type_check :kind_of?, true, value, *types
     end
 
     #def is_matching?(value, *types)
     #  a_type_check :===, false, value, *types
     #end
 
-    #def is_matching!(value, *types)
-    #  a_type_check :===, true, value, *types
-    #end
+    def is_matching!(value, *types)
+      a_type_check :===, true, value, *types
+    end
 
-    #private
-    #
-    #def a_type_check(which, bang, value, *types)
-    #  ok = types.any? do |t|
-    #    case which
-    #    when :===
-    #      t === value
-    #    when :kind_of?
-    #      value.kind_of? t
-    #    else
-    #      raise ArgumentError
-    #    end
-    #  end
-    #  raise TypeError, "value (#{value.class}) '#{value}' is not #{which} of #{types.inspect}" if bang && !ok
-    #  value
-    #end
+    private
+
+    def a_type_check(which, bang, value, *types)
+      ok = types.any? do |t|
+        case which
+        when :===
+          t === value
+        when :kind_of?
+          value.kind_of? t
+        else
+          raise ArgumentError
+        end
+      end
+      raise TypeError, "value (#{value.class}) '#{value}' is not ##{which} any of #{types.join(', ')}" if bang && !ok
+      value
+    end
   end
 
   module Matching
@@ -58,9 +56,8 @@ module Algebrick
     alias_method :_, :any # TODO make it optional
 
     #match Empty,
-    #      Node + lambda {},
-    #      Empty / ->() {},
-    #      Leaf.(~any) >> ->(value) do
+    #      Empty -->() {},
+    #      Leaf.(~any) >>-> value do
     #        value
     #      end
     #match Empty,
@@ -145,6 +142,10 @@ module Algebrick
     def to_s
       raise NotImplementedError
     end
+
+    def inspect
+      to_s
+    end
   end
 
   module Value
@@ -159,8 +160,16 @@ module Algebrick
       raise NotImplementedError
     end
 
-    def as_json
-      raise NotImplementedError # TODO
+    def to_hash
+      raise NotImplementedError
+    end
+
+    def to_s
+      raise NotImplementedError
+    end
+
+    def inspect
+      to_s
     end
   end
 
@@ -191,6 +200,18 @@ module Algebrick
     def to_s
       name
     end
+
+    def to_hash
+      { name => name }
+    end
+
+    def from_hash(hash)
+      if hash == to_hash
+        self
+      else
+        raise ArgumentError
+      end
+    end
   end
 
   class ProductConstructor
@@ -209,14 +230,27 @@ module Algebrick
     def to_s
       "#{self.class.type.name}[" +
           if type.field_names
-            type.field_names.map { |name| "#{name}: #{self[name]}" }.join(', ')
+            type.field_names.map { |name| "#{name}: #{self[name].to_s}" }.join(', ')
           else
-            fields.join(',')
+            fields.map(&:to_s).join(',')
           end + ']'
+    end
+
+    def to_ary
+      @fields
     end
 
     def to_a
       @fields
+    end
+
+    def to_hash
+      { self.class.type.name =>
+            if type.field_names
+              type.field_names.inject({}) { |h, name| h.update name => hashize(self[name]) }
+            else
+              fields.map { |v| hashize v }
+            end }
     end
 
     def ==(other)
@@ -236,6 +270,12 @@ module Algebrick
       raise if @type
       @type = type
       include type
+    end
+
+    private
+
+    def hashize(value)
+      (value.respond_to? :to_hash) ? value.to_hash : value
     end
   end
 
@@ -284,7 +324,7 @@ module Algebrick
       if keys
         @field_names = keys
         keys.all? { |k| is_kind_of! k, Symbol }
-        dict = keys.each_with_index.inject({}) { |h, (k, i)| h.update k => i }
+        dict = @field_indexes = keys.each_with_index.inject({}) { |h, (k, i)| h.update k => i }
         define_method(:[]) { |key| @fields[dict[key]] }
       end
 
@@ -324,10 +364,48 @@ module Algebrick
       "#{name}(#{fields_str.join ', '})"
     end
 
+    def product_from_hash(hash)
+      raise ArgumentError, 'hash does not have size 1' unless hash.size == 1
+      type_name, fields = hash.first
+      raise ArgumentError, "#{type_name} is not #{name}" unless type_name == name
+      is_kind_of! fields, Hash, Array
+      case fields
+      when Array
+        self[*fields.map { |value| field_from_hash value }]
+      when Hash
+        self[fields.inject({}) do |h, (name, value)|
+          raise ArgumentError unless @field_names.map(&:to_s).include? name
+          h.update name.to_sym => field_from_hash(value)
+        end]
+      end
+    end
+
+    def field_from_hash(hash)
+      return hash unless Hash === hash
+      return hash unless hash.size == 1
+      type_name, value = hash.first
+      type             = constantize type_name
+      if type.respond_to? :from_hash
+        type.from_hash hash
+      else
+        value
+      end
+    end
+
+    def constantize(camel_cased_word)
+      names = camel_cased_word.split('::')
+      names.shift if names.empty? || names.first.empty?
+
+      constant = Object
+      names.each do |name|
+        constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
+      end
+      constant
+    end
   end
 
   class Product < AbstractProductVariant
-    attr_reader :fields, :field_names
+    attr_reader :fields, :field_names, :field_indexes
 
     def initialize(*fields, &block)
       set_fields fields
@@ -357,6 +435,10 @@ module Algebrick
     def to_s
       product_to_s
     end
+
+    def from_hash(hash)
+      product_from_hash hash
+    end
   end
 
   class Variant < AbstractProductVariant
@@ -382,10 +464,14 @@ module Algebrick
     def to_s
       "#{name}(#{variants.map(&:name).join ' | '})"
     end
+
+    def from_hash(hash)
+      field_from_hash hash
+    end
   end
 
   class ProductVariant < AbstractProductVariant
-    attr_reader :fields, :field_names, :variants
+    attr_reader :fields, :field_names, :field_indexes, :variants
 
     def initialize(fields, variants, &block)
       set_fields fields
@@ -426,6 +512,10 @@ module Algebrick
             end
           end.join(' | ') +
           ')'
+    end
+
+    def from_hash(hash)
+      product_from_hash hash
     end
   end
 
@@ -489,6 +579,10 @@ module Algebrick
 
       def assign_to_s
         assign? ? '~' : ''
+      end
+
+      def inspect
+        to_s
       end
 
       def children

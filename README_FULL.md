@@ -2,6 +2,10 @@
 
 Is a small gem providing algebraic types and pattern matching on them for Ruby.
 
+-   Documentation: {http://blog.pitr.ch/algebrick}
+-   Source: {https://github.com/pitr-ch/algebrick}
+-   Blog: {http://blog.pitr.ch}
+
 ## Quick example with Maybe type
 
 {include:file:doc/maybe.out.rb}
@@ -52,29 +56,47 @@ Algebraic matchers are helper objects to match algebraic objects and others with
 
 ## What is it good for?
 
+### Defining data with a given structure
+
+{include:file:doc/data.out.rb}
+
+### Serialization
+
+Algebraic types also play nice with JSON serialization. So it is ideal for defining messegas
+for cross-process comunication.
+
+{include:file:doc/json.out.rb}
+
 ### Null Object Pattern
 
 see {http://en.wikipedia.org/wiki/Null_Object_pattern#Ruby}.
 
 {include:file:doc/null.out.rb}
 
+This has advantage over a classical approach that the methods are defined
+on one place, no need to track methods in two separate classes `User` and `NullUser`.
+
+### Massage matching in Actor pattern
+
+Just small snippet from a gem I am still working on.
+
+    class Worker < AbstractActor
+      def initialize(executor)
+        super()
+        @executor = executor
+      end
+
+      def on_message(message)
+        match message,
+              Work.(~any, ~any) --> actor, work do
+                @executor.tell Finished[actor, work.call, self.reference]
+              end
+      end
+    end
+
 ### TODO
 
--   Definition of messages between processes
--   Massage matching in Actor pattern
--   Menu model
-
-        module Menu
-          type_def do
-            menu === delimiter | item(String) | empty | menu(value: menu, next: menu)
-          end
-        end
-
-
--   modeling any data (replace struct, small classes)
-
-        type_def { cmd_result === success(out: String, err: String) | failure(code: Integer, out: String, err: String) }
-
-
+-   Menu model, TypedArray
 -   Pretty print example, see {http://homepages.inf.ed.ac.uk/wadler/papers/prettier/prettier.pdf}
+-   update actor pattern when gem is done
 

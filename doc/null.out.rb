@@ -41,4 +41,3 @@ nobody = Null                                      # => Null
 # => ["example@dot.com", "example@dot.com", "no email"]
 [peter, john, nobody].map &:deliver_personalized_email
 # => [true, true, true]
-

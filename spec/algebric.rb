@@ -173,6 +173,9 @@ describe 'AlgebrickTest' do
     it { assert Empty == Empty }
     it { assert Empty === Empty }
     it { eval(Empty.to_s).must_equal Empty }
+    it { eval(Empty.inspect).must_equal Empty }
+
+    it { Empty.from_hash(Empty.to_hash).must_equal Empty }
   end
 
   describe 'product' do
@@ -186,6 +189,9 @@ describe 'AlgebrickTest' do
     it { assert Leaf === Leaf[1] }
     it { assert Leaf[1].kind_of? Leaf }
     it { eval(Leaf[1].to_s).must_equal Leaf[1] }
+    it { eval(Leaf[1].inspect).must_equal Leaf[1] }
+    it { eval(Node[Leaf[1], Empty].to_s).must_equal Node[Leaf[1], Empty] }
+    it { eval(Node[Leaf[1], Empty].inspect).must_equal Node[Leaf[1], Empty] }
 
     it 'field assign' do
       value = Leaf[1].value
@@ -214,6 +220,12 @@ describe 'AlgebrickTest' do
       it { Named[a: 1, b: :a][:b].must_equal :a }
       it { Named[a: 1, b: 2].to_s.must_equal 'Named[a: 1, b: 2]' }
     end
+
+    it { Leaf.from_hash(Leaf[1].to_hash).must_equal Leaf[1] }
+    it { Named.from_hash(Named[1, :a].to_hash).must_equal Named[1, :a] }
+    it { Named[1, Leaf[1]].to_hash.must_equal 'Named' => { a: 1, b: { 'Leaf' => [1] } } }
+    it { Named.from_hash(Named[1, Leaf[1]].to_hash).must_equal Named[1, Leaf[1]] }
+
   end
 
   describe 'variant' do
