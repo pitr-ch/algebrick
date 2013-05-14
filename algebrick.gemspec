@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
 
   s.name             = 'algebrick'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.date             = '2013-05-14'
   s.summary          = 'Algebraic types and pattern matching for Ruby'
   s.description      = 'Provides algebraic type definitions and pattern matching'
