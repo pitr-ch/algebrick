@@ -374,7 +374,7 @@ module Algebrick
         self[*fields.map { |value| field_from_hash value }]
       when Hash
         self[fields.inject({}) do |h, (name, value)|
-          raise ArgumentError unless @field_names.map(&:to_s).include? name
+          raise ArgumentError unless @field_names.map(&:to_s).include? name.to_s
           h.update name.to_sym => field_from_hash(value)
         end]
       end
