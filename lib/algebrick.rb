@@ -120,6 +120,18 @@ module Algebrick
     def !
       !to_m
     end
+
+    def -(block)
+      to_m - block
+    end
+
+    def case(&block)
+      to_m.case &block
+    end
+
+    def >>(block)
+      to_m >> block
+    end
   end
 
   class Type < Module
