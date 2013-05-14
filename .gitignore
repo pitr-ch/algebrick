@@ -5,3 +5,4 @@
 .yardoc
 playground
 yardoc
+*.gem

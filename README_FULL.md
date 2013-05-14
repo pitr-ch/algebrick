@@ -76,7 +76,7 @@ see {http://en.wikipedia.org/wiki/Null_Object_pattern#Ruby}.
 This has advantage over a classical approach that the methods are defined
 on one place, no need to track methods in two separate classes `User` and `NullUser`.
 
-### Massage matching in Actor pattern
+### Message matching in Actor pattern
 
 Just small snippet from a gem I am still working on.
 

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    algebrick (0.0.1)
+    algebrick (0.1.0)
 
 GEM
   remote: http://rubygems.org/
