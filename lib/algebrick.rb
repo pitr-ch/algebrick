@@ -533,12 +533,16 @@ module Algebrick
         return self, block
       end
 
-      def +(block)
+      def -(block)
         return self, block
       end
 
-      alias_method :-, :+
-      alias_method :>>, :+
+      alias_method :>>, :-
+
+      def +(block)
+        warn 'a_matcher +-> {} is deprecated, it\'ll be removed in 0.2'
+        self - block
+      end
 
       def ~
         @assign = true

@@ -87,7 +87,6 @@ match Leaf[0],
 match Leaf[6],
       Leaf.(~-> v { v%2 == 0 }.to_m) >> 2,
       Leaf.(~-> v { v%3 == 0 }.to_m) --> v { 3 },
-      Leaf.(~-> v { v%7 == 0 }.to_m) +-> v { 7 }   # => 2
 
 # Matchers support logical operations
 # #& for and, #| for or, and #! for negation
