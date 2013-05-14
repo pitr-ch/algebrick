@@ -274,7 +274,7 @@
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Abstract.html" title="Algebrick::Matchers::Abstract (class)">Abstract</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Abstract.html#%21-instance_method" title="Algebrick::Matchers::Abstract#! (method)">#!</a></span>, <span class='object_link'><a href="Abstract.html#%26-instance_method" title="Algebrick::Matchers::Abstract#&amp; (method)">#&</a></span>, <span class='object_link'><a href="Abstract.html#%2B-instance_method" title="Algebrick::Matchers::Abstract#+ (method)">#+</a></span>, <span class='object_link'><a href="Abstract.html#%3D%3D%3D-instance_method" title="Algebrick::Matchers::Abstract#=== (method)">#===</a></span>, <span class='object_link'><a href="Abstract.html#assign%3F-instance_method" title="Algebrick::Matchers::Abstract#assign? (method)">#assign?</a></span>, <span class='object_link'><a href="Abstract.html#assign_to_s-instance_method" title="Algebrick::Matchers::Abstract#assign_to_s (method)">#assign_to_s</a></span>, <span class='object_link'><a href="Abstract.html#assigns-instance_method" title="Algebrick::Matchers::Abstract#assigns (method)">#assigns</a></span>, <span class='object_link'><a href="Abstract.html#case-instance_method" title="Algebrick::Matchers::Abstract#case (method)">#case</a></span>, <span class='object_link'><a href="Abstract.html#children_including_self-instance_method" title="Algebrick::Matchers::Abstract#children_including_self (method)">#children_including_self</a></span>, <span class='object_link'><a href="Abstract.html#find_children-instance_method" title="Algebrick::Matchers::Abstract#find_children (method)">#find_children</a></span>, <span class='object_link'><a href="Abstract.html#inspect-instance_method" title="Algebrick::Matchers::Abstract#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Abstract.html#matchable%21-instance_method" title="Algebrick::Matchers::Abstract#matchable! (method)">#matchable!</a></span>, <span class='object_link'><a href="Abstract.html#matching%3F-instance_method" title="Algebrick::Matchers::Abstract#matching? (method)">#matching?</a></span>, <span class='object_link'><a href="Abstract.html#to_s-instance_method" title="Algebrick::Matchers::Abstract#to_s (method)">#to_s</a></span>, <span class='object_link'><a href="Abstract.html#%7C-instance_method" title="Algebrick::Matchers::Abstract#| (method)">#|</a></span>, <span class='object_link'><a href="Abstract.html#%7E-instance_method" title="Algebrick::Matchers::Abstract#~ (method)">#~</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Abstract.html#%21-instance_method" title="Algebrick::Matchers::Abstract#! (method)">#!</a></span>, <span class='object_link'><a href="Abstract.html#%26-instance_method" title="Algebrick::Matchers::Abstract#&amp; (method)">#&</a></span>, <span class='object_link'><a href="Abstract.html#%2B-instance_method" title="Algebrick::Matchers::Abstract#+ (method)">#+</a></span>, <span class='object_link'><a href="Abstract.html#--instance_method" title="Algebrick::Matchers::Abstract#- (method)">#-</a></span>, <span class='object_link'><a href="Abstract.html#%3D%3D%3D-instance_method" title="Algebrick::Matchers::Abstract#=== (method)">#===</a></span>, <span class='object_link'><a href="Abstract.html#assign%3F-instance_method" title="Algebrick::Matchers::Abstract#assign? (method)">#assign?</a></span>, <span class='object_link'><a href="Abstract.html#assign_to_s-instance_method" title="Algebrick::Matchers::Abstract#assign_to_s (method)">#assign_to_s</a></span>, <span class='object_link'><a href="Abstract.html#assigns-instance_method" title="Algebrick::Matchers::Abstract#assigns (method)">#assigns</a></span>, <span class='object_link'><a href="Abstract.html#case-instance_method" title="Algebrick::Matchers::Abstract#case (method)">#case</a></span>, <span class='object_link'><a href="Abstract.html#children_including_self-instance_method" title="Algebrick::Matchers::Abstract#children_including_self (method)">#children_including_self</a></span>, <span class='object_link'><a href="Abstract.html#find_children-instance_method" title="Algebrick::Matchers::Abstract#find_children (method)">#find_children</a></span>, <span class='object_link'><a href="Abstract.html#inspect-instance_method" title="Algebrick::Matchers::Abstract#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Abstract.html#matchable%21-instance_method" title="Algebrick::Matchers::Abstract#matchable! (method)">#matchable!</a></span>, <span class='object_link'><a href="Abstract.html#matching%3F-instance_method" title="Algebrick::Matchers::Abstract#matching? (method)">#matching?</a></span>, <span class='object_link'><a href="Abstract.html#to_s-instance_method" title="Algebrick::Matchers::Abstract#to_s (method)">#to_s</a></span>, <span class='object_link'><a href="Abstract.html#%7C-instance_method" title="Algebrick::Matchers::Abstract#| (method)">#|</a></span>, <span class='object_link'><a href="Abstract.html#%7E-instance_method" title="Algebrick::Matchers::Abstract#~ (method)">#~</a></span></p>
 
   
   
@@ -314,12 +314,12 @@
       <pre class="lines">
 
 
-627
-628
-629</pre>
+643
+644
+645</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 627</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 643</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_matchers'>matchers</span><span class='rparen'>)</span>
   <span class='ivar'>@matchers</span> <span class='op'>=</span> <span class='id identifier rubyid_matchers'>matchers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span> <span class='id identifier rubyid_matchable!'>matchable!</span> <span class='id identifier rubyid_m'>m</span> <span class='rbrace'>}</span>
@@ -361,12 +361,12 @@
       <pre class="lines">
 
 
-625
-626
-627</pre>
+641
+642
+643</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 625</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 641</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matchers'>matchers</span>
   <span class='ivar'>@matchers</span>
@@ -398,12 +398,12 @@
       <pre class="lines">
 
 
-621
-622
-623</pre>
+637
+638
+639</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 621</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 637</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_matchers'>matchers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_new'>new</span> <span class='op'>*</span><span class='id identifier rubyid_matchers'>matchers</span>
@@ -434,13 +434,13 @@
       <pre class="lines">
 
 
-635
-636
-637
-638</pre>
+651
+652
+653
+654</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 635</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 651</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='kw'>and</span>
@@ -466,12 +466,12 @@
       <pre class="lines">
 
 
-631
-632
-633</pre>
+647
+648
+649</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 631</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 647</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_children'>children</span>
   <span class='id identifier rubyid_find_children'>find_children</span> <span class='id identifier rubyid_matchers'>matchers</span>
@@ -486,7 +486,7 @@
 </div>
 
     <div id="footer">
-  Generated on Tue May 14 21:17:20 2013 by
+  Generated on Tue May 14 21:55:32 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-2.0.0).
 </div>

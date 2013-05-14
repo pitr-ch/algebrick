@@ -85,12 +85,12 @@
 </span><span class='id identifier rubyid_extend'>extend</span> <span class='const'>Algebrick</span><span class='op'>::</span><span class='const'>Matching</span>                         <span class='comment'># =&gt; main
 </span>
 <span class='id identifier rubyid_match'>match</span> <span class='const'>None</span><span class='comma'>,</span>
-      <span class='const'>None</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span> <span class='op'>&gt;&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='const'>None</span> <span class='op'>&gt;&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
       <span class='comment'># ~ will match value of Some and pass it to the block
 </span>      <span class='const'>Some</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='rparen'>)</span> <span class='op'>-</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_value'>value</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>              <span class='comment'># =&gt; nil
 </span>
 <span class='id identifier rubyid_match'>match</span> <span class='const'>Some</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='const'>None</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span> <span class='op'>&gt;&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='const'>None</span> <span class='op'>&gt;&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
       <span class='const'>Some</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='rparen'>)</span> <span class='op'>-</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_value'>value</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_value'>value</span><span class='op'>*</span><span class='int'>2</span> <span class='rbrace'>}</span>            <span class='comment'># =&gt; 2
 </span>
 <span class='comment'># lets add some method to the Maybe type
@@ -376,8 +376,7 @@ It means that values of <code>Empty</code>, <code>Leaf[1]</code>, <code>Node[Emp
 </span><span class='id identifier rubyid_match'>match</span> <span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>6</span><span class='rbracket'>]</span><span class='comma'>,</span>
       <span class='const'>Leaf</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>~</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_v'>v</span><span class='op'>%</span><span class='int'>2</span> <span class='op'>==</span> <span class='int'>0</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span><span class='rparen'>)</span> <span class='op'>&gt;&gt;</span> <span class='int'>2</span><span class='comma'>,</span>
       <span class='const'>Leaf</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>~</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_v'>v</span><span class='op'>%</span><span class='int'>3</span> <span class='op'>==</span> <span class='int'>0</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span><span class='rparen'>)</span> <span class='op'>-</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='int'>3</span> <span class='rbrace'>}</span><span class='comma'>,</span>
-      <span class='const'>Leaf</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>~</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_v'>v</span><span class='op'>%</span><span class='int'>7</span> <span class='op'>==</span> <span class='int'>0</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span><span class='rparen'>)</span> <span class='op'>+</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='int'>7</span> <span class='rbrace'>}</span>   <span class='comment'># =&gt; 2
-</span>
+
 <span class='comment'># Matchers support logical operations
 </span><span class='comment'># #&amp; for and, #| for or, and #! for negation
 </span><span class='lparen'>(</span><span class='id identifier rubyid_m'>m</span> <span class='op'>=</span> <span class='const'>Leaf</span><span class='period'>.</span><span class='lparen'>(</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>&gt;</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span> <span class='op'>&amp;</span> <span class='op'>~</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>&lt;</span> <span class='int'>3</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>===</span> <span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='semicolon'>;</span> <span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_assigns'>assigns</span>
@@ -577,7 +576,7 @@ on one place, no need to track methods in two separate classes <code>User</code>
 </div></div>
 
     <div id="footer">
-  Generated on Tue May 14 21:17:17 2013 by
+  Generated on Tue May 14 21:55:28 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-2.0.0).
 </div>
