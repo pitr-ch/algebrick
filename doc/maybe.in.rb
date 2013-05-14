@@ -10,13 +10,13 @@ type_def { maybe === none | some(Object) }
 extend Algebrick::Matching
 
 match None,
-      None        => nil,
+      None.to_m >> nil,
       # ~ will match value of Some and pass it to the block
-      Some.(~any) => -> value { value }
+      Some.(~any) --> value { value }
 
 match Some[1],
-      None        => nil,
-      Some.(~any) => -> value { value*2 }
+      None.to_m >> nil,
+      Some.(~any) --> value { value*2 }
 
 # lets add some method to the Maybe type
 module Maybe

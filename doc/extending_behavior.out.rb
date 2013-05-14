@@ -1,6 +1,6 @@
 extend Algebrick::DSL                              # => main
 
-# Types can be extended in dsl
+# Types can be extended in DSL
 type_def do
   maybe === none | some(Object)
   maybe do
@@ -25,7 +25,7 @@ module Maybe
   end
 end                                                # => nil
 
-# #maybe and #mayby2 methods are defined on both Maybe`s values None and Some
+# #maybe and #maybe2 methods are defined on both Maybe`s values None and Some
 None.maybe { |_| raise 'never ever happens' }      # => nil
 None.maybe2 { |_| raise 'never ever happens' }     # => nil
 # block is called with the value
