@@ -66,9 +66,9 @@
 <p>Is a small gem providing algebraic types and pattern matching on them for Ruby.</p>
 
 <ul>
-  <li>Documentation: <a href="http://blog.pitr.ch/algebrick" target="_parent" title="http://blog.pitr.ch/algebrick">http://blog.pitr.ch/algebrick</a></li>
-  <li>Source: <a href="https://github.com/pitr-ch/algebrick" target="_parent" title="https://github.com/pitr-ch/algebrick">https://github.com/pitr-ch/algebrick</a></li>
-  <li>Blog: <a href="http://blog.pitr.ch" target="_parent" title="http://blog.pitr.ch">http://blog.pitr.ch</a></li>
+  <li>Documentation: <a href="http://blog.pitr.ch/algebrick">http://blog.pitr.ch/algebrick</a></li>
+  <li>Source: <a href="https://github.com/pitr-ch/algebrick">https://github.com/pitr-ch/algebrick</a></li>
+  <li>Blog: <a href="http://blog.pitr.ch/blog/categories/algebrick/">http://blog.pitr.ch/blog/categories/algebrick/</a></li>
 </ul>
 
 <h2 id="quick-example-with-maybe-type">Quick example with Maybe type</h2>
@@ -225,7 +225,7 @@ It means that values of <code>Empty</code>, <code>Leaf[1]</code>, <code>Node[Emp
     <span class='id identifier rubyid_e'>e</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>
-<span class='comment'># =&gt; #&lt;Proc:0x007fcc5d22f278@/Users/pitr/Workspace/personal/algebrick/doc/values.in.rb:44 (lambda)&gt;
+<span class='comment'># =&gt; #&lt;Proc:0x007fc474264bd0@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:44 (lambda)&gt;
 </span><span class='id identifier rubyid_try'>try</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='lbrace'>{</span> <span class='const'>Leaf</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
 <span class='comment'># =&gt; #&lt;TypeError: value (String) &#39;a&#39; is not #kind_of? any of Integer&gt;
 </span><span class='id identifier rubyid_try'>try</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='lbrace'>{</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
@@ -427,27 +427,24 @@ It means that values of <code>Empty</code>, <code>Leaf[1]</code>, <code>Node[Emp
 </span>
 <span class='kw'>module</span> <span class='const'>Package</span>
   <span class='kw'>def</span> <span class='id identifier rubyid_full_name'>full_name</span>
-    <span class='kw'>case</span> <span class='kw'>self</span>
-    <span class='kw'>when</span> <span class='const'>Deb</span>
-      <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='comma'>,</span> <span class='id identifier rubyid_revision'>revision</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw'>self</span>
-      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_revision'>revision</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_arch'>arch</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.deb</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>when</span> <span class='const'>Rpm</span>
-      <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='comma'>,</span> <span class='id identifier rubyid_release'>release</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw'>self</span>
-      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_release'>release</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_arch'>arch</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.rpm</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
+    <span class='id identifier rubyid_match'>match</span> <span class='kw'>self</span><span class='comma'>,</span>
+          <span class='const'>Deb</span> <span class='op'>&gt;&gt;</span> <span class='tlambda'>-&gt;</span> <span class='kw'>do</span>
+            <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='comma'>,</span> <span class='id identifier rubyid_revision'>revision</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw'>self</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_revision'>revision</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_arch'>arch</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.deb</span><span class='tstring_end'>&quot;</span></span>
+          <span class='kw'>end</span><span class='comma'>,</span>
+          <span class='const'>Rpm</span> <span class='op'>&gt;&gt;</span> <span class='tlambda'>-&gt;</span> <span class='kw'>do</span>
+            <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='comma'>,</span> <span class='id identifier rubyid_release'>release</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span> <span class='op'>=</span> <span class='op'>*</span><span class='kw'>self</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_release'>release</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_arch'>arch</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.rpm</span><span class='tstring_end'>&quot;</span></span>
+          <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
 </span>
 <span class='kw'>module</span> <span class='const'>Arch</span>
   <span class='kw'>def</span> <span class='id identifier rubyid_full_name'>full_name</span>
-    <span class='kw'>case</span> <span class='kw'>self</span>
-    <span class='kw'>when</span> <span class='const'>I386</span>
-      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>i386</span><span class='tstring_end'>&#39;</span></span>
-    <span class='kw'>when</span> <span class='const'>Amd64</span>
-      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>amd64</span><span class='tstring_end'>&#39;</span></span>
-    <span class='kw'>when</span> <span class='const'>Armel</span>
-      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>armel</span><span class='tstring_end'>&#39;</span></span>
-    <span class='kw'>end</span>
+    <span class='id identifier rubyid_match'>match</span> <span class='kw'>self</span><span class='comma'>,</span>
+          <span class='const'>I386</span>  <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>i386</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+          <span class='const'>Amd64</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>amd64</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+          <span class='const'>Armel</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>armel</span><span class='tstring_end'>&#39;</span></span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
 </span>
@@ -576,10 +573,20 @@ on one place, no need to track methods in two separate classes <code>User</code>
 </div></div>
 
     <div id="footer">
-  Generated on Tue May 14 21:55:28 2013 by
+  Generated on Fri May 17 11:08:13 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.1 (ruby-2.0.0).
+  0.8.6.1 (ruby-2.0.0) by <a href='http://blog.pitr.ch'>pitr.ch</a>.
 </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-4005004-8', 'pitr.ch');
+  ga('send', 'pageview');
+</script>
 
   </body>
 </html>

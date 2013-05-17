@@ -46,7 +46,7 @@ try = -> &b do
     e
   end
 end
-# => #<Proc:0x007fcc5d22f278@/Users/pitr/Workspace/personal/algebrick/doc/values.in.rb:44 (lambda)>
+# => #<Proc:0x007fc474264bd0@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:44 (lambda)>
 try.call { Leaf['a'] }
 # => #<TypeError: value (String) 'a' is not #kind_of? any of Integer>
 try.call { Node[nil, Empty] }
