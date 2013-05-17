@@ -35,27 +35,24 @@ type_def {
 
 module Package
   def full_name
-    case self
-    when Deb
-      name, version, revision, arch = *self
-      "#{name}_#{version}-#{revision}_#{arch.full_name}.deb"
-    when Rpm
-      name, version, release, arch = *self
-      "#{name}-#{version}-#{release}-#{arch.full_name}.rpm"
-    end
+    match self,
+          Deb >> -> do
+            name, version, revision, arch = *self
+            "#{name}_#{version}-#{revision}_#{arch.full_name}.deb"
+          end,
+          Rpm >> -> do
+            name, version, release, arch = *self
+            "#{name}-#{version}-#{release}-#{arch.full_name}.rpm"
+          end
   end
 end                                                # => nil
 
 module Arch
   def full_name
-    case self
-    when I386
-      'i386'
-    when Amd64
-      'amd64'
-    when Armel
-      'armel'
-    end
+    match self,
+          I386  => 'i386',
+          Amd64 => 'amd64',
+          Armel => 'armel'
   end
 end                                                # => nil
 

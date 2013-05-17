@@ -7,7 +7,7 @@
 --markup markdown
 --title=Algebrick
 --template default
---template-path ./yard-template
+--template-path ./../yard-template
 
 ./lib/**/*.rb
 -
