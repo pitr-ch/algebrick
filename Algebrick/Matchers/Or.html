@@ -209,7 +209,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../TypeCheck.html#a_type_check-instance_method" title="Algebrick::TypeCheck#a_type_check (method)">#a_type_check</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_kind_of%21-instance_method" title="Algebrick::TypeCheck#is_kind_of! (method)">#is_kind_of!</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_matching%21-instance_method" title="Algebrick::TypeCheck#is_matching! (method)">#is_matching!</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../TypeCheck.html#a_type_check-instance_method" title="Algebrick::TypeCheck#a_type_check (method)">#a_type_check</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_kind_of%21-instance_method" title="Algebrick::TypeCheck#is_kind_of! (method)">#is_kind_of!</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_matching%21-instance_method" title="Algebrick::TypeCheck#is_matching! (method)">#is_matching!</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_matching%3F-instance_method" title="Algebrick::TypeCheck#is_matching? (method)">#is_matching?</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -260,12 +260,12 @@
       <pre class="lines">
 
 
-676
-677
-678</pre>
+700
+701
+702</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 676</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 700</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matching?'>matching?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_matchers'>matchers</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span> <span class='id identifier rubyid_m'>m</span> <span class='op'>===</span> <span class='id identifier rubyid_other'>other</span> <span class='rbrace'>}</span>
@@ -290,12 +290,12 @@
       <pre class="lines">
 
 
-670
-671
-672</pre>
+694
+695
+696</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 670</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 694</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_matchers'>matchers</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> | </span><span class='tstring_end'>&#39;</span></span>
@@ -310,7 +310,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri May 17 11:11:20 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Mon May 27 19:18:39 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-2.0.0).
 </div>

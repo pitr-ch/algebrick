@@ -166,7 +166,30 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>def is_matching?(value, *types).</p>
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#is_matching%3F-instance_method" title="#is_matching? (instance method)">- (Boolean) <strong>is_matching?</strong>(value, *types) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
 </div></span>
   
 </li>
@@ -190,39 +213,12 @@
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Raises:</p>
-<ul class="raise">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>TypeError</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-35
-36
-37
-38
 39
 40
 41
@@ -232,10 +228,16 @@
 45
 46
 47
-48</pre>
+48
+49
+50
+51
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_a_type_check'>a_type_check</span><span class='lparen'>(</span><span class='id identifier rubyid_which'>which</span><span class='comma'>,</span> <span class='id identifier rubyid_bang'>bang</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ok'>ok</span> <span class='op'>=</span> <span class='id identifier rubyid_types'>types</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span>
@@ -248,8 +250,10 @@
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>value (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>) &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; is not #</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_which'>which</span><span class='embexpr_end'>}</span><span class='tstring_content'> any of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_types'>types</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_bang'>bang</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_ok'>ok</span>
-  <span class='id identifier rubyid_value'>value</span>
+  <span class='id identifier rubyid_bang'>bang</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_ok'>ok</span> <span class='kw'>and</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>value (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>) &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; is not #</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_which'>which</span><span class='embexpr_end'>}</span><span class='tstring_content'> any of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_types'>types</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_bang'>bang</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>:</span> <span class='id identifier rubyid_ok'>ok</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -283,12 +287,12 @@ end</p>
       <pre class="lines">
 
 
-21
-22
-23</pre>
+25
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_kind_of!'>is_kind_of!</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a_type_check'>a_type_check</span> <span class='symbol'>:kind_of?</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
@@ -307,17 +311,58 @@ end</p>
   
 
   
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 33</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_is_matching!'>is_matching!</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_a_type_check'>a_type_check</span> <span class='symbol'>:===</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="is_matching?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>is_matching?</strong>(value, *types) 
+  
+
+  
+
+  
 </h3><div class="docstring">
   <div class="discussion">
-    <p>def is_matching?(value, *types)
- a_type_check :===, false, value, *types
-end</p>
+    
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -332,8 +377,8 @@ end</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 29</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_is_matching!'>is_matching!</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_a_type_check'>a_type_check</span> <span class='symbol'>:===</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_is_matching?'>is_matching?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_a_type_check'>a_type_check</span> <span class='symbol'>:===</span><span class='comma'>,</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -345,7 +390,7 @@ end</p>
 </div>
 
     <div id="footer">
-  Generated on Fri May 17 11:11:18 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Mon May 27 19:18:37 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-2.0.0).
 </div>

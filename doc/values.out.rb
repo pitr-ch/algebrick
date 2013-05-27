@@ -38,6 +38,11 @@ v, left, right = *BTree[value: 1, left: Tip, right: Tip]
 BTree[value: 1, left: Tip, right: Tip][:value]     # => 1
 BTree[value: 1, left: Tip, right: Tip][:left]      # => Tip
 
+# BTree can also by made to create method accessors for its named fields
+BTree.add_all_field_method_accessors               # => [:value, :left, :right]
+BTree[1, Tip, Tip].value                           # => 1
+BTree[1, Tip, Tip].left                            # => Tip
+
 # it raises TypeError when being constructed with wrong type
 try = -> &b do
   begin
@@ -46,7 +51,7 @@ try = -> &b do
     e
   end
 end
-# => #<Proc:0x007fc474264bd0@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:44 (lambda)>
+# => #<Proc:0x007fd4ba32ea38@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:49 (lambda)>
 try.call { Leaf['a'] }
 # => #<TypeError: value (String) 'a' is not #kind_of? any of Integer>
 try.call { Node[nil, Empty] }

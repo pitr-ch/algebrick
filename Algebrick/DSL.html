@@ -77,9 +77,13 @@
     
   
   
+    <dt class="r1">Included in:</dt>
+    <dd class="r1"><span class='object_link'><a href="../Algebrick.html" title="Algebrick (module)">Algebrick</a></span></dd>
+    
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/algebrick.rb</dd>
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/algebrick.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -112,7 +116,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#type_def-instance_method" title="#type_def (instance method)">- (Object) <strong>type_def</strong>(&amp;definition) </a>
+      <a href="#type_def-instance_method" title="#type_def (instance method)">- (Object) <strong>type_def</strong>(base = self, &amp;definition) </a>
     
 
     
@@ -144,7 +148,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="type_def-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>type_def</strong>(&amp;definition) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>type_def</strong>(base = self, &amp;definition) 
   
 
   
@@ -156,15 +160,15 @@
       <pre class="lines">
 
 
-1015
-1016
-1017</pre>
+1039
+1040
+1041</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1015</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1039</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_type_def'>type_def</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span>
-  <span class='const'>Environment</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_type_def'>type_def</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span> <span class='op'>=</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span>
+  <span class='const'>Environment</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -176,7 +180,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri May 17 11:11:18 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Mon May 27 19:18:37 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-2.0.0).
 </div>

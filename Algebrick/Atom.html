@@ -343,7 +343,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="TypeCheck.html#a_type_check-instance_method" title="Algebrick::TypeCheck#a_type_check (method)">#a_type_check</a></span>, <span class='object_link'><a href="TypeCheck.html#is_kind_of%21-instance_method" title="Algebrick::TypeCheck#is_kind_of! (method)">#is_kind_of!</a></span>, <span class='object_link'><a href="TypeCheck.html#is_matching%21-instance_method" title="Algebrick::TypeCheck#is_matching! (method)">#is_matching!</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="TypeCheck.html#a_type_check-instance_method" title="Algebrick::TypeCheck#a_type_check (method)">#a_type_check</a></span>, <span class='object_link'><a href="TypeCheck.html#is_kind_of%21-instance_method" title="Algebrick::TypeCheck#is_kind_of! (method)">#is_kind_of!</a></span>, <span class='object_link'><a href="TypeCheck.html#is_matching%21-instance_method" title="Algebrick::TypeCheck#is_matching! (method)">#is_matching!</a></span>, <span class='object_link'><a href="TypeCheck.html#is_matching%3F-instance_method" title="Algebrick::TypeCheck#is_matching? (method)">#is_matching?</a></span></p>
 
   
   
@@ -405,13 +405,13 @@
       <pre class="lines">
 
 
-191
-192
-193
-194</pre>
+197
+198
+199
+200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 191</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 197</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>super</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
@@ -444,12 +444,12 @@
       <pre class="lines">
 
 
-204
-205
-206</pre>
+210
+211
+212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 204</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 210</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_equal?'>equal?</span> <span class='id identifier rubyid_other'>other</span>
@@ -474,12 +474,12 @@
       <pre class="lines">
 
 
-200
-201
-202</pre>
+206
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 200</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 206</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_be_kind_of'>be_kind_of</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_extend'>extend</span> <span class='id identifier rubyid_type'>type</span>
@@ -504,16 +504,16 @@
       <pre class="lines">
 
 
-220
-221
-222
-223
-224
-225
-226</pre>
+226
+227
+228
+229
+230
+231
+232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 220</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 226</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_hash'>from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_hash'>hash</span> <span class='op'>==</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
@@ -542,12 +542,12 @@
       <pre class="lines">
 
 
-216
-217
-218</pre>
+222
+223
+224</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 216</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
   <span class='lbrace'>{</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_name'>name</span> <span class='rbrace'>}</span>
@@ -572,12 +572,12 @@
       <pre class="lines">
 
 
-196
-197
-198</pre>
+202
+203
+204</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 196</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 202</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_m'>to_m</span>
   <span class='const'>Matchers</span><span class='op'>::</span><span class='const'>Atom</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>self</span>
@@ -602,12 +602,12 @@
       <pre class="lines">
 
 
-212
-213
-214</pre>
+218
+219
+220</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 212</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 218</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_name'>name</span>
@@ -632,12 +632,12 @@
       <pre class="lines">
 
 
-208
-209
-210</pre>
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 208</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 214</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span>
   <span class='kw'>self</span>
@@ -652,7 +652,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri May 17 11:11:18 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Mon May 27 19:18:37 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-2.0.0).
 </div>

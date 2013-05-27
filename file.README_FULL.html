@@ -217,6 +217,11 @@ It means that values of <code>Empty</code>, <code>Leaf[1]</code>, <code>Node[Emp
 </span><span class='const'>BTree</span><span class='lbracket'>[</span><span class='label'>value:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>left:</span> <span class='const'>Tip</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='const'>Tip</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:value</span><span class='rbracket'>]</span>     <span class='comment'># =&gt; 1
 </span><span class='const'>BTree</span><span class='lbracket'>[</span><span class='label'>value:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>left:</span> <span class='const'>Tip</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='const'>Tip</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:left</span><span class='rbracket'>]</span>      <span class='comment'># =&gt; Tip
 </span>
+<span class='comment'># BTree can also by made to create method accessors for its named fields
+</span><span class='const'>BTree</span><span class='period'>.</span><span class='id identifier rubyid_add_all_field_method_accessors'>add_all_field_method_accessors</span>               <span class='comment'># =&gt; [:value, :left, :right]
+</span><span class='const'>BTree</span><span class='lbracket'>[</span><span class='int'>1</span><span class='comma'>,</span> <span class='const'>Tip</span><span class='comma'>,</span> <span class='const'>Tip</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>                           <span class='comment'># =&gt; 1
+</span><span class='const'>BTree</span><span class='lbracket'>[</span><span class='int'>1</span><span class='comma'>,</span> <span class='const'>Tip</span><span class='comma'>,</span> <span class='const'>Tip</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_left'>left</span>                            <span class='comment'># =&gt; Tip
+</span>
 <span class='comment'># it raises TypeError when being constructed with wrong type
 </span><span class='id identifier rubyid_try'>try</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span> <span class='op'>&amp;</span><span class='id identifier rubyid_b'>b</span> <span class='kw'>do</span>
   <span class='kw'>begin</span>
@@ -225,7 +230,7 @@ It means that values of <code>Empty</code>, <code>Leaf[1]</code>, <code>Node[Emp
     <span class='id identifier rubyid_e'>e</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>
-<span class='comment'># =&gt; #&lt;Proc:0x007fc474264bd0@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:44 (lambda)&gt;
+<span class='comment'># =&gt; #&lt;Proc:0x007fd4ba32ea38@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:49 (lambda)&gt;
 </span><span class='id identifier rubyid_try'>try</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='lbrace'>{</span> <span class='const'>Leaf</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
 <span class='comment'># =&gt; #&lt;TypeError: value (String) &#39;a&#39; is not #kind_of? any of Integer&gt;
 </span><span class='id identifier rubyid_try'>try</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='lbrace'>{</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
@@ -573,7 +578,7 @@ on one place, no need to track methods in two separate classes <code>User</code>
 </div></div>
 
     <div id="footer">
-  Generated on Fri May 17 11:11:18 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Mon May 27 19:18:36 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-2.0.0).
 </div>
