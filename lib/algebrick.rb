@@ -13,6 +13,10 @@ end
 
 module Algebrick
 
+  def self.version
+    @version ||= Gem::Version.new File.read(File.join(File.dirname(__FILE__), '..', 'VERSION'))
+  end
+
   module TypeCheck
     #def is_kind_of?(value, *types)
     #  a_type_check :kind_of?, false, value, *types

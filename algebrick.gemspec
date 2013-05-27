@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
 
   s.name             = 'algebrick'
-  s.version          = '0.1.1'
+  s.version          = File.read(File.join(File.dirname(__FILE__), 'VERSION'))
   s.date             = '2013-05-14'
   s.summary          = 'Algebraic types and pattern matching for Ruby'
   s.description      = 'Provides algebraic type definitions and pattern matching'
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email            = 'git@pitr.ch'
   s.homepage         = 'https://github.com/pitr-ch/algebrick'
   s.extra_rdoc_files = %w(MIT-LICENSE README.md README_FULL.md)
-  s.files            = Dir['lib/algebrick.rb']
+  s.files            = Dir['lib/algebrick.rb'] + %w(VERSION)
   s.require_paths    = %w(lib)
   s.license          = 'MIT' 
   s.test_files       = Dir['spec/algebrick.rb']
