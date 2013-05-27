@@ -559,6 +559,8 @@ module Algebrick
 
       alias_method :>>, :-
 
+      raise 'remove deprecation' if Algebrick.version >= Gem::Version.new('0.2')
+
       def +(block)
         warn 'a_matcher +-> {} is deprecated, it\'ll be removed in 0.2'
         self - block
