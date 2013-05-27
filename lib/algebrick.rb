@@ -678,7 +678,7 @@ module Algebrick
       end
     end
 
-    class Not < Abstract # TODO
+    class Not < Abstract
       attr_reader :matcher
 
       def initialize(matcher)

@@ -28,4 +28,3 @@ Dir.chdir "#{root}/yardoc" do
     cmd 'git push origin gh-pages'
   end
 end
-# TODO assets for rubydoc.info
