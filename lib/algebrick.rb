@@ -1039,7 +1039,7 @@ module Algebrick
     def type_def(base = self, &definition)
       Environment.new(base, &definition).run
     end
-    end
+  end
 
   extend DSL
 
