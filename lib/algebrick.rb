@@ -1012,8 +1012,14 @@ module Algebrick
       end
     end
 
-    def type_def(&definition)
-      Environment.new(self, &definition).run
+    def type_def(base = self, &definition)
+      Environment.new(base, &definition).run
     end
+    end
+
+  extend DSL
+
+  def self.type_def(base, &definition)
+    super base, &definition
   end
 end

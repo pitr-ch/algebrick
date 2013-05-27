@@ -147,13 +147,13 @@ describe 'AlgebrickTest' do
 
   describe 'type definition' do
     module Asd
-      extend Algebrick::DSL
-      type_def { b === c | d }
+      Algebrick.type_def self do
+        b === c | d
+      end
     end
 
     it 'asd' do
-      p Module.nesting
-      p Asd::B.to_s
+      assert Asd::B
     end
   end
 
@@ -212,6 +212,7 @@ describe 'AlgebrickTest' do
     describe 'named field' do
       type_def { named(a: Integer, b: Object) }
       Named = self::Named
+      Named.add_all_field_method_accessors
       it { -> { Named[:a, 1] }.must_raise TypeError }
       it { Named[1, :a][:a].must_equal 1 }
       it { Named[1, :a][:b].must_equal :a }
@@ -219,6 +220,8 @@ describe 'AlgebrickTest' do
       it { Named[b: :a, a: 1][:a].must_equal 1 }
       it { Named[a: 1, b: :a][:b].must_equal :a }
       it { Named[a: 1, b: 2].to_s.must_equal 'Named[a: 1, b: 2]' }
+      it { Named[a: 1, b: 2].a.must_equal 1 }
+      it { Named[a: 1, b: 2].b.must_equal 2 }
     end
 
     it { Leaf.from_hash(Leaf[1].to_hash).must_equal Leaf[1] }
