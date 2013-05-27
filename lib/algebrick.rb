@@ -22,9 +22,9 @@ module Algebrick
       a_type_check :kind_of?, true, value, *types
     end
 
-    #def is_matching?(value, *types)
-    #  a_type_check :===, false, value, *types
-    #end
+    def is_matching?(value, *types)
+      a_type_check :===, false, value, *types
+    end
 
     def is_matching!(value, *types)
       a_type_check :===, true, value, *types
@@ -43,8 +43,10 @@ module Algebrick
           raise ArgumentError
         end
       end
-      raise TypeError, "value (#{value.class}) '#{value}' is not ##{which} any of #{types.join(', ')}" if bang && !ok
-      value
+      bang && !ok and
+          raise TypeError,
+                "value (#{value.class}) '#{value}' is not ##{which} any of #{types.join(', ')}"
+      bang ? value : ok
     end
   end
 
@@ -83,7 +85,7 @@ module Algebrick
       cases.each do |matcher, block|
         return match_value matcher, block if matcher === value
       end
-      raise "no match for #{value} by any of #{cases.map(&:first).join ', '}"
+      raise "no match for (#{value.class}) '#{value}' by any of #{cases.map(&:first).join ', '}"
     end
 
     private
