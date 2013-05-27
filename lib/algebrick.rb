@@ -313,6 +313,20 @@ module Algebrick
       self
     end
 
+    def add_field_method_accessor(field)
+      raise TypeError, 'no field names' unless @field_names
+      raise TypeError, "no field name #{field}" unless @field_names.include? field
+      define_method(field) { self[field] }
+    end
+
+    def add_field_method_accessors(*fields)
+      fields.each { |f| add_field_method_accessor f }
+    end
+
+    def add_all_field_method_accessors
+      add_field_method_accessors *@field_names
+    end
+
     protected
 
     def be_kind_of!(type)

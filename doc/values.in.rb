@@ -34,6 +34,11 @@ v, left, right = *BTree[value: 1, left: Tip, right: Tip]
 BTree[value: 1, left: Tip, right: Tip][:value]
 BTree[value: 1, left: Tip, right: Tip][:left]
 
+# BTree can also by made to create method accessors for its named fields
+BTree.add_all_field_method_accessors
+BTree[1, Tip, Tip].value
+BTree[1, Tip, Tip].left
+
 # it raises TypeError when being constructed with wrong type
 try = -> &b do
   begin
