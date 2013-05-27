@@ -338,7 +338,9 @@ module Algebrick
       if keys
         @field_names = keys
         keys.all? { |k| is_kind_of! k, Symbol }
-        dict = @field_indexes = keys.each_with_index.inject({}) { |h, (k, i)| h.update k => i }
+        dict = @field_indexes =
+            Hash.new { |h, k| raise ArgumentError, "uknown field #{k.inspect}" }.
+                update keys.each_with_index.inject({}) { |h, (k, i)| h.update k => i }
         define_method(:[]) { |key| @fields[dict[key]] }
       end
 
