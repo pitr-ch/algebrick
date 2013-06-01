@@ -372,17 +372,17 @@ TODO Method matcher (:size, matcher)</p>
       <pre class="lines">
 
 
-836
 837
 838
 839
 840
 841
 842
-843</pre>
+843
+844</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 836</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 837</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_algebraic_type'>algebraic_type</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_field_matchers'>field_matchers</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='rparen'>)</span>
@@ -429,12 +429,12 @@ TODO Method matcher (:size, matcher)</p>
       <pre class="lines">
 
 
-834
 835
-836</pre>
+836
+837</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 834</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 835</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_algebraic_type'>algebraic_type</span>
   <span class='ivar'>@algebraic_type</span>
@@ -471,12 +471,12 @@ TODO Method matcher (:size, matcher)</p>
       <pre class="lines">
 
 
-834
 835
-836</pre>
+836
+837</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 834</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 835</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_field_matchers'>field_matchers</span>
   <span class='ivar'>@field_matchers</span>
@@ -508,14 +508,14 @@ TODO Method matcher (:size, matcher)</p>
       <pre class="lines">
 
 
-853
 854
 855
 856
-857</pre>
+857
+858</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 853</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 854</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='kw'>and</span>
@@ -542,12 +542,12 @@ TODO Method matcher (:size, matcher)</p>
       <pre class="lines">
 
 
-845
 846
-847</pre>
+847
+848</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 845</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 846</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_children'>children</span>
   <span class='id identifier rubyid_find_children'>find_children</span> <span class='ivar'>@field_matchers</span>
@@ -594,15 +594,15 @@ TODO Method matcher (:size, matcher)</p>
       <pre class="lines">
 
 
-861
 862
 863
 864
 865
-866</pre>
+866
+867</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 861</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 862</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matching?'>matching?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='ivar'>@algebraic_type</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>ProductConstructor</span><span class='rparen'>)</span> <span class='kw'>and</span>
@@ -630,12 +630,12 @@ TODO Method matcher (:size, matcher)</p>
       <pre class="lines">
 
 
-849
 850
-851</pre>
+851
+852</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 849</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 850</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_assign_to_s'>assign_to_s</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@algebraic_type</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.(</span><span class='embexpr_beg'>#{</span><span class='ivar'>@field_matchers</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>,</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
@@ -650,7 +650,7 @@ TODO Method matcher (:size, matcher)</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Jun  1 12:35:20 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Sat Jun  1 16:49:38 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-2.0.0).
 </div>
