@@ -346,27 +346,28 @@ module Algebrick
     end
 
     def set_fields(fields_or_hash)
-      fields = if fields_or_hash.size == 1 && fields_or_hash.first.is_a?(Hash)
-                 keys = fields_or_hash.first.keys
-                 fields_or_hash.first.values
-               else
-                 fields_or_hash
-               end
+      fields, keys = if fields_or_hash.size == 1 && fields_or_hash.first.is_a?(Hash)
+                       [fields_or_hash.first.values, fields_or_hash.first.keys]
+                     else
+                       [fields_or_hash, nil]
+                     end
 
-      if keys
-        @field_names = keys
-        keys.all? { |k| is_kind_of! k, Symbol }
-        dict = @field_indexes =
-            Hash.new { |h, k| raise ArgumentError, "uknown field #{k.inspect}" }.
-                update keys.each_with_index.inject({}) { |h, (k, i)| h.update k => i }
-        define_method(:[]) { |key| @fields[dict[key]] }
-      end
+      set_field_names keys if keys
 
       fields.all? { |f| is_kind_of! f, Type, Class }
       raise TypeError, 'there is no product with zero fields' unless fields.size > 0
       define_method(:value) { @fields.first } if fields.size == 1
       @fields      = fields
       @constructor = Class.new(ProductConstructor).tap { |c| c.type = self }
+    end
+
+    def set_field_names(names)
+      @field_names = names
+      names.all? { |k| is_kind_of! k, Symbol }
+      dict = @field_indexes =
+          Hash.new { |h, k| raise ArgumentError, "uknown field #{k.inspect}" }.
+              update names.each_with_index.inject({}) { |h, (k, i)| h.update k => i }
+      define_method(:[]) { |key| @fields[dict[key]] }
     end
 
     def set_variants(variants)
