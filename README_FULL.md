@@ -1,14 +1,14 @@
 # Algebrick
 
-Is a small gem providing algebraic types and pattern matching on them for Ruby.
+Is a small gem providing **algebraic types** and **pattern matching** on them for Ruby.
 
 -   Documentation: <http://blog.pitr.ch/algebrick>
 -   Source: <https://github.com/pitr-ch/algebrick>
 -   Blog: <http://blog.pitr.ch/blog/categories/algebrick/>
 
-## Quick example with Maybe type
+## Quick example
 
-{include:file:doc/maybe.out.rb}
+{include:file:doc/quick_example.out.rb}
 
 ## Algebraic types: what is it?
 
@@ -62,8 +62,8 @@ Algebraic matchers are helper objects to match algebraic objects and others with
 
 ### Serialization
 
-Algebraic types also play nice with JSON serialization. So it is ideal for defining messegas
-for cross-process comunication.
+Algebraic types also play nice with JSON serialization and deserialization. It is ideal for defining
+messege-based cross-process comunication.
 
 {include:file:doc/json.out.rb}
 

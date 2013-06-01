@@ -1,34 +1,36 @@
 PATH
   remote: .
   specs:
-    algebrick (0.1.1)
+    algebrick (0.1.2)
 
 GEM
   remote: http://rubygems.org/
   specs:
     ansi (1.4.3)
     coderay (1.0.9)
-    kramdown (1.0.1)
+    github-markup (0.7.5)
     method_source (0.8.1)
-    minitest (4.7.0)
-    multi_json (1.7.2)
-    pry (0.9.12)
+    minitest (5.0.3)
+    multi_json (1.7.4)
+    pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    slop (3.4.4)
+    redcarpet (2.3.0)
+    slop (3.4.5)
     turn (0.9.6)
       ansi
-    yard (0.8.5.2)
+    yard (0.8.6.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   algebrick!
-  kramdown
+  github-markup
   minitest
   multi_json
   pry
+  redcarpet
   turn
   yard

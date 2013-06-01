@@ -4,6 +4,7 @@
 --main=README_FULL.md
 --output-dir=./yardoc/
 --asset ./doc
+--markup-provider redcarpet
 --markup markdown
 --title=Algebrick
 --template default
