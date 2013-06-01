@@ -1,4 +1,6 @@
-## Algebrick
+# Algebrick
+
+[![Build Status](https://travis-ci.org/pitr-ch/algebrick.png)](https://travis-ci.org/pitr-ch/algebrick)
 
 Is a small gem providing **algebraic types** and **pattern matching** on them for Ruby.
 
@@ -6,14 +8,14 @@ Is a small gem providing **algebraic types** and **pattern matching** on them fo
 -   Source: <https://github.com/pitr-ch/algebrick>
 -   Blog: <http://blog.pitr.ch/blog/categories/algebrick/>
 
-### What is it good for?
+## What is it good for?
 
 -   Defining data structures.
 -   Algebraic types play nice with JSON serialization and deserialization. It is ideal for defining
     message-based cross-process communication.
 -   and more...
 
-### Quick example
+## Quick example
 
 Load DSL for type definition and define some algebraic types
 

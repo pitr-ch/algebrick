@@ -1,11 +1,7 @@
 require 'bundler/setup'
-
-require 'minitest/spec'
-#require 'minitest/autorun'
-require 'turn/autorun'
-
+require 'minitest/autorun'
 require 'pp'
-require_relative '../lib/algebrick'
+require 'algebrick'
 require 'pry'
 
 class Module
@@ -13,22 +9,6 @@ class Module
     raise "no constant #{const.inspect} in #{self}"
   end
 end
-
-Turn.config do |c|
-  # use one of output formats:
-  # :outline  - turn's original case/test outline mode [default]
-  # :progress - indicates progress with progress bar
-  # :dotted   - test/unit's traditional dot-progress mode
-  # :pretty   - new pretty reporter
-  # :marshal  - dump output as YAML (normal run mode only)
-  # :cue      - interactive testing
-  c.format  = :outline
-  # turn on invoke/execute tracing, enable full backtrace
-  #c.trace   = true
-  # use humanized test names (works only with :outline format)
-  c.natural = true
-end
-
 
 describe 'AlgebrickTest' do
   i_suck_and_my_tests_are_order_dependent!
