@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/pitr-ch/algebrick.png)](https://travis-ci.org/pitr-ch/algebrick)
 
-Is a small gem providing **algebraic types** and **pattern matching** on them for Ruby.
+It's a small gem providing **algebraic types** and **pattern matching** on them for Ruby.
 
 -   Documentation: <http://blog.pitr.ch/algebrick>
 -   Source: <https://github.com/pitr-ch/algebrick>
@@ -37,6 +37,7 @@ module Tree
     match self,
           Empty >> 0,
           Leaf >> 1,
+          # ~ will store and pass matched parts to variables left and right
           Node.(~any, ~any) --> left, right do
             1 + [left.depth, right.depth].max
           end
