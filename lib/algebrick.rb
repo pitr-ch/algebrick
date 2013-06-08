@@ -18,9 +18,9 @@ module Algebrick
   end
 
   module TypeCheck
-    #def is_kind_of?(value, *types)
-    #  a_type_check :kind_of?, false, value, *types
-    #end
+    def is_kind_of?(value, *types)
+      a_type_check :kind_of?, false, value, *types
+    end
 
     def is_kind_of!(value, *types)
       a_type_check :kind_of?, true, value, *types
