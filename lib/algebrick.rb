@@ -191,6 +191,9 @@ module Algebrick
     end
   end
 
+  TYPE_KEY   = :algebrick
+  FIELDS_KEY = :fields
+
   class Atom < Type
     include Value
 
@@ -220,7 +223,7 @@ module Algebrick
     end
 
     def to_hash
-      { name => name }
+      { TYPE_KEY => name }
     end
 
     def from_hash(hash)
@@ -263,12 +266,12 @@ module Algebrick
     end
 
     def to_hash
-      { self.class.type.name =>
-            if type.field_names
+      { TYPE_KEY => self.class.type.name }.
+          update(if type.field_names
               type.field_names.inject({}) { |h, name| h.update name => hashize(self[name]) }
             else
-              fields.map { |v| hashize v }
-            end }
+                   { FIELDS_KEY => fields.map { |v| hashize v } }
+                 end)
     end
 
     def ==(other)
@@ -400,10 +403,14 @@ module Algebrick
     end
 
     def product_from_hash(hash)
-      raise ArgumentError, 'hash does not have size 1' unless hash.size == 1
-      type_name, fields = hash.first
+      (type_name = hash[TYPE_KEY] || hash[TYPE_KEY.to_s]) or
+          raise ArgumentError, "hash does not have #{TYPE_KEY}"
       raise ArgumentError, "#{type_name} is not #{name}" unless type_name == name
+
+      fields = hash[FIELDS_KEY] || hash[FIELDS_KEY.to_s] ||
+          hash.reject { |k, _| k.to_s == TYPE_KEY.to_s }
       is_kind_of! fields, Hash, Array
+
       case fields
       when Array
         self[*fields.map { |value| field_from_hash value }]
@@ -417,14 +424,9 @@ module Algebrick
 
     def field_from_hash(hash)
       return hash unless Hash === hash
-      return hash unless hash.size == 1
-      type_name, value = hash.first
+      (type_name = hash[TYPE_KEY] || hash[TYPE_KEY.to_s]) or return hash
       type             = constantize type_name
-      if type.respond_to? :from_hash
         type.from_hash hash
-      else
-        value
-      end
     end
 
     def constantize(camel_cased_word)

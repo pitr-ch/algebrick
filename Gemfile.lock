@@ -7,11 +7,21 @@ GEM
   remote: http://rubygems.org/
   specs:
     ansi (1.4.3)
+    builder (3.2.2)
     coderay (1.0.9)
     github-markup (0.7.5)
+    hashie (2.0.5)
     method_source (0.8.1)
-    minitest (5.0.3)
+    minitest (4.7.4)
+    minitest-reporters (0.14.20)
+      ansi
+      builder
+      minitest (>= 2.12, < 5.0)
+      powerbar
     multi_json (1.7.4)
+    powerbar (1.0.11)
+      ansi (~> 1.4.0)
+      hashie (>= 1.1.0)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -28,7 +38,8 @@ PLATFORMS
 DEPENDENCIES
   algebrick!
   github-markup
-  minitest
+  minitest (< 5)
+  minitest-reporters
   multi_json
   pry
   redcarpet

@@ -1,5 +1,8 @@
 require 'bundler/setup'
 require 'minitest/autorun'
+require 'minitest/reporters'
+MiniTest::Reporters.use!
+
 require 'pp'
 require 'algebrick'
 require 'pry'
@@ -206,8 +209,16 @@ describe 'AlgebrickTest' do
 
     it { Leaf.from_hash(Leaf[1].to_hash).must_equal Leaf[1] }
     it { Named.from_hash(Named[1, :a].to_hash).must_equal Named[1, :a] }
-    it { Named[1, Leaf[1]].to_hash.must_equal 'Named' => { a: 1, b: { 'Leaf' => [1] } } }
-    it { Named.from_hash(Named[1, Leaf[1]].to_hash).must_equal Named[1, Leaf[1]] }
+    it do
+      Named[1, Node[Leaf[1], Empty]].to_hash.
+          must_equal algebrick: 'Named', a: 1, b: { algebrick: 'Node',
+                                                    fields:    [{ algebrick: 'Leaf', fields: [1] },
+                                                                { algebrick: 'Empty' }] }
+    end
+    it do
+      Named.from_hash(Named[1, Node[Leaf[1], Empty]].to_hash).
+          must_equal Named[1, Node[Leaf[1], Empty]]
+    end
 
   end
 

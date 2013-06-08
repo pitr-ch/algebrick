@@ -18,13 +18,14 @@ Gem::Specification.new do |s|
   #  s.add_runtime_dependency(gem, [version || '>= 0'])
   #end
 
-  { 'minitest'      => nil,
-    'turn'          => nil,
-    'pry'           => nil,
-    'yard'          => nil,
-    'redcarpet'     => nil,
-    'github-markup' => nil,
-    'multi_json'    => nil,
+  { 'minitest'           => '< 5',
+    'minitest-reporters' => nil,
+    'turn'               => nil,
+    'pry'                => nil,
+    'yard'               => nil,
+    'redcarpet'          => nil,
+    'github-markup'      => nil,
+    'multi_json'         => nil,
   }.each do |gem, version|
     s.add_development_dependency(gem, [version || '>= 0'])
   end
