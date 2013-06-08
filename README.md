@@ -1,6 +1,6 @@
 # Algebrick
 
-[![Build Status](https://travis-ci.org/pitr-ch/algebrick.png)](https://travis-ci.org/pitr-ch/algebrick)
+[![Build Status](https://travis-ci.org/pitr-ch/algebrick.png?branch=master)](https://travis-ci.org/pitr-ch/algebrick)
 
 It's a small gem providing **algebraic types** and **pattern matching** on them for Ruby.
 
