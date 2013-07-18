@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors          = ['Petr Chalupa']
   s.email            = 'git@pitr.ch'
   s.homepage         = 'https://github.com/pitr-ch/algebrick'
-  s.extra_rdoc_files = %w(MIT-LICENSE README.md README_FULL.md)
+  s.extra_rdoc_files = %w(MIT-LICENSE README.md README_FULL.md VERSION)
   s.files            = Dir['lib/algebrick.rb'] + %w(VERSION)
   s.require_paths    = %w(lib)
   s.license          = 'MIT'
@@ -18,16 +18,8 @@ Gem::Specification.new do |s|
   #  s.add_runtime_dependency(gem, [version || '>= 0'])
   #end
 
-  { 'minitest'           => '< 5',
-    'minitest-reporters' => nil,
-    'turn'               => nil,
-    'pry'                => nil,
-    'yard'               => nil,
-    'redcarpet'          => nil,
-    'github-markup'      => nil,
-    'multi_json'         => nil,
-  }.each do |gem, version|
-    s.add_development_dependency(gem, [version || '>= 0'])
+  %w(minitest minitest-reporters turn pry yard redcarpet github-markup multi_json).each do |gem|
+    s.add_development_dependency gem, '>= 0'
   end
 end
 
