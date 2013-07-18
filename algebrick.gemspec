@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors          = ['Petr Chalupa']
   s.email            = 'git@pitr.ch'
   s.homepage         = 'https://github.com/pitr-ch/algebrick'
-  s.extra_rdoc_files = %w(MIT-LICENSE README.md README_FULL.md VERSION)
+  s.extra_rdoc_files = %w(LICENSE README.md README_FULL.md VERSION)
   s.files            = Dir['lib/algebrick.rb'] + %w(VERSION)
   s.require_paths    = %w(lib)
   s.license          = 'MIT'
