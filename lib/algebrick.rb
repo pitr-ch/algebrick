@@ -449,9 +449,11 @@ module Algebrick
       super(&block)
     end
 
-    def [](*fields)
+    def new(*fields)
       construct_product(*fields)
     end
+
+    alias_method :[], :new
 
     def be_kind_of!(type)
       product_be_kind_of type
@@ -530,9 +532,11 @@ module Algebrick
       Matchers::Variant.new self
     end
 
-    def [](*fields)
+    def new(*fields)
       construct_product(*fields)
     end
+
+    alias_method :[], :new
 
     def ==(other)
       other.kind_of? ProductVariant and
