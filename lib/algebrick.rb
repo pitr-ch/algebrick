@@ -139,6 +139,10 @@ module Algebrick
       to_m | other
     end
 
+    def ^(other)
+      to_m ^ other
+    end
+
     def !
       !to_m
     end
@@ -583,7 +587,7 @@ module Algebrick
       attr_reader :value
 
       def initialize
-        @assign, @value = nil
+        @assign, @value, @matched = nil
       end
 
       def case(&block)
@@ -620,8 +624,16 @@ module Algebrick
         Not.new self
       end
 
+      def ^(matcher)
+        Xor.new self, matcher
+      end
+
       def assign?
         @assign
+      end
+
+      def matched?
+        @matched
       end
 
       def children_including_self
@@ -637,7 +649,7 @@ module Algebrick
       end
 
       def ===(other)
-        matching?(other).tap { |matched| @value = other if matched }
+        matching?(other).tap { |matched| @value = other if (@matched = matched) }
       end
 
       def assign_to_s
@@ -722,6 +734,33 @@ module Algebrick
 
       def matching?(other)
         matchers.any? { |m| m === other }
+      end
+    end
+
+    class Xor < Or
+      def to_s
+        matchers.join ' ^ '
+      end
+
+      alias_method :super_children, :children
+      private :super_children
+
+      def children
+        super.select &:matched?
+      end
+
+      def assigns
+        super.tap do |assigns|
+          missing = assigns_size - assigns.size
+          assigns.push(*::Array.new(missing))
+        end
+      end
+
+      private
+
+      def assigns_size
+        # TODO is it efficient?
+        super_children.map { |ch| ch.assigns.size }.max
       end
     end
 
