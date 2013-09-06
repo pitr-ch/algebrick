@@ -158,6 +158,10 @@ module Algebrick
     def >>(block)
       to_m >> block
     end
+
+    def >(block)
+      to_m > block
+    end
   end
 
   class Type < Module
@@ -594,18 +598,19 @@ module Algebrick
         return self, block
       end
 
+      raise 'remove deprecation' if Algebrick.version >= Gem::Version.new('0.2')
+
       def -(block)
+        warn "a matcher --> {} is deprecated, it'll be removed in 0.2 \n"
+        self > block
+      end
+
+      def >(block)
         return self, block
       end
 
       alias_method :>>, :-
-
-      raise 'remove deprecation' if Algebrick.version >= Gem::Version.new('0.2')
-
-      def +(block)
-        warn 'a_matcher +-> {} is deprecated, it\'ll be removed in 0.2'
-        self - block
-      end
+      alias_method :+, :-
 
       def ~
         @assign = true
