@@ -1,11 +1,11 @@
-# load DSL for type definition
-extend Algebrick::DSL                              # => main
-
 # define algebraic types
-type_def do
-  tree === empty | leaf(Integer) | node(tree, tree)
-end
-# => [Tree(Empty | Leaf | Node), Empty, Leaf(Integer), Node(Tree, Tree)]
+Tree = Algebrick.type do |tree|
+  Empty = type
+  Leaf  = type { fields Integer }
+  Node  = type { fields tree, tree }
+
+  variants Empty, Leaf, Node
+end                                                # => Tree(Empty | Leaf | Node)
 
 # add some methods
 module Tree
@@ -15,7 +15,7 @@ module Tree
           Empty >> 0,
           Leaf >> 1,
           # ~ will store and pass matched parts to variables left and right
-          Node.(~any, ~any) --> left, right do
+          Node.(~any, ~any) >-> left, right do
             1 + [left.depth, right.depth].max
           end
   end

@@ -1,15 +1,22 @@
-extend Algebrick::DSL
 extend Algebrick::Matching
 
 # lets define message-protocol for a cross-process communication
-type_def do
-  message === request | response
+Request = Algebrick.type do
+  User       = type { fields login: String, password: String }
+  CreateUser = type { fields User }
+  GetUser    = type { fields login: String }
 
-  request === create_user(user) | get_user(login: String) | delete_user(user)
-  user(login: String, password: String)
+  variants CreateUser, GetUser
+end
 
-  response === success(Object) | failure(error: String)
-end; nil
+Response = Algebrick.type do
+  Success = type { fields Object }
+  Failure = type { fields error: String }
+
+  variants Success, Failure
+end
+
+Message = Algebrick.type { variants Request, Response }
 
 require 'multi_json'
 
@@ -19,7 +26,7 @@ raw_create_user_request = MultiJson.dump create_user_request.to_hash
 
 # receive the message
 response                = match Message.from_hash(MultiJson.load(raw_create_user_request)),
-                                CreateUser.(~any) --> user { Success[user] }
+                                CreateUser.(~any) >-> user { Success[user] }
 
 # send response
 response_raw            = MultiJson.dump response.to_hash

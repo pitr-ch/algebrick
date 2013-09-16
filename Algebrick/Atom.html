@@ -78,7 +78,7 @@
         <ul class="fullTree">
           <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
           
-            <li class="next"><span class='object_link'><a href="../Module.html" title="Module (class)">Module</a></span></li>
+            <li class="next">Module</li>
           
             <li class="next"><span class='object_link'><a href="Type.html" title="Algebrick::Type (class)">Type</a></span></li>
           
@@ -191,7 +191,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Atom) <strong>initialize</strong>(&amp;block) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Atom) <strong>initialize</strong>(name, &amp;block) </a>
     
 
     
@@ -336,7 +336,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="TypeCheck.html#a_type_check-instance_method" title="Algebrick::TypeCheck#a_type_check (method)">#a_type_check</a></span>, <span class='object_link'><a href="TypeCheck.html#is_kind_of%21-instance_method" title="Algebrick::TypeCheck#is_kind_of! (method)">#is_kind_of!</a></span>, <span class='object_link'><a href="TypeCheck.html#is_matching%21-instance_method" title="Algebrick::TypeCheck#is_matching! (method)">#is_matching!</a></span>, <span class='object_link'><a href="TypeCheck.html#is_matching%3F-instance_method" title="Algebrick::TypeCheck#is_matching? (method)">#is_matching?</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="TypeCheck.html#a_type_check-instance_method" title="Algebrick::TypeCheck#a_type_check (method)">#a_type_check</a></span>, <span class='object_link'><a href="TypeCheck.html#is_kind_of%21-instance_method" title="Algebrick::TypeCheck#is_kind_of! (method)">#is_kind_of!</a></span>, <span class='object_link'><a href="TypeCheck.html#is_kind_of%3F-instance_method" title="Algebrick::TypeCheck#is_kind_of? (method)">#is_kind_of?</a></span>, <span class='object_link'><a href="TypeCheck.html#is_matching%21-instance_method" title="Algebrick::TypeCheck#is_matching! (method)">#is_matching!</a></span>, <span class='object_link'><a href="TypeCheck.html#is_matching%3F-instance_method" title="Algebrick::TypeCheck#is_matching? (method)">#is_matching?</a></span></p>
 
   
   
@@ -347,7 +347,7 @@
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Type.html" title="Algebrick::Type (class)">Type</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Type.html#inspect-instance_method" title="Algebrick::Type#inspect (method)">#inspect</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Type.html#inspect-instance_method" title="Algebrick::Type#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Type.html#name-instance_method" title="Algebrick::Type#name (method)">#name</a></span></p>
 
   
   
@@ -358,25 +358,15 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="MatcherDelegations.html" title="Algebrick::MatcherDelegations (module)">MatcherDelegations</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="MatcherDelegations.html#%21-instance_method" title="Algebrick::MatcherDelegations#! (method)">#!</a></span>, <span class='object_link'><a href="MatcherDelegations.html#%26-instance_method" title="Algebrick::MatcherDelegations#&amp; (method)">#&</a></span>, <span class='object_link'><a href="MatcherDelegations.html#--instance_method" title="Algebrick::MatcherDelegations#- (method)">#-</a></span>, <span class='object_link'><a href="MatcherDelegations.html#%3E%3E-instance_method" title="Algebrick::MatcherDelegations#&gt;&gt; (method)">#>></a></span>, <span class='object_link'><a href="MatcherDelegations.html#case-instance_method" title="Algebrick::MatcherDelegations#case (method)">#case</a></span>, <span class='object_link'><a href="MatcherDelegations.html#%7C-instance_method" title="Algebrick::MatcherDelegations#| (method)">#|</a></span>, <span class='object_link'><a href="MatcherDelegations.html#%7E-instance_method" title="Algebrick::MatcherDelegations#~ (method)">#~</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="MatcherDelegations.html#%21-instance_method" title="Algebrick::MatcherDelegations#! (method)">#!</a></span>, <span class='object_link'><a href="MatcherDelegations.html#%26-instance_method" title="Algebrick::MatcherDelegations#&amp; (method)">#&</a></span>, <span class='object_link'><a href="MatcherDelegations.html#--instance_method" title="Algebrick::MatcherDelegations#- (method)">#-</a></span>, <span class='object_link'><a href="MatcherDelegations.html#%3E-instance_method" title="Algebrick::MatcherDelegations#&gt; (method)">#></a></span>, <span class='object_link'><a href="MatcherDelegations.html#%3E%3E-instance_method" title="Algebrick::MatcherDelegations#&gt;&gt; (method)">#>></a></span>, <span class='object_link'><a href="MatcherDelegations.html#%5E-instance_method" title="Algebrick::MatcherDelegations#^ (method)">#^</a></span>, <span class='object_link'><a href="MatcherDelegations.html#case-instance_method" title="Algebrick::MatcherDelegations#case (method)">#case</a></span>, <span class='object_link'><a href="MatcherDelegations.html#%7C-instance_method" title="Algebrick::MatcherDelegations#| (method)">#|</a></span>, <span class='object_link'><a href="MatcherDelegations.html#%7E-instance_method" title="Algebrick::MatcherDelegations#~ (method)">#~</a></span></p>
 
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Module.html" title="Module (class)">Module</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Module.html#extended_modules-instance_method" title="Module#extended_modules (method)">#extended_modules</a></span></p>
-<div id="constructor_details" class="method_details_list">
+  <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Algebrick::Atom (class)">Atom</a></span></tt>) <strong>initialize</strong>(&amp;block) 
+    - (<tt><span class='object_link'><a href="" title="Algebrick::Atom (class)">Atom</a></span></tt>) <strong>initialize</strong>(name, &amp;block) 
   
 
   
@@ -398,16 +388,16 @@
       <pre class="lines">
 
 
-197
-198
-199
-200</pre>
+233
+234
+235
+236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 197</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 233</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='kw'>super</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>super</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
   <span class='id identifier rubyid_extend'>extend</span> <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -437,12 +427,12 @@
       <pre class="lines">
 
 
-210
-211
-212</pre>
+246
+247
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 210</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 246</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_equal?'>equal?</span> <span class='id identifier rubyid_other'>other</span>
@@ -467,12 +457,12 @@
       <pre class="lines">
 
 
-206
-207
-208</pre>
+242
+243
+244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 206</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_be_kind_of'>be_kind_of</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_extend'>extend</span> <span class='id identifier rubyid_type'>type</span>
@@ -497,16 +487,16 @@
       <pre class="lines">
 
 
-226
-227
-228
-229
-230
-231
-232</pre>
+262
+263
+264
+265
+266
+267
+268</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 226</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 262</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_hash'>from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_hash'>hash</span> <span class='op'>==</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
@@ -535,15 +525,15 @@
       <pre class="lines">
 
 
-222
-223
-224</pre>
+258
+259
+260</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 258</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
-  <span class='lbrace'>{</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_name'>name</span> <span class='rbrace'>}</span>
+  <span class='lbrace'>{</span> <span class='const'>TYPE_KEY</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_name'>name</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -565,12 +555,12 @@
       <pre class="lines">
 
 
-202
-203
-204</pre>
+238
+239
+240</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 202</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 238</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_m'>to_m</span>
   <span class='const'>Matchers</span><span class='op'>::</span><span class='const'>Atom</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>self</span>
@@ -595,12 +585,12 @@
       <pre class="lines">
 
 
-218
-219
-220</pre>
+254
+255
+256</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 254</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_name'>name</span>
@@ -625,12 +615,12 @@
       <pre class="lines">
 
 
-214
-215
-216</pre>
+250
+251
+252</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 250</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span>
   <span class='kw'>self</span>
@@ -645,9 +635,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Jun  1 16:49:36 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Mon Sep 16 21:57:13 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.1 (ruby-2.0.0).
+  0.8.6.2 (ruby-2.0.0).
 </div>
 
 <script>

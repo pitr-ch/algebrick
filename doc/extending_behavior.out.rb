@@ -1,22 +1,10 @@
-extend Algebrick::DSL                              # => main
+None  = Algebrick.type                             # => None
+Some  = Algebrick.type { fields Object }           # => Some(Object)
+Maybe = Algebrick.type { variants None, Some }     # => Maybe(None | Some)
 
-# Types can be extended in DSL
-type_def do
-  maybe === none | some(Object)
-  maybe do
-    def maybe(&block)
-      case self
-      when None
-      when Some
-        block.call value
-      end
-    end
-  end
-end                                                # => [Maybe(None | Some), None, Some(Object)]
-
-# or with usual module syntax
+# Types can be extended with usual module syntax
 module Maybe
-  def maybe2(&block)
+  def maybe(&block)
     case self
     when None
     when Some
@@ -25,12 +13,10 @@ module Maybe
   end
 end                                                # => nil
 
-# #maybe and #maybe2 methods are defined on both Maybe`s values None and Some
+# #maybe method id defined on both values (None, Some) of Maybe
 None.maybe { |_| raise 'never ever happens' }      # => nil
-None.maybe2 { |_| raise 'never ever happens' }     # => nil
 # block is called with the value
 Some[1].maybe { |v| v*2 }                          # => 2
-Some[1].maybe2 { |v| v*2 }                         # => 2
 
 # when only a Some is extended
 module Some

@@ -1,8 +1,11 @@
-extend Algebrick::DSL                              # => main
-
 # lets define a tree to demonstrate the pattern matching abilities
-type_def { tree === empty | leaf(Integer) | node(tree, tree) }
-# => [Tree(Empty | Leaf | Node), Empty, Leaf(Integer), Node(Tree, Tree)]
+Tree = Algebrick.type do |tree|
+  Empty = type
+  Leaf  = type { fields Integer }
+  Node  = type { fields tree, tree }
+
+  variants Empty, Leaf, Node
+end                                                # => Tree(Empty | Leaf | Node)
 
 extend Algebrick::Matching                         # => main
 
@@ -71,7 +74,7 @@ begin
 rescue => e
   e
 end
-# => #<RuntimeError: no match for Leaf[1] by any of Node.(any,any)>
+# => #<RuntimeError: no match for (#<Class:0x007f9182867458>) 'Leaf[1]' by any of Node.(any,any)>
 
 # alternative syntax are
 match Leaf[0],
@@ -83,10 +86,12 @@ match Leaf[0],
       [Leaf.(~-> v { v < 0 }.to_m), -> v { v-10 }],
       [Leaf.(~-> v { v >= 0 }.to_m), -> v { v+10 }]
 # => 10
-# operators may also be used
+# operators may also be used as sugar to construct arrays above
 match Leaf[6],
       Leaf.(~-> v { v%2 == 0 }.to_m) >> 2,
-      Leaf.(~-> v { v%3 == 0 }.to_m) --> v { 3 },
+      Leaf.(~-> v { v%3 == 0 }.to_m) >-> v { 3 }   # => 2
+# the last example of using #>> for static values and #>-> for blocks in #match
+# is the preferred matching syntax
 
 # Matchers support logical operations
 # #& for and, #| for or, and #! for negation
@@ -94,6 +99,8 @@ match Leaf[6],
 # => [2]
 (m = Leaf.(~-> v { v > 1 }.to_m | ~-> v { v < 3 }.to_m)) === Leaf[2]; m.assigns
 # => [2, nil]
+(m = Leaf.(~-> v { v > 1 }.to_m ^ ~-> v { v < 3 }.to_m)) === Leaf[2]; m.assigns
+# => [2]
 (m = Leaf.(~!-> v { v > 1 }.to_m)) === Leaf[0]; m.assigns
 # => [0]
 

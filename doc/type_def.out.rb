@@ -1,33 +1,20 @@
-# Using dsl is a preferred way
-extend Algebrick::DSL                              # => main
-type_def { maybe === none | some(Object) }         # => [Maybe(None | Some), None, Some(Object)]
+# Let's define some types
+None  = Algebrick.type                             # => None
+Some  = Algebrick.type { fields Object }           # => Some(Object)
+Maybe = Algebrick.type { variants None, Some }     # => Maybe(None | Some)
 
-# but lets see what it actually does. The `type_def` above is equivalent to:
-None  = Algebrick::Atom.new                        # => None
-Some  = Algebrick::Product.new(Object)             # => Some(Object)
-Maybe = Algebrick::Variant.new(None, Some)         # => Maybe(None | Some)
+# where the Maybe actually is:
+Maybe.class                                        # => Algebrick::ProductVariant
+Maybe.class.superclass                             # => Algebrick::Type
+Maybe.class.superclass.superclass                  # => Module
+Maybe.class.superclass.superclass.superclass       # => Object
 
-# and to show what Maybe is
-Maybe.class                                        # => Algebrick::Variant
-Maybe.class.superclass                             # => Algebrick::AbstractProductVariant
-Maybe.class.superclass.superclass                  # => Algebrick::Type
-Maybe.class.superclass.superclass.superclass       # => Module
+# if there is a circular dependency you can define the dependent types inside the block like this:
+Tree = Algebrick.type do |tree|
+  Empty = type
+  Leaf  = type { fields Integer }
+  Node  = type { fields tree, tree }
 
-# DSL is preferred because it makes recursive definitions easy
-type_def { tree === empty | leaf(Integer) | node(tree, tree) }
-# => [Tree(Empty | Leaf | Node), Empty, Leaf(Integer), Node(Tree, Tree)]
-
-# would have to be written this way
-begin
-  Empty = Algebrick::Atom.new
-  Leaf  = Algebrick::Product.new Integer
-  Tree  = Algebrick::Variant.allocate
-  Node  = Algebrick::Product.new Tree, Tree
-  Tree.send :initialize, Empty, Leaf, Node
-  # and it can get much more complicated than one #allocate
+  variants Empty, Leaf, Node
 end                                                # => Tree(Empty | Leaf | Node)
-
-
-
-
 

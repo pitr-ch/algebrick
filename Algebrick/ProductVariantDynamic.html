@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
-  Class: Algebrick::ProductVariant
+  Class: Algebrick::ProductVariantDynamic
   
     &mdash; Algebrick
   
@@ -34,7 +34,7 @@
     <a href="../_index.html">Index (P)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../Algebrick.html" title="Algebrick (module)">Algebrick</a></span></span>
      &raquo; 
-    <span class="title">ProductVariant</span>
+    <span class="title">ProductVariantDynamic</span>
   
 
   <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
@@ -63,7 +63,7 @@
 
     <iframe id="search_frame"></iframe>
 
-    <div id="content"><h1>Class: Algebrick::ProductVariant
+    <div id="content"><h1>Class: Algebrick::ProductVariantDynamic
   
   
   
@@ -82,7 +82,7 @@
           
             <li class="next"><span class='object_link'><a href="Type.html" title="Algebrick::Type (class)">Type</a></span></li>
           
-            <li class="next">Algebrick::ProductVariant</li>
+            <li class="next">Algebrick::ProductVariantDynamic</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -881,16 +881,16 @@
       <pre class="lines">
 
 
+392
 393
 394
-395
-396</pre>
+395</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 393</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 392</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>ProductVariant</span> <span class='kw'>and</span>
+  <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>ProductVariantDynamic</span> <span class='kw'>and</span>
       <span class='id identifier rubyid_variants'>variants</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_variants'>variants</span> <span class='kw'>and</span> <span class='id identifier rubyid_fields'>fields</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_fields'>fields</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -913,12 +913,12 @@
       <pre class="lines">
 
 
+368
 369
-370
-371</pre>
+370</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 369</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 368</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_all_field_method_accessors'>add_all_field_method_accessors</span>
   <span class='id identifier rubyid_add_field_method_accessors'>add_field_method_accessors</span> <span class='op'>*</span><span class='ivar'>@field_names</span>
@@ -970,8 +970,7 @@
 358
 359
 360
-361
-362</pre>
+361</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 356</span>
@@ -979,7 +978,6 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_add_field_method_accessor'>add_field_method_accessor</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>no field names</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='ivar'>@field_names</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>no field name </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field'>field</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='ivar'>@field_names</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_field'>field</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>method </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field'>field</span><span class='embexpr_end'>}</span><span class='tstring_content'> already defined</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_instance_methods'>instance_methods</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_field'>field</span>
   <span class='id identifier rubyid_define_method'>define_method</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
@@ -1003,13 +1001,13 @@
       <pre class="lines">
 
 
+363
 364
 365
-366
-367</pre>
+366</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 364</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 363</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_field_method_accessors'>add_field_method_accessors</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_fields'>fields</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_add_field_method_accessor'>add_field_method_accessor</span> <span class='id identifier rubyid_f'>f</span> <span class='rbrace'>}</span>
@@ -1035,14 +1033,14 @@
       <pre class="lines">
 
 
+397
 398
 399
 400
-401
-402</pre>
+401</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 398</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 397</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_be_kind_of'>be_kind_of</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_kind'>kind</span>
@@ -1091,13 +1089,13 @@
       <pre class="lines">
 
 
+403
 404
 405
-406
-407</pre>
+406</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 404</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 403</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_field_matchers'>field_matchers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span> <span class='kw'>unless</span> <span class='ivar'>@fields</span>
@@ -1123,6 +1121,7 @@
       <pre class="lines">
 
 
+515
 516
 517
 518
@@ -1131,11 +1130,10 @@
 521
 522
 523
-524
-525</pre>
+524</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 516</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 515</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_constantize'>constantize</span><span class='lparen'>(</span><span class='id identifier rubyid_camel_cased_word'>camel_cased_word</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_names'>names</span> <span class='op'>=</span> <span class='id identifier rubyid_camel_cased_word'>camel_cased_word</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>::</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -1167,15 +1165,15 @@
       <pre class="lines">
 
 
+508
 509
 510
 511
 512
-513
-514</pre>
+513</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 509</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 508</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_field_from_hash'>field_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_hash'>hash</span> <span class='kw'>unless</span> <span class='const'>Hash</span> <span class='op'>===</span> <span class='id identifier rubyid_hash'>hash</span>
@@ -1203,6 +1201,7 @@
       <pre class="lines">
 
 
+442
 443
 444
 445
@@ -1213,11 +1212,10 @@
 450
 451
 452
-453
-454</pre>
+453</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 443</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 442</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_hash'>from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_kind'>kind</span>
@@ -1251,6 +1249,7 @@
       <pre class="lines">
 
 
+455
 456
 457
 458
@@ -1261,11 +1260,10 @@
 463
 464
 465
-466
-467</pre>
+466</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 456</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 455</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_kind'>kind</span>
   <span class='kw'>case</span>
@@ -1325,13 +1323,13 @@
       <pre class="lines">
 
 
+385
 386
 387
-388
-389</pre>
+388</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 386</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 385</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_fields'>fields</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span> <span class='kw'>unless</span> <span class='ivar'>@constructor</span>
@@ -1379,6 +1377,7 @@
       <pre class="lines">
 
 
+488
 489
 490
 491
@@ -1396,11 +1395,10 @@
 503
 504
 505
-506
-507</pre>
+506</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 489</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 488</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_product_from_hash'>product_from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='lparen'>(</span><span class='id identifier rubyid_type_name'>type_name</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='const'>TYPE_KEY</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='const'>TYPE_KEY</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>or</span>
@@ -1441,17 +1439,17 @@
       <pre class="lines">
 
 
+470
 471
 472
 473
 474
 475
 476
-477
-478</pre>
+477</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 471</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 470</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_product_to_s'>product_to_s</span>
   <span class='id identifier rubyid_fields_str'>fields_str</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_field_names'>field_names</span>
@@ -1481,17 +1479,17 @@
       <pre class="lines">
 
 
+479
 480
 481
 482
 483
 484
 485
-486
-487</pre>
+486</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 480</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 479</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_field_names'>set_field_names</span><span class='lparen'>(</span><span class='id identifier rubyid_names'>names</span><span class='rparen'>)</span>
   <span class='ivar'>@field_names</span> <span class='op'>=</span> <span class='id identifier rubyid_names'>names</span>
@@ -1621,6 +1619,7 @@
       <pre class="lines">
 
 
+372
 373
 374
 375
@@ -1631,11 +1630,10 @@
 380
 381
 382
-383
-384</pre>
+383</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 373</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 372</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_variants'>set_variants</span><span class='lparen'>(</span><span class='id identifier rubyid_variants'>variants</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>can be set only once</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='ivar'>@variants</span>
@@ -1669,6 +1667,7 @@
       <pre class="lines">
 
 
+408
 409
 410
 411
@@ -1679,11 +1678,10 @@
 416
 417
 418
-419
-420</pre>
+419</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 409</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 408</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_m'>to_m</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_kind'>kind</span>
@@ -1717,6 +1715,7 @@
       <pre class="lines">
 
 
+421
 422
 423
 424
@@ -1735,11 +1734,10 @@
 437
 438
 439
-440
-441</pre>
+440</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 422</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 421</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_kind'>kind</span>
@@ -1771,7 +1769,7 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Sep 16 21:57:14 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Mon Sep 16 20:46:07 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.2 (ruby-2.0.0).
 </div>

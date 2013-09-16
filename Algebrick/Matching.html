@@ -200,12 +200,12 @@
       <pre class="lines">
 
 
-58
-59
-60</pre>
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_any'>any</span>
   <span class='const'>Matchers</span><span class='op'>::</span><span class='const'>Any</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -227,14 +227,14 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p>match Empty,
-     Empty --&gt;() {},
-     Leaf.(~any) &gt;&gt;-&gt; value do
+     Empty &gt;&gt; static_value_like_string,
+     Leaf.(~any) &gt;-> value do
        value
      end
 match Empty,
-     Node        =&gt; -&gt;() {},
-     Empty       =&gt; -&gt;() {},
-     Leaf.(~any) =&gt; -&gt;(value) { value }
+     Node        =&gt; ->() {},
+     Empty       =&gt; ->() {},
+     Leaf.(~any) =&gt; ->(value) { value }
 match Empty,
      [Node, lambda {}],
      [Empty, lambda {}],
@@ -256,21 +256,21 @@ match(Empty,
       <pre class="lines">
 
 
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93</pre>
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_cases'>cases</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cases'>cases</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_cases'>cases</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cases'>cases</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
@@ -304,20 +304,20 @@ match(Empty,
       <pre class="lines">
 
 
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107</pre>
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_match_value'>match_value</span><span class='lparen'>(</span><span class='id identifier rubyid_matcher'>matcher</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>Proc</span>
@@ -340,9 +340,9 @@ match(Empty,
 </div>
 
     <div id="footer">
-  Generated on Sat Jun  1 16:49:35 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Mon Sep 16 21:57:13 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.1 (ruby-2.0.0).
+  0.8.6.2 (ruby-2.0.0).
 </div>
 
 <script>

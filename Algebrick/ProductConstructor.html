@@ -418,7 +418,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="TypeCheck.html#a_type_check-instance_method" title="Algebrick::TypeCheck#a_type_check (method)">#a_type_check</a></span>, <span class='object_link'><a href="TypeCheck.html#is_kind_of%21-instance_method" title="Algebrick::TypeCheck#is_kind_of! (method)">#is_kind_of!</a></span>, <span class='object_link'><a href="TypeCheck.html#is_matching%21-instance_method" title="Algebrick::TypeCheck#is_matching! (method)">#is_matching!</a></span>, <span class='object_link'><a href="TypeCheck.html#is_matching%3F-instance_method" title="Algebrick::TypeCheck#is_matching? (method)">#is_matching?</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="TypeCheck.html#a_type_check-instance_method" title="Algebrick::TypeCheck#a_type_check (method)">#a_type_check</a></span>, <span class='object_link'><a href="TypeCheck.html#is_kind_of%21-instance_method" title="Algebrick::TypeCheck#is_kind_of! (method)">#is_kind_of!</a></span>, <span class='object_link'><a href="TypeCheck.html#is_kind_of%3F-instance_method" title="Algebrick::TypeCheck#is_kind_of? (method)">#is_kind_of?</a></span>, <span class='object_link'><a href="TypeCheck.html#is_matching%21-instance_method" title="Algebrick::TypeCheck#is_matching! (method)">#is_matching!</a></span>, <span class='object_link'><a href="TypeCheck.html#is_matching%3F-instance_method" title="Algebrick::TypeCheck#is_matching? (method)">#is_matching?</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -447,17 +447,17 @@
       <pre class="lines">
 
 
-239
-240
-241
-242
-243
-244
-245
-246</pre>
+275
+276
+277
+278
+279
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 239</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 275</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_fields'>fields</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
@@ -504,12 +504,12 @@
       <pre class="lines">
 
 
-237
-238
-239</pre>
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 273</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fields'>fields</span>
   <span class='ivar'>@fields</span>
@@ -541,12 +541,12 @@
       <pre class="lines">
 
 
-279
-280
-281</pre>
+315
+316
+317</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 279</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 315</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
   <span class='ivar'>@type</span> <span class='op'>||</span> <span class='id identifier rubyid_raise'>raise</span>
@@ -571,14 +571,14 @@
       <pre class="lines">
 
 
-287
-288
-289
-290
-291</pre>
+323
+324
+325
+326
+327</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 287</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 323</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type='>type=</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>if</span> <span class='ivar'>@type</span>
@@ -611,13 +611,13 @@
       <pre class="lines">
 
 
-274
-275
-276
-277</pre>
+310
+311
+312
+313</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 274</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 310</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span>
@@ -643,12 +643,12 @@
       <pre class="lines">
 
 
-295
-296
-297</pre>
+331
+332
+333</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 295</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 331</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hashize'>hashize</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:to_hash</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_hash'>to_hash</span> <span class='op'>:</span> <span class='id identifier rubyid_value'>value</span>
@@ -673,12 +673,12 @@
       <pre class="lines">
 
 
-261
-262
-263</pre>
+297
+298
+299</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 261</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 297</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_a'>to_a</span>
   <span class='ivar'>@fields</span>
@@ -703,12 +703,12 @@
       <pre class="lines">
 
 
-257
-258
-259</pre>
+293
+294
+295</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 257</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 293</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_ary'>to_ary</span>
   <span class='ivar'>@fields</span>
@@ -733,25 +733,25 @@
       <pre class="lines">
 
 
-265
-266
-267
-268
-269
-270
-271
-272</pre>
+301
+302
+303
+304
+305
+306
+307
+308</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 301</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
-  <span class='lbrace'>{</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=&gt;</span>
-        <span class='kw'>if</span> <span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_field_names'>field_names</span>
-          <span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_field_names'>field_names</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_h'>h</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='op'>|</span> <span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_hashize'>hashize</span><span class='lparen'>(</span><span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-        <span class='kw'>else</span>
-          <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_hashize'>hashize</span> <span class='id identifier rubyid_v'>v</span> <span class='rbrace'>}</span>
-        <span class='kw'>end</span> <span class='rbrace'>}</span>
+  <span class='lbrace'>{</span> <span class='const'>TYPE_KEY</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='rbrace'>}</span><span class='period'>.</span>
+      <span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='kw'>if</span> <span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_field_names'>field_names</span>
+               <span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_field_names'>field_names</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_h'>h</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='op'>|</span> <span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_hashize'>hashize</span><span class='lparen'>(</span><span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+             <span class='kw'>else</span>
+               <span class='lbrace'>{</span> <span class='const'>FIELDS_KEY</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_hashize'>hashize</span> <span class='id identifier rubyid_v'>v</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
+             <span class='kw'>end</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -773,17 +773,17 @@
       <pre class="lines">
 
 
-248
-249
-250
-251
-252
-253
-254
-255</pre>
+284
+285
+286
+287
+288
+289
+290
+291</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 284</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>[</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span>
@@ -813,12 +813,12 @@
       <pre class="lines">
 
 
-283
-284
-285</pre>
+319
+320
+321</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 283</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 319</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
@@ -833,9 +833,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Jun  1 16:49:36 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Mon Sep 16 21:57:13 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.1 (ruby-2.0.0).
+  0.8.6.2 (ruby-2.0.0).
 </div>
 
 <script>

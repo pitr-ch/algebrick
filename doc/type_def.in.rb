@@ -1,32 +1,20 @@
-# Using dsl is a preferred way
-extend Algebrick::DSL
-type_def { maybe === none | some(Object) }
+# Let's define some types
+None  = Algebrick.type
+Some  = Algebrick.type { fields Object }
+Maybe = Algebrick.type { variants None, Some }
 
-# but lets see what it actually does. The `type_def` above is equivalent to:
-None  = Algebrick::Atom.new
-Some  = Algebrick::Product.new(Object)
-Maybe = Algebrick::Variant.new(None, Some)
-
-# and to show what Maybe is
+# where the Maybe actually is:
 Maybe.class
 Maybe.class.superclass
 Maybe.class.superclass.superclass
 Maybe.class.superclass.superclass.superclass
 
-# DSL is preferred because it makes recursive definitions easy
-type_def { tree === empty | leaf(Integer) | node(tree, tree) }
+# if there is a circular dependency you can define the dependent types inside the block like this:
+Tree = Algebrick.type do |tree|
+  Empty = type
+  Leaf  = type { fields Integer }
+  Node  = type { fields tree, tree }
 
-# would have to be written this way
-begin
-  Empty = Algebrick::Atom.new
-  Leaf  = Algebrick::Product.new Integer
-  Tree  = Algebrick::Variant.allocate
-  Node  = Algebrick::Product.new Tree, Tree
-  Tree.send :initialize, Empty, Leaf, Node
-  # and it can get much more complicated than one #allocate
+  variants Empty, Leaf, Node
 end
-
-
-
-
 

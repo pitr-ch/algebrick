@@ -1,7 +1,11 @@
-extend Algebrick::DSL                              # => main
-type_def { tree === empty | leaf(Integer) | node(tree, tree) }
-# => [Tree(Empty | Leaf | Node), Empty, Leaf(Integer), Node(Tree, Tree)]
-# Which defines 4 modules representing these types in current module/class
+Tree = Algebrick.type do |tree|
+  Empty = type
+  Leaf  = type { fields Integer }
+  Node  = type { fields tree, tree }
+
+  variants Empty, Leaf, Node
+end                                                # => Tree(Empty | Leaf | Node)
+# Which sets 4 modules representing these types in current module/class
 Tree                                               # => Tree(Empty | Leaf | Node)
 Empty                                              # => Empty
 Leaf                                               # => Leaf(Integer)
