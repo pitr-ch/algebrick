@@ -1,9 +1,11 @@
-extend Algebrick::DSL                              # => main
-# lets define some types
-type_def do
-  tree === empty | leaf(Integer) | node(tree, tree)
-end
-# => [Tree(Empty | Leaf | Node), Empty, Leaf(Integer), Node(Tree, Tree)]
+# lets define a Tree
+Tree = Algebrick.type do |tree|
+  Empty = type
+  Leaf  = type { fields Integer }
+  Node  = type { fields tree, tree }
+
+  variants Empty, Leaf, Node
+end                                                # => Tree(Empty | Leaf | Node)
 
 # values of atomic types are represented by itself,
 # they are theirs own value
@@ -16,30 +18,35 @@ Leaf[1].kind_of? Algebrick::Value                  # => true
 Leaf[1].kind_of? Leaf                              # => true
 Leaf[1].kind_of? Tree                              # => true
 
-# Variants and ProductVariants does not have its own values,
-# they use atoms and products
+# Variant does not have its own values, it uses atoms and products
 
 # Product also can have its fields named
-type_def { b_tree === tip | b_tree(value: Integer, left: b_tree, right: b_tree) }
-# => [BTree(Tip | BTree(value: Integer, left: BTree, right: BTree)), Tip]
-# values can be created with names
+BTree = Algebrick.type do |bt|
+  Tip = type
+  fields value: Integer, left: bt, right: bt
+  variants Tip, bt
+end
+# => BTree(Tip | BTree(value: Integer, left: BTree, right: BTree))
+
+# Then values can be created with names
 tree1 = BTree[value: 1, left: Tip, right: Tip]     # => BTree[value: 1, left: Tip, right: Tip]
 # or without them
 BTree[0, Tip, tree1]
 # => BTree[value: 0, left: Tip, right: BTree[value: 1, left: Tip, right: Tip]]
 
-# to read values use:
-# method #value when type has only one field
+# To read the values use:
+# 1. method #value when type has only one field.
 Leaf[1].value                                      # => 1
-# multi-assign when type has more fields
+# 2. multi-assign when type has more fields
 v, left, right = *BTree[value: 1, left: Tip, right: Tip]
 # => [1, Tip, Tip]
-# or #[] when fields are named
+# 3. or #[] when fields are named
 BTree[value: 1, left: Tip, right: Tip][:value]     # => 1
 BTree[value: 1, left: Tip, right: Tip][:left]      # => Tip
 
 # BTree can also by made to create method accessors for its named fields
-BTree.add_all_field_method_accessors               # => [:value, :left, :right]
+BTree.add_all_field_method_accessors
+# => BTree(Tip | BTree(value: Integer, left: BTree, right: BTree))
 BTree[1, Tip, Tip].value                           # => 1
 BTree[1, Tip, Tip].left                            # => Tip
 
@@ -51,7 +58,7 @@ try = -> &b do
     e
   end
 end
-# => #<Proc:0x007fd4ba32ea38@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:49 (lambda)>
+# => #<Proc:0x007f91820ee898@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:56 (lambda)>
 try.call { Leaf['a'] }
 # => #<TypeError: value (String) 'a' is not #kind_of? any of Integer>
 try.call { Node[nil, Empty] }

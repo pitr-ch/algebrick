@@ -1,7 +1,10 @@
-extend Algebrick::DSL
-# lets define some types
-type_def do
-  tree === empty | leaf(Integer) | node(tree, tree)
+# lets define a Tree
+Tree = Algebrick.type do |tree|
+  Empty = type
+  Leaf  = type { fields Integer }
+  Node  = type { fields tree, tree }
+
+  variants Empty, Leaf, Node
 end
 
 # values of atomic types are represented by itself,
@@ -15,22 +18,26 @@ Leaf[1].kind_of? Algebrick::Value
 Leaf[1].kind_of? Leaf
 Leaf[1].kind_of? Tree
 
-# Variants and ProductVariants does not have its own values,
-# they use atoms and products
+# Variant does not have its own values, it uses atoms and products
 
 # Product also can have its fields named
-type_def { b_tree === tip | b_tree(value: Integer, left: b_tree, right: b_tree) }
-# values can be created with names
+BTree = Algebrick.type do |bt|
+  Tip = type
+  fields value: Integer, left: bt, right: bt
+  variants Tip, bt
+end
+
+# Then values can be created with names
 tree1 = BTree[value: 1, left: Tip, right: Tip]
 # or without them
 BTree[0, Tip, tree1]
 
-# to read values use:
-# method #value when type has only one field
+# To read the values use:
+# 1. method #value when type has only one field.
 Leaf[1].value
-# multi-assign when type has more fields
+# 2. multi-assign when type has more fields
 v, left, right = *BTree[value: 1, left: Tip, right: Tip]
-# or #[] when fields are named
+# 3. or #[] when fields are named
 BTree[value: 1, left: Tip, right: Tip][:value]
 BTree[value: 1, left: Tip, right: Tip][:left]
 

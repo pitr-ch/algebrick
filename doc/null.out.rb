@@ -1,12 +1,15 @@
-extend Algebrick::DSL                              # => main
 extend Algebrick::Matching                         # => main
 
 def deliver_email(email)
   true
 end                                                # => nil
 
-type_def { contact === null | contact(username: String, email: String) }
-# => [Contact(Null | Contact(username: String, email: String)), Null]
+Contact = Algebrick.type do |c|
+  Null = type
+  variants Null, c
+  fields username: String, email: String
+end
+# => Contact(Null | Contact(username: String, email: String))
 
 module Contact
   def null?
@@ -16,19 +19,19 @@ module Contact
   def username
     match self,
           Null.to_m >> 'no name',
-          Contact.() --> { self[:username] }
+          Contact.() >-> { self[:username] }
   end
 
   def email
     match self,
           Null.to_m >> 'no email',
-          Contact.() --> { self[:email] }
+          Contact.() >-> { self[:email] }
   end
 
   def deliver_personalized_email
     match self,
           Null.to_m >> true,
-          Contact.() --> { deliver_email(self.email) }
+          Contact.() >-> { deliver_email(self.email) }
   end
 end                                                # => nil
 

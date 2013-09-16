@@ -11,24 +11,25 @@ It's a small gem providing **algebraic types** and **pattern matching** on them 
 ## What is it good for?
 
 -   Defining data structures.
--   Algebraic types play nice with JSON serialization and deserialization. It is ideal for defining
-    message-based cross-process communication.
+-   Algebraic types play nice with JSON serialization and deserialization. It is ideal for defining message-based cross-process communication.
 -   and more...
 
 ## Quick example
 
-Load DSL for type definition and define some algebraic types
+Let's define a Tree
 
 ```ruby
-extend Algebrick::DSL
+Tree = Algebrick.type do |tree|
+  Empty = type
+  Leaf  = type { fields Integer }
+  Node  = type { fields tree, tree }
 
-type_def do
-  tree === empty | leaf(Integer) | node(tree, tree)
+  variants Empty, Leaf, Node
 end
 ```
 
 Now types `Tree(Empty | Leaf | Node)`, `Empty`, `Leaf(Integer)` and `Node(Tree, Tree)` are defined.
-Lets add some methods, don't miss the **pattern matching** example.
+Add some methods, don't miss the **pattern matching** example.
 
 ```ruby
 module Tree

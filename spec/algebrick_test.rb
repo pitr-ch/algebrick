@@ -30,123 +30,59 @@ end
 describe 'AlgebrickTest' do
   i_suck_and_my_tests_are_order_dependent!
 
-  #type_def do
-  #  maybe === none | some(Object)
+  Tree = Algebrick.type do |tree|
+    Empty = Algebrick.type
+    Leaf  = Algebrick.type { fields Integer }
+    Node  = Algebrick.type { fields tree, tree }
 
-  #  message === success | failure
-  #  sucess === int(Integer) | str(String)
-  #  failure === error | str_error(String)
+    variants Empty, Leaf, Node
+  end
 
-  #user = user(String, address) do
-  #  def name
-  #    fields[0]
-  #  end
-  #
-  #  def address
-  #    fields[1]
-  #  end
-  #end
-  #
-  #psc     = psc(String) do
-  #  REG = /\d{5}/
-  #
-  #  def initialize(*fields)
-  #    raise TypeError unless fields[0] =~ REG
-  #  end
-  #
-  #  def schema
-  #    super << { pattern: REG.to_s }
-  #  end
-  #end
-  #
-  ##                 street, num,      city
-  #address = address(street(String), street_number(Integer), city(String), psc)
-  #
-  #message1 === user
-  #
-  #User['pepa',
-  #     Adress[
-  #         Street['Stavebni'],
-  #         StreetNumber[5],
-  #         City['Brno']]]
-  #
-  #{ user: ['pepa',
-  #         { address: [{ street: 'Stavebni' },
-  #                     { street_number: 5 }] }] }
+  module Tree
+    def a
+      :a
+    end
 
-  #sucess === int(Integer) | str(String)
-  #failure === error | str_error(String)
-  #message === success | failure
-
-
-  #list === empty | list_item(Integer, list)
-  #end
-
-  #Empty = Algebrick::Atom.new
-  #Leaf  = Algebrick::Product.new(Integer)
-  #Tree  = Algebrick::Variant.allocate
-  #Node  = Algebrick::Product.new(Tree, Tree)
-  #Tree.send :initialize, Empty, Leaf, Node do
-  #  def a
-  #    :a
-  #  end
-  #end
-  #List = Algebrick::ProductVariant.allocate
-  #List.send :initialize, [Integer, List], [Empty, List]
-
-  extend Algebrick::DSL
-
-  type_def do
-    tree === empty | leaf(Integer) | node(tree, tree)
-    tree do
-      def a
-        :a
-      end
-
-      def depth
-        case self
-        when Empty
-          0
-        when Leaf
-          1
-        when Node
-          left, right = *self
-          1 + [left.depth, right.depth].max
-        end
-      end
-
-      def each(&block)
-        return to_enum :each unless block
-        case self
-        when Empty
-        when Leaf
-          block.call self.value
-        when Node
-          left, right = *self
-          left.each &block
-          right.each &block
-        end
-      end
-
-      def sum
-        each.inject(0) { |sum, v| sum + v }
+    def depth
+      case self
+      when Empty
+        0
+      when Leaf
+        1
+      when Node
+        left, right = *self
+        1 + [left.depth, right.depth].max
       end
     end
 
-    list === empty | list(Integer, list)
+    def each(&block)
+      return to_enum :each unless block
+      case self
+      when Empty
+      when Leaf
+        block.call self.value
+      when Node
+        left, right = *self
+        left.each &block
+        right.each &block
+      end
+    end
+
+    def sum
+      each.inject(0) { |sum, v| sum + v }
+    end
   end
 
-  Empty = self::Empty
-  Node  = self::Node
-  Leaf  = self::Leaf
-  Tree  = self::Tree
-  List  = self::List
+  List = Algebrick.type do |list|
+    variants Empty, list
+    fields Integer, list
+  end
 
   describe 'type definition' do
     module Asd
-      Algebrick.type_def self do
-        b === c | d
-      end
+      C = Algebrick.type
+      D = Algebrick.type
+      B = Algebrick.type { variants C, D }
     end
 
     it 'asd' do
@@ -207,9 +143,8 @@ describe 'AlgebrickTest' do
     it { lambda { Node[Empty, nil] }.must_raise TypeError }
 
     describe 'named field' do
-      type_def { named(a: Integer, b: Object) }
-      Named = self::Named
-      Named.add_all_field_method_accessors
+      Named = Algebrick.type { fields a: Integer, b: Object }.add_all_field_method_accessors
+
       it { -> { Named[:a, 1] }.must_raise TypeError }
       it { Named[1, :a][:a].must_equal 1 }
       it { Named[1, :a][:b].must_equal :a }
@@ -249,21 +184,25 @@ describe 'AlgebrickTest' do
     it { assert Tree === Leaf[1] }
 
     describe 'inherit behavior deep' do
-      type_def do
-        a === a1 | a2
-        a1 === b1 | b2
-        a do
+      module Deep
+        B1 = Algebrick.type
+        B2 = Algebrick.type
+        A1 = Algebrick.type { variants B1, B2 }
+        A2 = Algebrick.type
+        A  = Algebrick.type { variants A1, A2 }
+
+        module A
           def a
             :a
           end
         end
       end
 
-      it { self.class::B1.a.must_equal :a }
+      it { Deep::B1.a.must_equal :a }
     end
 
     describe 'a klass as a variant' do
-      MaybeString = Algebrick::Variant.new Empty, String
+      MaybeString = Algebrick.type { variants Empty, String }
       it { 'a'.must_be_kind_of MaybeString }
     end
   end
@@ -306,25 +245,38 @@ describe 'AlgebrickTest' do
   end
 
   describe 'maybe' do
-    type_def do
-      maybe === none | some(Object)
-      maybe do
-        def maybe(&block)
-          case self
-          when None
-          when Some
-            block.call self.value
-          end
+    None  = Algebrick.type
+    Some  = Algebrick.type { fields Object }
+    Maybe = Algebrick.type { variants None, Some }
+
+    module Maybe
+      def maybe(&block)
+        case self
+        when None
+        when Some
+          block.call self.value
         end
       end
     end
 
-    None = self::None
-    Some = self::Some
-
     it { refute None.maybe { true } }
     it { assert Some[nil].maybe { true } }
   end
+
+  #describe 'parametrized types' do
+  #  types = type_def do
+  #    maybe[:v] === none | some(:v)
+  #    tree[:v] === tip | tree(:v, tree, tree)
+  #  end
+  #
+  #  maybe, none, some, tree, tip = types
+  #
+  #  p [maybe, none, some, tree, tip]
+  #  maybe_integer = maybe[Integer]
+  #  puts tree[Integer]
+  #
+  #  #puts some[Integer][1]
+  #end
 
   extend Algebrick::Matching
   include Algebrick::Matching
@@ -365,7 +317,7 @@ describe 'AlgebrickTest' do
 
     describe 'match' do
       it 'returns value from executed block' do
-        Algebrick.match(Empty, Empty.to_m.case { 1 }).must_equal 1
+        Algebrick.match(Empty, Empty >-> { 1 }).must_equal 1
       end
 
       it 'passes assigned values' do
@@ -380,11 +332,11 @@ describe 'AlgebrickTest' do
 
       it 'raises when no match' do
         -> { Algebrick.match Empty,
-                             Leaf.(any).case {} }.must_raise RuntimeError
+                             Leaf.(any) >-> {} }.must_raise RuntimeError
       end
 
       it 'does not pass any values when no matcher' do
-        Algebrick.match(Empty, Empty => -> *a { a }).must_equal []
+        Algebrick.match(Empty, Empty >-> *a { a }).must_equal []
       end
     end
 
@@ -400,6 +352,7 @@ describe 'AlgebrickTest' do
        Node.(Leaf.(any), any),
        ~Node.(Leaf.(any), any),
        ~Leaf.(1) | Leaf.(~any),
+       ~Leaf.(1) ^ Leaf.(~any),
        ~Leaf.(1) & Leaf.(~any)
       ].each do |matcher|
         it matcher.to_s do
@@ -432,6 +385,8 @@ describe 'AlgebrickTest' do
       Tree & Leaf.(_)                      => Leaf[1],
       Empty | Leaf.(_)                     => Leaf[1],
       Empty | Leaf.(_)                     => Empty,
+      Empty ^ Leaf.(_)                     => Leaf[1],
+      Empty ^ Leaf.(_)                     => Empty,
       !Empty & Leaf.(_)                    => Leaf[1],
       Empty & !Leaf.(_)                    => Empty,
 
@@ -456,7 +411,7 @@ describe 'AlgebrickTest' do
     refute List.(_, _) === Empty
   }
 
-  describe 'and-or matching' do
+  describe 'and-or-xor matching' do
     it do
       m = ~Leaf.(1) | ~Leaf.(~any)
       assert m === Leaf[1]
@@ -472,7 +427,21 @@ describe 'AlgebrickTest' do
       assert m === Leaf[2]
       m.assigns.must_equal [Leaf[2], 2]
     end
-
+    it do
+      m = ~Leaf.(1) ^ ~Leaf.(~any)
+      assert m === Leaf[1]
+      m.assigns.must_equal [Leaf[1], nil]
+    end
+    it do
+      m = ~Leaf.(~->(v) { v > 1 }.to_m) ^ ~Leaf.(1)
+      assert m === Leaf[1]
+      m.assigns.must_equal [Leaf[1], nil]
+    end
+    it do
+      m = ~Leaf.(1) ^ ~Leaf.(~any)
+      assert m === Leaf[2]
+      m.assigns.must_equal [Leaf[2], 2]
+    end
   end
 
   describe 'equality' do
@@ -495,9 +464,9 @@ describe 'AlgebrickTest' do
     it { List.(any, List) === List[1, Empty] }
   end
 
-  describe 'binary tree' do
-    type_def { b_tree === tip | b_node(Object, b_tree, b_tree) }
-  end
+  #describe 'binary tree' do
+  #  type_def { b_tree === tip | b_node(Object, b_tree, b_tree) }
+  #end
 
 end
 

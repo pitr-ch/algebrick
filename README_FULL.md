@@ -26,14 +26,14 @@ Same thing can be defined with this gem:
 
 {include:file:doc/tree1.out.rb}
 
-There are 4 kinds of algebraic types in Algebrick gem:
+There are 4 kinds of algebraic types:
 
--   **Atom** a type that has only one value e.g. `Empty`.
--   **Product** a type that has a set nuber of fields with given type e.g. `Leaf(Integer)`
--   **Variant** a type that does have set number of variants e.g. `Tree(Empty | Leaf(Integer) | Node(Tree, Tree)`.
-    It means that values of `Empty`, `Leaf[1]`, `Node[Empty, Empry]` have all type `Tree`.
--   **ProductVariant** will be created when a recursive type like `list === empty | list(Object, list)` is defined.
-    `List` has two variants `Empty` and itself simultaneously it has fields as product type.
+1.  **Atom** a type that has only one value e.g. `Empty`.
+2.  **Product** a type that has a set number of fields with given type e.g. `Leaf(Integer)`
+3.  **Variant** a type that does have set number of variants e.g. `Tree(Empty | Leaf(Integer) | Node(Tree, Tree)`. It means that values of `Empty`, `Leaf[1]`, `Node[Empty, Empry]` are all of type `Tree`.
+4.  **ProductVariant** will be created when a recursive type like `List(Empty | List(Integer, List))` is defined. `List` has two variants `Empty` and itself, and simultaneously it has fields as product type.
+
+Atom type is implemented with {Algebrick::Atom} and the rest is implemented with {Algebrick::ProductVariant} which behaves differently based on what is set: fields, variants or both.
 
 ### Type definition
 
@@ -49,7 +49,7 @@ There are 4 kinds of algebraic types in Algebrick gem:
 
 ### Pattern matching
 
-Algebraic matchers are helper objects to match algebraic objects and others with
+Algebraic matchers are helper objects to match algebraic values and others with
 `#===` method based on theirs initialization values.
 
 {include:file:doc/pattern_matching.out.rb}
@@ -88,7 +88,7 @@ Just small snippet from a gem I am still working on.
 
       def on_message(message)
         match message,
-              Work.(~any, ~any) --> actor, work do
+              Work.(~any, ~any) >-> actor, work do
                 @executor.tell Finished[actor, work.call, self.reference]
               end
       end
@@ -97,6 +97,5 @@ Just small snippet from a gem I am still working on.
 ### TODO
 
 -   Menu model, TypedArray
--   Pretty print example, see {http://homepages.inf.ed.ac.uk/wadler/papers/prettier/prettier.pdf}
 -   update actor pattern when gem is done
-
+-   example with birth-number Valid|Invalid

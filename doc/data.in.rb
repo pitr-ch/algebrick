@@ -1,15 +1,20 @@
-extend Algebrick::DSL
 extend Algebrick::Matching
 
-# Algebraic types very useful for defining data_structures
-type_def { tree === tip | node(value: Object, left: tree, right: tree) }
+# Definition of data structures
+Tree = Algebrick.type do |tree|
+  Tip  = type
+  Node = type { fields value: Object, left: tree, right: tree }
+
+  variants Tip, Node
+end
 
 module Tree
   def depth
     match self,
           Tip.to_m >> 0,
-          Node.(_, ~any, ~any) --> left, right { 1 + [left.depth, right.depth].max }
-
+          Node.(_, ~any, ~any) >-> left, right do
+            1 + [left.depth, right.depth].max
+          end
   end
 end
 
@@ -20,32 +25,39 @@ tree = Node[2,
                  Node[6, Tip, Tip]]]
 tree.depth
 
-# and a more real example
-type_def {
-  package === deb | rpm
+# Domain model specification
+Arch = Algebrick.type do
+  I386  = type
+  Amd64 = type
+  Armel = type
+  # ... other architectures omitted
 
-  deb(name: String, version: String, revision: Integer, arch: arch)
-  rpm(name: String, version: String, release: Integer, arch: arch)
+  variants I386, Amd64, Armel
+end
 
-  arch === i386 | amd64 | armel # and more
-}
+Package = Algebrick.type do
+  Deb = type { fields id:       String,
+                      version:  String,
+                      revision: Integer,
+                      arch:     Arch }.add_all_field_method_accessors
+  Rpm = type { fields id:      String,
+                      version: String,
+                      release: Integer,
+                      arch:    Arch }.add_all_field_method_accessors
+
+  variants Deb, Rpm
+end
 
 module Package
-  def full_name
+  def pkg_name
     match self,
-          Deb >> -> do
-            name, version, revision, arch = *self
-            "#{name}_#{version}-#{revision}_#{arch.full_name}.deb"
-          end,
-          Rpm >> -> do
-            name, version, release, arch = *self
-            "#{name}-#{version}-#{release}-#{arch.full_name}.rpm"
-          end
+          Deb >-> { "#{id}_#{version}-#{revision}_#{arch.pkg_name}.deb" },
+          Rpm >-> { "#{id}-#{version}-#{release}-#{arch.pkg_name}.rpm" }
   end
 end
 
 module Arch
-  def full_name
+  def pkg_name
     match self,
           I386  => 'i386',
           Amd64 => 'amd64',
@@ -53,7 +65,25 @@ module Arch
   end
 end
 
-d = Deb['apt', '1.2.3', 4, I386]
-r = Rpm['yum', '1.2.3', 4, Amd64]
-d.full_name
-r.full_name
+dep = Deb['apt', '1.2.3', 4, I386]
+rom = Rpm['yum', '1.2.3', 4, Amd64]
+dep.pkg_name
+rom.pkg_name
+
+# Avoiding nil errors with Maybe
+Maybe = Algebrick.type do
+  None = type
+  Some = type { fields Integer }
+  variants None, Some
+end
+# wrap values which can be nil into maybe and then match to avoid nil errors
+def add(value)
+  @sum ||= 0
+  match value,
+        None >> @sum,
+        Some.(~any) >-> int { @sum += int }
+end
+add None
+add Some[2]
+add Some[-1]
+add 2 rescue $!
