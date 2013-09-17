@@ -353,7 +353,7 @@ module Algebrick
       @constructor = Class.new(ProductConstructor).tap { |c| c.type = self }
     end
 
-    def add_field_method_accessor(field)
+    def add_field_method_reader(field)
       raise TypeError, 'no field names' unless @field_names
       raise ArgumentError, "no field name #{field}" unless @field_names.include? field
       raise ArgumentError, "method #{field} already defined" if instance_methods.include? field
@@ -361,13 +361,30 @@ module Algebrick
       self
     end
 
-    def add_field_method_accessors(*fields)
-      fields.each { |f| add_field_method_accessor f }
+    def add_field_method_readers(*fields)
+      fields.each { |f| add_field_method_reader f }
       self
     end
 
+    def add_all_field_method_readers
+      add_field_method_readers *@field_names
+    end
+
+    raise 'remove deprecation' if Algebrick.version >= Gem::Version.new('0.3')
+
     def add_all_field_method_accessors
-      add_field_method_accessors *@field_names
+      warn "add_all_field_method_accessors is deprecated, it'll be removed in 0.3\n#{caller[0]}"
+      add_all_field_method_readers
+    end
+
+    def add_field_method_accessors(*fields)
+      warn "add_all_field_method_accessors is deprecated, it'll be removed in 0.3\n#{caller[0]}"
+      add_field_method_readers *fields
+    end
+
+    def add_field_method_accessor(field)
+      warn "add_all_field_method_accessors is deprecated, it'll be removed in 0.3\n#{caller[0]}"
+      add_field_method_reader field
     end
 
     def set_variants(variants)
@@ -547,6 +564,20 @@ module Algebrick
     def type(&block)
       Algebrick.type &block
     end
+
+    def field_readers(*names)
+      @new_type.add_field_method_readers *names
+      self
+    end
+
+    alias_method :readers, :field_readers
+
+    def all_field_readers
+      @new_type.add_all_field_method_readers
+      self
+    end
+
+    alias_method :all_readers, :all_field_readers
   end
 
   def self.type(&block)

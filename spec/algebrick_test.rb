@@ -143,7 +143,10 @@ describe 'AlgebrickTest' do
     it { lambda { Node[Empty, nil] }.must_raise TypeError }
 
     describe 'named field' do
-      Named = Algebrick.type { fields a: Integer, b: Object }.add_all_field_method_accessors
+      Named = Algebrick.type do
+        fields a: Integer, b: Object
+        all_readers
+      end
 
       it { -> { Named[:a, 1] }.must_raise TypeError }
       it { Named[1, :a][:a].must_equal 1 }

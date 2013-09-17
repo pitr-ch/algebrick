@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
 
   s.name             = 'algebrick'
   s.version          = File.read(File.join(File.dirname(__FILE__), 'VERSION'))
-  s.date             = Time.now.strftime('%Y-%m-%d').tap { |d| puts "  Release date is: #{d}" }
+  s.date             = Time.now.strftime('%Y-%m-%d')
   s.summary          = 'Algebraic types and pattern matching for Ruby'
   s.description      = 'Provides algebraic type definitions and pattern matching'
   s.authors          = ['Petr Chalupa']
