@@ -39,7 +39,7 @@ module Tree
           Empty >> 0,
           Leaf >> 1,
           # ~ will store and pass matched parts to variables left and right
-          Node.(~any, ~any) --> left, right do
+          Node.(~any, ~any) >-> left, right do
             1 + [left.depth, right.depth].max
           end
   end

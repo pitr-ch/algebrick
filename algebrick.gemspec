@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
 
   s.name             = 'algebrick'
   s.version          = File.read(File.join(File.dirname(__FILE__), 'VERSION'))
-  s.date             = '2013-05-14'
+  s.date             = Time.now.strftime('%Y-%m-%d').tap { |d| puts "  Release date is: #{d}" }
   s.summary          = 'Algebraic types and pattern matching for Ruby'
   s.description      = 'Provides algebraic type definitions and pattern matching'
   s.authors          = ['Petr Chalupa']
@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = %w(LICENSE README.md README_FULL.md VERSION)
   s.files            = Dir['lib/algebrick.rb'] + %w(VERSION)
   s.require_paths    = %w(lib)
-  s.license          = 'MIT'
+  s.license          = 'Apache License 2.0'
   s.test_files       = Dir['spec/algebrick.rb']
 
   #{}.each do |gem, version|
