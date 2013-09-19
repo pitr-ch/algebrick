@@ -113,11 +113,11 @@ end</p>
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Algebrick/MatcherDelegations.html" title="Algebrick::MatcherDelegations (module)">MatcherDelegations</a></span>, <span class='object_link'><a href="Algebrick/Matchers.html" title="Algebrick::Matchers (module)">Matchers</a></span>, <span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span>, <span class='object_link'><a href="Algebrick/TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span>, <span class='object_link'><a href="Algebrick/Value.html" title="Algebrick::Value (module)">Value</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Algebrick/DSL.html" title="Algebrick::DSL (module)">DSL</a></span>, <span class='object_link'><a href="Algebrick/MatcherDelegations.html" title="Algebrick::MatcherDelegations (module)">MatcherDelegations</a></span>, <span class='object_link'><a href="Algebrick/Matchers.html" title="Algebrick::Matchers (module)">Matchers</a></span>, <span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span>, <span class='object_link'><a href="Algebrick/TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span>, <span class='object_link'><a href="Algebrick/Value.html" title="Algebrick::Value (module)">Value</a></span>
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Algebrick/Atom.html" title="Algebrick::Atom (class)">Atom</a></span>, <span class='object_link'><a href="Algebrick/ProductConstructor.html" title="Algebrick::ProductConstructor (class)">ProductConstructor</a></span>, <span class='object_link'><a href="Algebrick/ProductVariant.html" title="Algebrick::ProductVariant (class)">ProductVariant</a></span>, <span class='object_link'><a href="Algebrick/Type.html" title="Algebrick::Type (class)">Type</a></span>, <span class='object_link'><a href="Algebrick/TypeDefinitionScope.html" title="Algebrick::TypeDefinitionScope (class)">TypeDefinitionScope</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Algebrick/Atom.html" title="Algebrick::Atom (class)">Atom</a></span>, <span class='object_link'><a href="Algebrick/ProductConstructor.html" title="Algebrick::ProductConstructor (class)">ProductConstructor</a></span>, <span class='object_link'><a href="Algebrick/ProductVariant.html" title="Algebrick::ProductVariant (class)">ProductVariant</a></span>, <span class='object_link'><a href="Algebrick/Type.html" title="Algebrick::Type (class)">Type</a></span>
     
   
 </p>
@@ -156,7 +156,51 @@ end</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#atom-class_method" title="atom (class method)">+ (Object) <strong>atom</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#type-class_method" title="type (class method)">+ (Object) <strong>type</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#types-class_method" title="types (class method)">+ (Object) <strong>types</strong>(&amp;block) </a>
     
 
     
@@ -218,7 +262,37 @@ end</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="type-class_method">
+  <h3 class="signature first" id="atom-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>atom</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+628
+629
+630</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 628</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_atom'>atom</span>
+  <span class='const'>Atom</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="type-class_method">
   
     + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>type</strong>(&amp;block) 
   
@@ -232,23 +306,53 @@ end</p>
       <pre class="lines">
 
 
-552
-553
-554
-555
-556
-557
-558</pre>
+620
+621
+622
+623
+624
+625
+626</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 552</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 620</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-    <span class='const'>Atom</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>nil</span>
+    <span class='id identifier rubyid_atom'>atom</span>
   <span class='kw'>else</span>
-    <span class='const'>TypeDefinitionScope</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new_type'>new_type</span>
+    <span class='const'>DSL</span><span class='op'>::</span><span class='const'>TypeDefinitionScope</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new_type'>new_type</span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="types-class_method">
+  
+    + (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>types</strong>(&amp;block) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+632
+633
+634</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 632</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_types'>types</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'>DSL</span><span class='op'>::</span><span class='const'>OuterShell</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -270,12 +374,12 @@ end</p>
       <pre class="lines">
 
 
-32
-33
-34</pre>
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
   <span class='ivar'>@version</span> <span class='op'>||=</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_dirname'>dirname</span><span class='lparen'>(</span><span class='kw'>__FILE__</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>..</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>VERSION</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -290,9 +394,9 @@ end</p>
 </div>
 
     <div id="footer">
-  Generated on Mon Sep 16 21:57:13 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Sep 19 13:23:12 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-2.0.0).
+  0.8.7.1 (ruby-2.0.0).
 </div>
 
 <script>

@@ -237,11 +237,6 @@
       <pre class="lines">
 
 
-55
-56
-57
-58
-59
 60
 61
 62
@@ -252,10 +247,15 @@
 67
 68
 69
-70</pre>
+70
+71
+72
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_a_type_check'>a_type_check</span><span class='lparen'>(</span><span class='id identifier rubyid_which'>which</span><span class='comma'>,</span> <span class='id identifier rubyid_bang'>bang</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ok'>ok</span> <span class='op'>=</span> <span class='id identifier rubyid_types'>types</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span>
@@ -293,12 +293,12 @@
       <pre class="lines">
 
 
-41
-42
-43</pre>
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_kind_of!'>is_kind_of!</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a_type_check'>a_type_check</span> <span class='symbol'>:kind_of?</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
@@ -345,12 +345,12 @@
       <pre class="lines">
 
 
-37
-38
-39</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_kind_of?'>is_kind_of?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a_type_check'>a_type_check</span> <span class='symbol'>:kind_of?</span><span class='comma'>,</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
@@ -375,12 +375,12 @@
       <pre class="lines">
 
 
-49
-50
-51</pre>
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_matching!'>is_matching!</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a_type_check'>a_type_check</span> <span class='symbol'>:===</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
@@ -427,12 +427,12 @@
       <pre class="lines">
 
 
-45
-46
-47</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_matching?'>is_matching?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a_type_check'>a_type_check</span> <span class='symbol'>:===</span><span class='comma'>,</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
@@ -447,9 +447,9 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Sep 16 21:57:13 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Sep 19 13:23:12 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-2.0.0).
+  0.8.7.1 (ruby-2.0.0).
 </div>
 
 <script>

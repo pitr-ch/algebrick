@@ -42,7 +42,7 @@ BTree[value: 1, left: Tip, right: Tip][:value]
 BTree[value: 1, left: Tip, right: Tip][:left]
 
 # BTree can also by made to create method accessors for its named fields
-BTree.add_all_field_method_accessors
+BTree.add_all_field_method_readers
 BTree[1, Tip, Tip].value
 BTree[1, Tip, Tip].left
 

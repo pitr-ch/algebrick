@@ -297,7 +297,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>A new instance of AbstractLogic</p>
+    <p>Returns a new instance of AbstractLogic</p>
 
 
   </div>
@@ -311,12 +311,12 @@
       <pre class="lines">
 
 
-679
-680
-681</pre>
+755
+756
+757</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 679</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 755</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_matchers'>matchers</span><span class='rparen'>)</span>
   <span class='ivar'>@matchers</span> <span class='op'>=</span> <span class='id identifier rubyid_matchers'>matchers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span> <span class='id identifier rubyid_matchable!'>matchable!</span> <span class='id identifier rubyid_m'>m</span> <span class='rbrace'>}</span>
@@ -358,12 +358,12 @@
       <pre class="lines">
 
 
-677
-678
-679</pre>
+753
+754
+755</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 677</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 753</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matchers'>matchers</span>
   <span class='ivar'>@matchers</span>
@@ -395,12 +395,12 @@
       <pre class="lines">
 
 
-673
-674
-675</pre>
+749
+750
+751</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 673</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 749</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_matchers'>matchers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_new'>new</span> <span class='op'>*</span><span class='id identifier rubyid_matchers'>matchers</span>
@@ -431,13 +431,13 @@
       <pre class="lines">
 
 
-687
-688
-689
-690</pre>
+763
+764
+765
+766</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 687</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 763</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='kw'>and</span>
@@ -463,12 +463,12 @@
       <pre class="lines">
 
 
-683
-684
-685</pre>
+759
+760
+761</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 683</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 759</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_children'>children</span>
   <span class='id identifier rubyid_find_children'>find_children</span> <span class='id identifier rubyid_matchers'>matchers</span>
@@ -483,9 +483,9 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Sep 16 21:57:14 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Sep 19 13:23:13 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-2.0.0).
+  0.8.7.1 (ruby-2.0.0).
 </div>
 
 <script>

@@ -306,7 +306,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>A new instance of Not</p>
+    <p>Returns a new instance of Not</p>
 
 
   </div>
@@ -320,12 +320,12 @@
       <pre class="lines">
 
 
-747
-748
-749</pre>
+823
+824
+825</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 747</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 823</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_matcher'>matcher</span><span class='rparen'>)</span>
   <span class='ivar'>@matcher</span> <span class='op'>=</span> <span class='id identifier rubyid_matcher'>matcher</span>
@@ -367,12 +367,12 @@
       <pre class="lines">
 
 
-745
-746
-747</pre>
+821
+822
+823</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 745</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 821</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matcher'>matcher</span>
   <span class='ivar'>@matcher</span>
@@ -404,13 +404,13 @@
       <pre class="lines">
 
 
-759
-760
-761
-762</pre>
+835
+836
+837
+838</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 759</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 835</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='kw'>and</span>
@@ -436,12 +436,12 @@
       <pre class="lines">
 
 
-751
-752
-753</pre>
+827
+828
+829</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 751</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 827</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_children'>children</span>
   <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -488,12 +488,12 @@
       <pre class="lines">
 
 
-766
-767
-768</pre>
+842
+843
+844</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 766</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 842</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matching?'>matching?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>not</span> <span class='id identifier rubyid_matcher'>matcher</span> <span class='op'>===</span> <span class='id identifier rubyid_other'>other</span>
@@ -518,12 +518,12 @@
       <pre class="lines">
 
 
-755
-756
-757</pre>
+831
+832
+833</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 755</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 831</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>!</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_matcher'>matcher</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -538,9 +538,9 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Sep 16 21:57:14 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Sep 19 13:23:14 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-2.0.0).
+  0.8.7.1 (ruby-2.0.0).
 </div>
 
 <script>

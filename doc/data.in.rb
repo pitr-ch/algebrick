@@ -36,14 +36,20 @@ Arch = Algebrick.type do
 end
 
 Package = Algebrick.type do
-  Deb = type { fields id:       String,
-                      version:  String,
-                      revision: Integer,
-                      arch:     Arch }.add_all_field_method_accessors
-  Rpm = type { fields id:      String,
-                      version: String,
-                      release: Integer,
-                      arch:    Arch }.add_all_field_method_accessors
+  Deb = type do
+    fields id:       String,
+           version:  String,
+           revision: Integer,
+           arch:     Arch
+    all_readers
+  end
+  Rpm = type do
+    fields id:      String,
+           version: String,
+           release: Integer,
+           arch:    Arch
+    all_readers
+  end
 
   variants Deb, Rpm
 end
