@@ -15,6 +15,11 @@
 
 # TODO method definition in variant type defines methods on variants based on match, better performance?
 # TODO type variables/constructor maybe(a) === none | a
+# TODO add matcher/s for Hash
+# TODO add method matcher (:size, matcher)
+# TODO Menu modeling example, add TypedArray
+# TODO update actor pattern example when gem is done
+# TODO example with birth-number Valid|Invalid
 
 require 'set'
 
@@ -283,7 +288,7 @@ module Algebrick
 
     def to_s
       "#{self.class.type.name}[" +
-          if type.field_names
+          if type.field_names?
             type.field_names.map { |name| "#{name}: #{self[name].to_s}" }.join(', ')
           else
             fields.map(&:to_s).join(',')
@@ -300,7 +305,7 @@ module Algebrick
 
     def to_hash
       { TYPE_KEY => self.class.type.name }.
-          update(if type.field_names
+          update(if type.field_names?
                    type.field_names.inject({}) { |h, name| h.update name => hashize(self[name]) }
                  else
                    { FIELDS_KEY => fields.map { |v| hashize v } }
@@ -334,7 +339,7 @@ module Algebrick
   end
 
   class ProductVariant < Type
-    attr_reader :fields, :field_names, :field_indexes, :variants
+    attr_reader :fields, :variants
 
     def set_fields(fields_or_hash)
       raise TypeError, 'can be set only once' if @fields
@@ -346,16 +351,28 @@ module Algebrick
 
       set_field_names keys if keys
 
-      fields.all? { |f| is_kind_of! f, Type, Class }
+      fields.all? { |f| is_kind_of! f, Type, Class, Module }
       raise TypeError, 'there is no product with zero fields' unless fields.size > 0
       define_method(:value) { @fields.first } if fields.size == 1
       @fields      = fields
       @constructor = Class.new(ProductConstructor).tap { |c| c.type = self }
     end
 
+    def field_names
+      @field_names or raise TypeError, "field names not defined on #{self}"
+    end
+
+    def field_names?
+      !!@field_names
+    end
+
+    def field_indexes
+      @field_indexes or raise TypeError, "field names not defined on #{self}"
+    end
+
     def add_field_method_reader(field)
-      raise TypeError, 'no field names' unless @field_names
-      raise ArgumentError, "no field name #{field}" unless @field_names.include? field
+      raise TypeError, 'no field names' unless field_names?
+      raise ArgumentError, "no field name #{field}" unless field_names.include? field
       raise ArgumentError, "method #{field} already defined" if instance_methods.include? field
       define_method(field) { self[field] }
       self
@@ -486,7 +503,7 @@ module Algebrick
     private
 
     def product_to_s
-      fields_str = if field_names
+      fields_str = if field_names?
                      field_names.zip(fields).map { |name, field| "#{name}: #{field.name}" }
                    else
                      fields.map(&:name)
@@ -517,7 +534,7 @@ module Algebrick
         self[*fields.map { |value| field_from_hash value }]
       when Hash
         self[fields.inject({}) do |h, (name, value)|
-          raise ArgumentError unless @field_names.map(&:to_s).include? name.to_s
+          raise ArgumentError unless field_names.map(&:to_s).include? name.to_s
           h.update name.to_sym => field_from_hash(value)
         end]
       end
@@ -542,50 +559,78 @@ module Algebrick
     end
   end
 
-  class TypeDefinitionScope
-    attr_reader :new_type
+  module DSL
+    module Shortcuts
+      def type(&block)
+        Algebrick.type &block
+      end
 
-    def initialize(&block)
-      @new_type = ProductVariant.new nil
-      instance_exec @new_type, &block
-      @new_type.kind
+      def atom
+        Algebrick.atom
+      end
     end
 
-    def fields(*fields)
-      @new_type.set_fields fields
-      self
+    class TypeDefinitionScope
+      include Shortcuts
+
+      attr_reader :new_type
+
+      def initialize(&block)
+        @new_type = ProductVariant.new nil
+        instance_exec @new_type, &block
+        @new_type.kind
+      end
+
+      def fields(*fields)
+        @new_type.set_fields fields
+        self
+      end
+
+      def variants(*variants)
+        @new_type.set_variants variants
+        self
+      end
+
+      def field_readers(*names)
+        @new_type.add_field_method_readers *names
+        self
+      end
+
+      alias_method :readers, :field_readers
+
+      def all_field_readers
+        @new_type.add_all_field_method_readers
+        self
+      end
+
+      alias_method :all_readers, :all_field_readers
     end
 
-    def variants(*variants)
-      @new_type.set_variants variants
-      self
+    class OuterShellImpl
+      include Shortcuts
+
+      def run(&block)
+        instance_eval &block
+      end
     end
 
-    def type(&block)
-      Algebrick.type &block
-    end
-
-    def field_readers(*names)
-      @new_type.add_field_method_readers *names
-      self
-    end
-
-    alias_method :readers, :field_readers
-
-    def all_field_readers
-      @new_type.add_all_field_method_readers
-      self
-    end
-
-    alias_method :all_readers, :all_field_readers
+    OuterShell = OuterShellImpl.new
   end
 
   def self.type(&block)
     if block.nil?
-      Atom.new nil
+      atom
     else
-      TypeDefinitionScope.new(&block).new_type
+      DSL::TypeDefinitionScope.new(&block).new_type
     end
+  end
+
+  def self.atom
+    Atom.new nil
+  end
+
+  def self.types(&block)
+    DSL::OuterShell.run &block
   end
 
   module Matchers
@@ -897,20 +942,39 @@ module Algebrick
       end
     end
 
-    # TODO Hash matcher
-    # TODO Method matcher (:size, matcher)
-
     class Product < Abstract
-      # TODO allow to match by field_name e.g. Address.(:street)
       attr_reader :algebraic_type, :field_matchers
 
       def initialize(algebraic_type, *field_matchers)
         super()
         @algebraic_type = is_kind_of! algebraic_type, Algebrick::ProductVariant
         raise ArgumentError unless algebraic_type.fields
-        field_matchers  += ::Array.new(algebraic_type.fields.size) { Algebrick.any } if field_matchers.empty?
-        @field_matchers = field_matchers
-        raise ArgumentError unless algebraic_type.fields.size == field_matchers.size
+        @field_matchers = case
+                          when field_matchers.empty?
+                            ::Array.new(algebraic_type.fields.size) { Algebrick.any }
+
+                          when field_matchers.size == 1 && field_matchers.first.is_a?(Hash)
+                            field_matchers = field_matchers.first
+                            unless (dif = field_matchers.keys - algebraic_type.field_names).empty?
+                              raise ArgumentError, "no #{dif} fields in #{algebraic_type}"
+                            end
+                            algebraic_type.field_names.map do |field|
+                              field_matchers[field] || Algebrick.any
+                            end
+                          when field_matchers.is_a?(::Array) && field_matchers.all? { |v| v.is_a? Symbol }
+                            unless (dif = field_matchers - algebraic_type.field_names).empty?
+                              raise ArgumentError, "no #{dif} fields in #{algebraic_type}"
+                            end
+                            algebraic_type.field_names.map do |field|
+                              field_matchers.include?(field) ? ~Algebrick.any : Algebrick.any
+                            end
+
+                          else
+                            field_matchers
+                          end
+        unless algebraic_type.fields.size == @field_matchers.size
+          raise ArgumentError
+        end
       end
 
       def children

@@ -93,9 +93,3 @@ Just small snippet from a gem I am still working on.
               end
       end
     end
-
-### TODO
-
--   Menu model, TypedArray
--   update actor pattern when gem is done
--   example with birth-number Valid|Invalid

@@ -30,12 +30,20 @@ end
 describe 'AlgebrickTest' do
   i_suck_and_my_tests_are_order_dependent!
 
-  Tree = Algebrick.type do |tree|
-    Empty = Algebrick.type
-    Leaf  = Algebrick.type { fields Integer }
-    Node  = Algebrick.type { fields tree, tree }
+  Algebrick.types do
+    Tree = type do |tree|
+      Empty = type
+      Leaf  = type { fields Integer }
+      Node  = type { fields tree, tree }
 
-    variants Empty, Leaf, Node
+      variants Empty, Leaf, Node
+    end
+
+    BTree = type do |btree|
+      fields value: Comparable, left: btree, right: btree
+      all_readers
+      variants Empty, btree
+    end
   end
 
   module Tree
@@ -140,6 +148,11 @@ describe 'AlgebrickTest' do
     it { lambda { Leaf['a'] }.must_raise TypeError }
     it { lambda { Leaf[nil] }.must_raise TypeError }
     it { lambda { Node['a'] }.must_raise TypeError }
+    ComparableItem = Class.new { include Comparable }
+    it { BTree[1.0, Empty, Empty] }
+    it { BTree['s', Empty, Empty] }
+    it { BTree[ComparableItem.new, Empty, Empty] }
+    it { lambda { BTree[Object.new, Empty, Empty] }.must_raise TypeError }
     it { lambda { Node[Empty, nil] }.must_raise TypeError }
 
     describe 'named field' do
@@ -181,7 +194,11 @@ describe 'AlgebrickTest' do
     it { Leaf[1].must_be_kind_of Tree }
     it { Leaf[1].a.must_equal :a }
     it { Node[Empty, Empty].must_be_kind_of Tree }
-    #it { assert Empty.kind_of? List }
+    it { assert Empty.kind_of? List }
+
+    it { assert Empty > List }
+    it { assert Leaf > Tree }
+    it { assert Node > Tree }
 
     it { assert Tree === Empty }
     it { assert Tree === Leaf[1] }
@@ -202,6 +219,7 @@ describe 'AlgebrickTest' do
       end
 
       it { Deep::B1.a.must_equal :a }
+      it { Deep::B1 > Deep::A }
     end
 
     describe 'a klass as a variant' do
@@ -303,6 +321,14 @@ describe 'AlgebrickTest' do
       m.assigns.must_equal [Leaf[5], 5]
       m === Leaf[3]
       m.assigns.must_equal [Leaf[3], 3]
+
+      m = BTree.(:value)
+      m === BTree[1, Empty, Empty]
+      m.assigns.must_equal [1]
+
+      m = BTree.(value: ~any)
+      m === BTree[1, Empty, Empty]
+      m.assigns.must_equal [1]
     end
 
     it 'assigns in case' do

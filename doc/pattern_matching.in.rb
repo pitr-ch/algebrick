@@ -1,10 +1,16 @@
-# lets define a tree to demonstrate the pattern matching abilities
+# lets define a trees to demonstrate the pattern matching abilities
 Tree = Algebrick.type do |tree|
   Empty = type
   Leaf  = type { fields Integer }
   Node  = type { fields tree, tree }
 
   variants Empty, Leaf, Node
+end
+
+BTree = Algebrick.type do |btree|
+  fields value: Comparable, left: btree, right: btree
+  all_readers
+  variants Empty, btree
 end
 
 extend Algebrick::Matching
@@ -92,5 +98,13 @@ match Leaf[6],
 (m = Leaf.(~-> v { v > 1 }.to_m ^ ~-> v { v < 3 }.to_m)) === Leaf[2]; m.assigns
 (m = Leaf.(~!-> v { v > 1 }.to_m)) === Leaf[0]; m.assigns
 
+# There are also shortcuts to match on named fields
+match BTree[1.5, Empty, Empty],
+      BTree.(:value) >-> v { v }
+
+match BTree[1.5, Empty, BTree[4.5, Empty, Empty]],
+      BTree.(value: ~any, right: BTree.(:value)) >-> value, right_value do
+        [value, right_value]
+      end
 
 
