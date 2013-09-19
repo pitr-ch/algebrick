@@ -441,35 +441,40 @@ describe 'AlgebrickTest' do
   }
 
   describe 'and-or-xor matching' do
+    def assert_assigns(matcher, values)
+      matcher.assigns.must_equal values
+      matcher.assigns { |*assigns| assigns.must_equal values }
+    end
+
     it do
       m = ~Leaf.(1) | ~Leaf.(~any)
       assert m === Leaf[1]
-      m.assigns.must_equal [Leaf[1], nil, nil]
+      assert_assigns m, [Leaf[1], nil, nil]
     end
     it do
       m = ~Leaf.(1) | ~Leaf.(~any)
       assert m === Leaf[2]
-      m.assigns.must_equal [nil, Leaf[2], 2]
+      assert_assigns m, [nil, Leaf[2], 2]
     end
     it do
       m = ~Leaf.(->(v) { v > 1 }) & Leaf.(~any)
       assert m === Leaf[2]
-      m.assigns.must_equal [Leaf[2], 2]
+      assert_assigns m, [Leaf[2], 2]
     end
     it do
       m = ~Leaf.(1) ^ ~Leaf.(~any)
       assert m === Leaf[1]
-      m.assigns.must_equal [Leaf[1], nil]
+      assert_assigns m, [Leaf[1], nil]
     end
     it do
       m = ~Leaf.(~->(v) { v > 1 }.to_m) ^ ~Leaf.(1)
       assert m === Leaf[1]
-      m.assigns.must_equal [Leaf[1], nil]
+      assert_assigns m, [Leaf[1], nil]
     end
     it do
       m = ~Leaf.(1) ^ ~Leaf.(~any)
       assert m === Leaf[2]
-      m.assigns.must_equal [Leaf[2], 2]
+      assert_assigns m, [Leaf[2], 2]
     end
   end
 

@@ -606,15 +606,13 @@ module Algebrick
       alias_method :all_readers, :all_field_readers
     end
 
-    class OuterShellImpl
+    class OuterShell
       include Shortcuts
 
-      def run(&block)
+      def initialize(&block)
         instance_eval &block
       end
     end
-
-    OuterShell = OuterShellImpl.new
   end
 
   def self.type(&block)
@@ -630,7 +628,7 @@ module Algebrick
   end
 
   def self.types(&block)
-    DSL::OuterShell.run &block
+    DSL::OuterShell.new &block
   end
 
   module Matchers
@@ -695,8 +693,7 @@ module Algebrick
       end
 
       def assigns
-        mine = @assign ? [@value] : []
-        children.inject(mine) { |assigns, child| assigns + child.assigns }.tap do
+        collect_assigns.tap do
           return yield *assigns if block_given?
         end
       end
@@ -732,6 +729,11 @@ module Algebrick
       end
 
       private
+
+      def collect_assigns
+        mine = @assign ? [@value] : []
+        children.inject(mine) { |assigns, child| assigns + child.assigns }
+      end
 
       def matchable!(obj)
         raise ArgumentError, 'object does not respond to :===' unless obj.respond_to? :===
@@ -802,14 +804,14 @@ module Algebrick
         super.select &:matched?
       end
 
-      def assigns
+      private
+
+      def collect_assigns
         super.tap do |assigns|
           missing = assigns_size - assigns.size
           assigns.push(*::Array.new(missing))
         end
       end
-
-      private
 
       def assigns_size
         # TODO is it efficient?
