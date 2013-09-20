@@ -586,6 +586,11 @@ module Algebrick
         self
       end
 
+      def fields!(*fields)
+        fields(*fields)
+        all_readers
+      end
+
       def variants(*variants)
         @new_type.set_variants variants
         self

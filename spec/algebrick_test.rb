@@ -40,8 +40,7 @@ describe 'AlgebrickTest' do
     end
 
     BTree = type do |btree|
-      fields value: Comparable, left: btree, right: btree
-      all_readers
+      fields! value: Comparable, left: btree, right: btree
       variants Empty, btree
     end
   end
@@ -157,8 +156,7 @@ describe 'AlgebrickTest' do
 
     describe 'named field' do
       Named = Algebrick.type do
-        fields a: Integer, b: Object
-        all_readers
+        fields! a: Integer, b: Object
       end
 
       it { -> { Named[:a, 1] }.must_raise TypeError }
