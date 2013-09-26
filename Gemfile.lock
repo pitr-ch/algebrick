@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    algebrick (0.2.4)
+    algebrick (0.2.5)
 
 GEM
   remote: http://rubygems.org/
@@ -13,7 +13,7 @@ GEM
     hashie (2.0.5)
     method_source (0.8.2)
     minitest (4.7.5)
-    minitest-reporters (0.14.21)
+    minitest-reporters (0.14.22)
       ansi
       builder
       minitest (>= 2.12, < 5.0)
@@ -30,7 +30,7 @@ GEM
     slop (3.4.6)
     turn (0.9.6)
       ansi
-    yard (0.8.7.1)
+    yard (0.8.7.2)
 
 PLATFORMS
   ruby
