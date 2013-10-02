@@ -4,7 +4,7 @@
 --main=README_FULL.md
 --output-dir=./yardoc/
 --asset ./doc
---markup-provider redcarpet
+--markup-provider kramdown
 --markup markdown
 --title=Algebrick
 --template default
@@ -12,5 +12,5 @@
 
 ./lib/**/*.rb
 -
-LICENSE
+LICENSE.txt
 README.md

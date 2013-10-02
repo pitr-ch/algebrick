@@ -54,6 +54,10 @@ Algebraic matchers are helper objects to match algebraic values and others with
 
 {include:file:doc/pattern_matching.out.rb}
 
+### Parametrized types
+
+{include:file:doc/parametrized.out.rb}
+
 ## What is it good for?
 
 ### Defining data with a given structure

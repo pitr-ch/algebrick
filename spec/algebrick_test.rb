@@ -25,6 +25,13 @@ class Module
   def const_missing const
     raise "no constant #{const.inspect} in #{self}"
   end
+
+  # Return any modules we +extend+
+  def extended_modules
+    class << self
+      self
+    end.included_modules
+  end
 end
 
 describe 'AlgebrickTest' do
@@ -241,6 +248,10 @@ describe 'AlgebrickTest' do
     it { assert List[1, Empty].kind_of? List }
   end
 
+  describe 'tree' do
+    it { assert Leaf > Tree }
+  end
+
   describe '#depth' do
     it do
       tree = Node[Node[Empty, Leaf[1]], Leaf[1]]
@@ -264,9 +275,10 @@ describe 'AlgebrickTest' do
   end
 
   describe 'maybe' do
-    None  = Algebrick.type
-    Some  = Algebrick.type { fields Object }
-    Maybe = Algebrick.type { variants None, Some }
+    Maybe = Algebrick.type do
+      variants None = atom,
+               Some = type { fields Object }
+    end
 
     module Maybe
       def maybe(&block)
@@ -282,20 +294,67 @@ describe 'AlgebrickTest' do
     it { assert Some[nil].maybe { true } }
   end
 
-  #describe 'parametrized types' do
-  #  types = type_def do
-  #    maybe[:v] === none | some(:v)
-  #    tree[:v] === tip | tree(:v, tree, tree)
-  #  end
-  #
-  #  maybe, none, some, tree, tip = types
-  #
-  #  p [maybe, none, some, tree, tip]
-  #  maybe_integer = maybe[Integer]
-  #  puts tree[Integer]
-  #
-  #  #puts some[Integer][1]
-  #end
+  describe 'parametrized types' do
+
+    PTree = Algebrick.type(:v) do |p_tree|
+      PEmpty = atom
+      PLeaf  = type(:v) { fields value: :v }
+      PNode  = type(:v) { fields left: p_tree, right: p_tree }
+
+      variants PEmpty, PLeaf, PNode
+    end
+
+    module PTree
+      def depth
+        match self,
+              PEmpty >> 0,
+              PLeaf >> 1,
+              PNode.(~any, ~any) >-> left, right do
+                1 + [left.depth, right.depth].max
+              end
+      end
+    end
+
+    PTree[String].module_eval do
+      def glue
+        match self,
+              PEmpty >> '',
+              PLeaf.(:value) >-> v { v },
+              PNode.(~any, ~any) >-> l, r { l.glue + r.glue }
+      end
+    end
+
+    it { [PTree, PLeaf, PNode].all? { |pt| pt > Algebrick::ParametrizedType } }
+
+    it { PLeaf[Integer].to_s.must_equal 'PLeaf[Integer](value: Integer)' }
+    it { PNode[Integer].to_s.must_equal 'PNode[Integer](left: PTree[Integer], right: PTree[Integer])' }
+    it { PTree[Integer].to_s.must_equal 'PTree[Integer](PEmpty | PLeaf[Integer] | PNode[Integer])' }
+
+    it { PLeaf[Integer].is_a? PLeaf }
+    it { PLeaf[Integer][1].is_a? PLeaf }
+
+    it { PLeaf[Integer][1].is_a? Tree }
+    it { PLeaf[Integer][1].to_s.must_equal 'PLeaf[Integer][value: 1]' }
+    it { PLeaf[Integer][1].value.must_equal 1 }
+    it { PNode[Integer][PEmpty, PLeaf[Integer][1]].is_a? Tree }
+
+    it { PLeaf[Integer][2].depth.must_equal 1 }
+    it do
+      PTree[Object] # FIXME without this it does not work
+      PLeaf[Object][2].depth.must_equal 1
+    end
+    it do
+      PNode[Integer][PLeaf[Integer][2],
+                     PEmpty].depth.must_equal 2
+    end
+    it do
+      PTree[String]
+      PNode[String][PLeaf[String]['a'],
+                    PNode[String][PLeaf[String]['b'],
+                                  PEmpty]].glue.must_equal 'ab'
+      refute PTree[Object].respond_to? :glue
+    end
+  end
 
   extend Algebrick::Matching
   include Algebrick::Matching
@@ -496,52 +555,4 @@ describe 'AlgebrickTest' do
     it { List.(any, List) === List[1, Empty] }
   end
 
-  #describe 'binary tree' do
-  #  type_def { b_tree === tip | b_node(Object, b_tree, b_tree) }
-  #end
-
 end
-
-
-#require 'benchmark'
-#
-#include Algebrick
-#
-#class None < Atom
-#end
-#
-#class Some < Product
-#  fields Object
-#end
-#
-#Maybe = Variant.new do
-#  variants None, Some
-#end
-#count = 1000_000
-#
-#Benchmark.bmbm(10) do |b|
-#  b.report('nil') do
-#    count.times do
-#      v = [Object.new, nil].sample
-#      case v
-#      when Object
-#        true
-#      when nil
-#        false
-#      end
-#    end
-#  end
-#  b.report('Maybe') do
-#    count.times do
-#      v = [Some[Object.new], None].sample
-#      case v
-#      when Some
-#        true
-#      when Maybe
-#        false
-#      end
-#    end
-#  end
-#
-#
-#end

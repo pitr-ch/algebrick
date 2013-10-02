@@ -9,11 +9,13 @@ GEM
     ansi (1.4.3)
     builder (3.2.2)
     coderay (1.0.9)
+    ffi (1.9.0-java)
     github-markup (0.7.5)
     hashie (2.0.5)
+    kramdown (1.2.0)
     method_source (0.8.2)
     minitest (4.7.5)
-    minitest-reporters (0.14.22)
+    minitest-reporters (0.14.23)
       ansi
       builder
       minitest (>= 2.12, < 5.0)
@@ -26,22 +28,29 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    redcarpet (3.0.0)
+    pry (0.9.12.2-java)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+      spoon (~> 0.0)
     slop (3.4.6)
+    spoon (0.0.4)
+      ffi
     turn (0.9.6)
       ansi
     yard (0.8.7.2)
 
 PLATFORMS
+  java
   ruby
 
 DEPENDENCIES
   algebrick!
   github-markup
+  kramdown
   minitest
   minitest-reporters
   multi_json
   pry
-  redcarpet
   turn
   yard

@@ -18,16 +18,20 @@ None.maybe { |_| raise 'never ever happens' }
 # block is called with the value
 Some[1].maybe { |v| v*2 }
 
-# when only a Some is extended
+# when only subtypes are extended
 module Some
   def i_am
     true
   end
 end
 
-begin
-  None.i_am
-rescue => e
-  e
+module None
+  def i_am_not
+    true
+  end
 end
-Some[1].i_am
+
+None.i_am rescue $!
+None.i_am_not rescue $!
+Some[1].i_am rescue $!
+Some[1].i_am_not rescue $!

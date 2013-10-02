@@ -17,4 +17,6 @@ Tree = Algebrick.type do |tree|
 
   variants Empty, Leaf, Node
 end
-
+Empty
+Leaf
+Node

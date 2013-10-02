@@ -14,24 +14,18 @@
 
 
 # TODO method definition in variant type defines methods on variants based on match, better performance?
-# TODO type variables/constructor maybe(a) === none | a
 # TODO add matcher/s for Hash
 # TODO add method matcher (:size, matcher)
 # TODO Menu modeling example, add TypedArray
 # TODO update actor pattern example when gem is done
-# TODO example with birth-number Valid|Invalid
 
-require 'set'
+require 'monitor'
 
-#class Module
-#  # Return any modules we +extend+
-#  def extended_modules
-#    class << self
-#      self
-#    end.included_modules
-#  end
-#end
 
+# Provides Algebraic types and pattern matching
+#
+# **Quick example**
+# {include:file:doc/quick_example.out.rb}
 module Algebrick
 
   def self.version
@@ -75,30 +69,13 @@ module Algebrick
     end
   end
 
+  # include this module anywhere yoy need to use pattern matching
   module Matching
     def any
       Matchers::Any.new
     end
 
-    alias_method :_, :any # TODO make it optional
-
-    #match Empty,
-    #      Empty >> static_value_like_string,
-    #      Leaf.(~any) >-> value do
-    #        value
-    #      end
-    #match Empty,
-    #      Node        => ->() {},
-    #      Empty       => ->() {},
-    #      Leaf.(~any) => ->(value) { value }
-    #match Empty,
-    #      [Node, lambda {}],
-    #      [Empty, lambda {}],
-    #      [Leaf.(~any), lambda { |value| value }]
-    #match(Empty,
-    #      Node.case {},
-    #      Empty.case {},
-    #      Leaf.(~any).case { |value| value })
+    alias_method :_, :any
 
     def match(value, *cases)
       cases = if cases.size == 1 && cases.first.is_a?(Hash)
@@ -108,14 +85,14 @@ module Algebrick
               end
 
       cases.each do |matcher, block|
-        return match_value matcher, block if matcher === value
+        return Matching.match_value matcher, block if matcher === value
       end
       raise "no match for (#{value.class}) '#{value}' by any of #{cases.map(&:first).join ', '}"
     end
 
     private
 
-    def match_value(matcher, block)
+    def self.match_value(matcher, block)
       if block.kind_of? Proc
         if matcher.kind_of? Matchers::Abstract
           matcher.assigns &block
@@ -169,6 +146,7 @@ module Algebrick
     end
   end
 
+  # Any Algebraic type defined by Algebrick is kind of Type
   class Type < Module
     include TypeCheck
     include Matching
@@ -204,6 +182,7 @@ module Algebrick
     end
   end
 
+  # Any value of Algebraic type is kind of Value
   module Value
     include TypeCheck
     include Matching
@@ -232,6 +211,7 @@ module Algebrick
   TYPE_KEY   = :algebrick
   FIELDS_KEY = :fields
 
+  # Representation of Atomic types
   class Atom < Type
     include Value
 
@@ -273,6 +253,7 @@ module Algebrick
     end
   end
 
+  # A private class used for Product values creation
   class ProductConstructor
     include Value
     attr_reader :fields
@@ -338,15 +319,25 @@ module Algebrick
     end
   end
 
+  # Representation of Product and Variant types. The class behaves differently
+  # based on #kind.
   class ProductVariant < Type
     attr_reader :fields, :variants
 
+    def initialize(name, &definition)
+      super(name, &definition)
+      @to_be_kind_of = []
+    end
+
     def set_fields(fields_or_hash)
       raise TypeError, 'can be set only once' if @fields
-      fields, keys = if fields_or_hash.size == 1 && fields_or_hash.first.is_a?(Hash)
-                       [fields_or_hash.first.values, fields_or_hash.first.keys]
-                     else
+      fields, keys = case fields_or_hash
+                     when Hash
+                       [fields_or_hash.values, fields_or_hash.keys]
+                     when Array
                        [fields_or_hash, nil]
+                     else
+                       raise ArgumentError
                      end
 
       set_field_names keys if keys
@@ -356,6 +347,8 @@ module Algebrick
       define_method(:value) { @fields.first } if fields.size == 1
       @fields      = fields
       @constructor = Class.new(ProductConstructor).tap { |c| c.type = self }
+      apply_be_kind_of
+      self
     end
 
     def field_names
@@ -408,6 +401,7 @@ module Algebrick
       raise TypeError, 'can be set only once' if @variants
       variants.all? { |v| is_kind_of! v, Type, Class }
       @variants = variants
+      apply_be_kind_of
       variants.each do |v|
         if v.respond_to? :be_kind_of
           v.be_kind_of self
@@ -415,10 +409,11 @@ module Algebrick
           v.send :include, self
         end
       end
+      self
     end
 
     def new(*fields)
-      raise TypeError unless @constructor
+      raise TypeError, "#{self} does not have fields" unless @constructor
       @constructor.new *fields
     end
 
@@ -430,9 +425,15 @@ module Algebrick
     end
 
     def be_kind_of(type)
-      kind
-      @constructor.send :include, type if @constructor
-      variants.each { |v| v.be_kind_of type unless v == self } if @variants
+      @to_be_kind_of << type
+      apply_be_kind_of
+    end
+
+    def apply_be_kind_of
+      @to_be_kind_of.each do |type|
+        @constructor.send :include, type if @constructor
+        variants.each { |v| v.be_kind_of type unless v == self } if @variants
+      end
     end
 
     def call(*field_matchers)
@@ -500,6 +501,15 @@ module Algebrick
       end
     end
 
+    def assigned_types
+      @assigned_types or raise TypeError, "#{self} does not have assigned types"
+    end
+
+    def assigned_types=(assigned_types)
+      raise TypeError, "#{self} assigned types already set" if @assigned_types
+      @assigned_types = assigned_types
+    end
+
     private
 
     def product_to_s
@@ -559,10 +569,108 @@ module Algebrick
     end
   end
 
+  class ParametrizedType < Module
+    include TypeCheck
+    include MatcherDelegations
+
+    attr_reader :variables, :fields, :variants
+
+    def initialize(variables)
+      @variables     = variables.each { |v| is_kind_of! v, Symbol }
+      @fields        = nil
+      @variants      = nil
+      @cache         = {}
+      @cache_barrier = Monitor.new
+    end
+
+    def set_fields(fields)
+      @fields = is_kind_of! fields, Hash, Array
+    end
+
+    def field_names
+      case @fields
+      when Hash
+        @fields.keys
+      when Array, nil
+        raise TypeError, "field names not defined on #{self}"
+      else
+        raise
+      end
+    end
+
+    def set_variants(variants)
+      @variants = is_kind_of! variants, Array
+    end
+
+    def [](*assigned_types)
+      @cache_barrier.synchronize do
+        @cache[assigned_types] || begin
+          raise ArgumentError unless assigned_types.size == variables.size
+          ProductVariant.new(type_name(assigned_types)).tap do |type|
+            type.be_kind_of self
+            @cache[assigned_types] = type
+            type.assigned_types    = assigned_types
+            type.set_variants insert_types(variants, assigned_types) if variants
+            type.set_fields insert_types(fields, assigned_types) if fields
+          end
+        end
+      end
+    end
+
+    def to_s
+      "#{name}[#{variables.join(', ')}]"
+    end
+
+    def inspect
+      to_s
+    end
+
+    def to_m
+      if @variants
+        Matchers::Variant.new self
+      else
+        Matchers::Product.new self
+      end
+    end
+
+    def call(*field_matchers)
+      raise TypeError unless @fields
+      Matchers::Product.new self, *field_matchers
+    end
+
+    private
+
+    def insert_types(types, assigned_types)
+      case types
+      when Hash
+        types.inject({}) { |h, (k, v)| h.update k => insert_type(v, assigned_types) }
+      when Array
+        types.map { |v| insert_type v, assigned_types }
+      else
+        raise ArgumentError
+      end
+    end
+
+    def insert_type(type, assigned_types)
+      case type
+      when Symbol
+        assigned_types[variables.index type]
+      when ParametrizedType
+        type[*type.variables.map { |v| assigned_types[variables.index v] }]
+      else
+        type
+      end
+    end
+
+    def type_name(assigned_types)
+      "#{name}[#{assigned_types.join(', ')}]"
+    end
+  end
+
   module DSL
     module Shortcuts
-      def type(&block)
-        Algebrick.type &block
+      def type(*variables, &block)
+        Algebrick.type *variables, &block
       end
 
       def atom
@@ -572,17 +680,18 @@ module Algebrick
 
     class TypeDefinitionScope
       include Shortcuts
+      include TypeCheck
 
       attr_reader :new_type
 
-      def initialize(&block)
-        @new_type = ProductVariant.new nil
+      def initialize(new_type, &block)
+        @new_type = is_kind_of! new_type, ProductVariant, ParametrizedType
         instance_exec @new_type, &block
-        @new_type.kind
+        @new_type.kind if @new_type.is_a? ProductVariant
       end
 
       def fields(*fields)
-        @new_type.set_fields fields
+        @new_type.set_fields fields.first.is_a?(Hash) ? fields.first : fields
         self
       end
 
@@ -620,11 +729,16 @@ module Algebrick
     end
   end
 
-  def self.type(&block)
+  def self.type(*variables, &block)
     if block.nil?
+      raise 'Atom canot be parametrized' unless variables.empty?
       atom
     else
-      DSL::TypeDefinitionScope.new(&block).new_type
+      if variables.empty?
+        DSL::TypeDefinitionScope.new(ProductVariant.new(nil), &block).new_type
+      else
+        DSL::TypeDefinitionScope.new(ParametrizedType.new(variables), &block).new_type
+      end
     end
   end
 
@@ -954,12 +1068,15 @@ module Algebrick
 
       def initialize(algebraic_type, *field_matchers)
         super()
-        @algebraic_type = is_kind_of! algebraic_type, Algebrick::ProductVariant
+        @algebraic_type = is_kind_of! algebraic_type, Algebrick::ProductVariant, Algebrick::ParametrizedType
         raise ArgumentError unless algebraic_type.fields
         @field_matchers = case
+
+                            # AProduct.()
                           when field_matchers.empty?
                             ::Array.new(algebraic_type.fields.size) { Algebrick.any }
 
+                            # AProduct.(field_name: a_matcher)
                           when field_matchers.size == 1 && field_matchers.first.is_a?(Hash)
                             field_matchers = field_matchers.first
                             unless (dif = field_matchers.keys - algebraic_type.field_names).empty?
@@ -968,7 +1085,9 @@ module Algebrick
                             algebraic_type.field_names.map do |field|
                               field_matchers[field] || Algebrick.any
                             end
-                          when field_matchers.is_a?(::Array) && field_matchers.all? { |v| v.is_a? Symbol }
+
+                            # AProduct.(:field_name)
+                          when field_matchers.all? { |v| v.is_a? Symbol }
                             unless (dif = field_matchers - algebraic_type.field_names).empty?
                               raise ArgumentError, "no #{dif} fields in #{algebraic_type}"
                             end
@@ -976,6 +1095,7 @@ module Algebrick
                               field_matchers.include?(field) ? ~Algebrick.any : Algebrick.any
                             end
 
+                            # normal
                           else
                             field_matchers
                           end
@@ -1032,565 +1152,4 @@ module Algebrick
     end
   end
 
-  #class AbstractProductVariant < Type
-  #  def be_kind_of(type = nil)
-  #    if initialized?
-  #      be_kind_of! type if type
-  #      if @to_be_kind_of
-  #        while (type = @to_be_kind_of.shift)
-  #          be_kind_of! type
-  #        end
-  #      end
-  #    else
-  #      @to_be_kind_of ||= []
-  #      @to_be_kind_of << type if type
-  #    end
-  #    self
-  #  end
-  #
-  #  def add_field_method_accessor(field)
-  #    raise TypeError, 'no field names' unless @field_names
-  #    raise TypeError, "no field name #{field}" unless @field_names.include? field
-  #    define_method(field) { self[field] }
-  #    self
-  #  end
-  #
-  #  def add_field_method_accessors(*fields)
-  #    fields.each { |f| add_field_method_accessor f }
-  #    self
-  #  end
-  #
-  #  def add_all_field_method_accessors
-  #    add_field_method_accessors *@field_names
-  #  end
-  #
-  #  protected
-  #
-  #  def be_kind_of!(type)
-  #    raise NotImplementedError
-  #  end
-  #
-  #  private
-  #
-  #  def initialized?
-  #    !!@initialized
-  #  end
-  #
-  #  def initialize(name, &block)
-  #    super name, &block
-  #    @initialized = true
-  #    be_kind_of
-  #  end
-  #
-  #  def set_fields(fields_or_hash)
-  #    fields, keys = if fields_or_hash.size == 1 && fields_or_hash.first.is_a?(Hash)
-  #                     [fields_or_hash.first.values, fields_or_hash.first.keys]
-  #                   else
-  #                     [fields_or_hash, nil]
-  #                   end
-  #
-  #    set_field_names keys if keys
-  #
-  #    fields.all? { |f| is_kind_of! f, Type, Class }
-  #    raise TypeError, 'there is no product with zero fields' unless fields.size > 0
-  #    define_method(:value) { @fields.first } if fields.size == 1
-  #    @fields      = fields
-  #    @constructor = Class.new(ProductConstructor).tap { |c| c.type = self }
-  #  end
-  #
-  #  def set_field_names(names)
-  #    @field_names = names
-  #    names.all? { |k| is_kind_of! k, Symbol }
-  #    dict = @field_indexes =
-  #        Hash.new { |h, k| raise ArgumentError, "unknown field #{k.inspect} in #{self}" }.
-  #            update names.each_with_index.inject({}) { |h, (k, i)| h.update k => i }
-  #    define_method(:[]) { |key| @fields[dict[key]] }
-  #  end
-  #
-  #  def set_variants(variants)
-  #    variants.all? { |v| is_kind_of! v, Type, Class }
-  #    @variants = variants
-  #    variants.each do |v|
-  #      if v.respond_to? :be_kind_of
-  #        v.be_kind_of self
-  #      else
-  #        v.send :include, self
-  #      end
-  #    end
-  #  end
-  #
-  #  def product_be_kind_of(type)
-  #    @constructor.send :include, type
-  #  end
-  #
-  #  def construct_product(*fields)
-  #    @constructor.new *fields
-  #  end
-  #
-  #  def product_to_s
-  #    fields_str = if field_names
-  #                   field_names.zip(fields).map { |name, field| "#{name}: #{field.name}" }
-  #                 else
-  #                   fields.map(&:name)
-  #                 end
-  #    "#{name}(#{fields_str.join ', '})"
-  #  end
-  #
-  #  def product_from_hash(hash)
-  #    (type_name = hash[TYPE_KEY] || hash[TYPE_KEY.to_s]) or
-  #        raise ArgumentError, "hash does not have #{TYPE_KEY}"
-  #    raise ArgumentError, "#{type_name} is not #{name}" unless type_name == name
-  #
-  #    fields = hash[FIELDS_KEY] || hash[FIELDS_KEY.to_s] ||
-  #        hash.reject { |k, _| k.to_s == TYPE_KEY.to_s }
-  #    is_kind_of! fields, Hash, Array
-  #
-  #    case fields
-  #    when Array
-  #      self[*fields.map { |value| field_from_hash value }]
-  #    when Hash
-  #      self[fields.inject({}) do |h, (name, value)|
-  #        raise ArgumentError unless @field_names.map(&:to_s).include? name.to_s
-  #        h.update name.to_sym => field_from_hash(value)
-  #      end]
-  #    end
-  #  end
-  #
-  #  def field_from_hash(hash)
-  #    return hash unless Hash === hash
-  #    (type_name = hash[TYPE_KEY] || hash[TYPE_KEY.to_s]) or return hash
-  #    type = constantize type_name
-  #    type.from_hash hash
-  #  end
-  #
-  #  def constantize(camel_cased_word)
-  #    names = camel_cased_word.split('::')
-  #    names.shift if names.empty? || names.first.empty?
-  #
-  #    constant = Object
-  #    names.each do |name|
-  #      constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
-  #    end
-  #    constant
-  #  end
-  #end
-  #
-  #class Product < AbstractProductVariant
-  #  attr_reader :fields, :field_names, :field_indexes
-  #
-  #  def initialize(name, *fields, &block)
-  #    set_fields fields
-  #    super(name, &block)
-  #  end
-  #
-  #  def new(*fields)
-  #    construct_product(*fields)
-  #  end
-  #
-  #  alias_method :[], :new
-  #
-  #  def be_kind_of!(type)
-  #    product_be_kind_of type
-  #  end
-  #
-  #  def call(*field_matchers)
-  #    Matchers::Product.new self, *field_matchers
-  #  end
-  #
-  #  def to_m
-  #    call *::Array.new(fields.size) { Algebrick.any }
-  #  end
-  #
-  #  def ==(other)
-  #    other.kind_of? Product and fields == other.fields
-  #  end
-  #
-  #  def to_s
-  #    product_to_s
-  #  end
-  #
-  #  def from_hash(hash)
-  #    product_from_hash hash
-  #  end
-  #end
-  #
-  #class Variant < AbstractProductVariant
-  #  attr_reader :variants
-  #
-  #  def initialize(name, *variants, &block)
-  #    set_variants(variants)
-  #    super name, &block
-  #  end
-  #
-  #  def be_kind_of!(type)
-  #    variants.each { |v| v.be_kind_of type }
-  #  end
-  #
-  #  def to_m
-  #    Matchers::Variant.new self
-  #  end
-  #
-  #  def ==(other)
-  #    other.kind_of? Variant and variants == other.variants
-  #  end
-  #
-  #  def to_s
-  #    "#{name}(#{variants.map(&:name).join ' | '})"
-  #  end
-  #
-  #  def from_hash(hash)
-  #    field_from_hash hash
-  #  end
-  #end
-  #
-  #class ProductVariant < AbstractProductVariant
-  #  attr_reader :fields, :field_names, :field_indexes, :variants
-  #
-  #  def initialize(name, fields, variants, &block)
-  #    set_fields fields
-  #    raise unless variants.include? self
-  #    set_variants variants
-  #    super name, &block
-  #  end
-  #
-  #  def be_kind_of!(type)
-  #    variants.each { |v| v.be_kind_of type unless v == self }
-  #    product_be_kind_of type
-  #  end
-  #
-  #  def call(*field_matchers)
-  #    Matchers::Product.new self, *field_matchers
-  #  end
-  #
-  #  def to_m
-  #    Matchers::Variant.new self
-  #  end
-  #
-  #  def new(*fields)
-  #    construct_product(*fields)
-  #  end
-  #
-  #  alias_method :[], :new
-  #
-  #  def ==(other)
-  #    other.kind_of? ProductVariant and
-  #        variants == other.variants and fields == other.fields
-  #  end
-  #
-  #  def to_s
-  #    name + '(' +
-  #        variants.map do |variant|
-  #          if variant == self
-  #            product_to_s
-  #          else
-  #            variant.name
-  #          end
-  #        end.join(' | ') +
-  #        ')'
-  #  end
-  #
-  #  def from_hash(hash)
-  #    product_from_hash hash
-  #  end
-  #end
-
-  #module DSL
-  #  -> do
-  #    maybe[:a] === none | some(:a)
-  #    tree[:a] === tip | tree(:a, tree, tree)
-  #  end
-  #
-  #  -> do
-  #    maybe[:a].can_be none,
-  #                     some.has(:a)
-  #
-  #    maybe[:a].can_be none,
-  #                     some.having(:a)
-  #
-  #    maybe[:a].can_be none,
-  #                     some.having(:a)
-  #    tree.can_be tip,
-  #                tree.having(Object, tree, tree)
-  #
-  #    tree.can_be empty,
-  #                leaf.having(Object),
-  #                node.having(left: tree, right: tree)
-  #
-  #    tree do
-  #      # def ...
-  #    end
-  #  end
-  #
-  #  class PreType
-  #    include TypeCheck
-  #
-  #    attr_reader :environment, :name, :fields, :variants, :definition, :variables
-  #
-  #    def initialize(environment, name)
-  #      @environment = is_kind_of! environment, Environment
-  #      @name        = is_kind_of! name, String
-  #      @fields      = []
-  #      @variables   = []
-  #      @variants    = []
-  #      @definition  = nil
-  #    end
-  #
-  #    def const_name
-  #      @const_name ||= name.to_s.split('_').map { |s| s.tap { s[0] = s[0].upcase } }.join
-  #    end
-  #
-  #    #def |(other)
-  #    #  [self, other]
-  #    #end
-  #    #
-  #    #def to_ary
-  #    #  [self]
-  #    #end
-  #
-  #    def [](*variables)
-  #      variables.all? { |var| is_kind_of! var, Symbol }
-  #      @variables += variables
-  #      self
-  #    end
-  #
-  #    def fields=(fields)
-  #      raise 'fields can be defined only once' unless @fields.empty?
-  #      fields.each do |field|
-  #        if Hash === field
-  #          field.each do |k, v|
-  #            is_kind_of! k, Symbol
-  #            is_kind_of! v, PreType, Type, Class, Symbol
-  #            @variables.push v if v.is_a? Symbol
-  #          end
-  #        else
-  #          is_kind_of! field, PreType, Type, Class, Symbol
-  #          @variables += fields.select { |v| v.is_a? Symbol }
-  #        end
-  #      end
-  #      @fields += fields
-  #    end
-  #
-  #    def having(fields)
-  #      self.fields = fields
-  #      self
-  #    end
-  #
-  #    alias_method :has, :having
-  #
-  #    def fields_array
-  #      if (hash = @fields.find { |f| Hash === f })
-  #        hash.values
-  #      else
-  #        @fields
-  #      end
-  #    end
-  #
-  #    #def dependent(set = Set.new)
-  #    #  children = @variants + @fields
-  #    #  children.each do |a_type|
-  #    #    next if set.include? a_type
-  #    #    next unless a_type.respond_to? :dependent
-  #    #    set.add a_type
-  #    #    a_type.dependent set
-  #    #  end
-  #    #  set.to_a
-  #    #end
-  #
-  #    def definition=(block)
-  #      raise 'definition can be defined only once' if @definition
-  #      @definition = block
-  #    end
-  #
-  #    def can_be(*variants)
-  #      raise 'variants can be defined only once' unless @variants.empty?
-  #      @variants = variants
-  #      self
-  #    end
-  #
-  #    def no_variables?
-  #      !variables? and fields_array.select { |f| Symbol === f }.empty?
-  #    end
-  #
-  #    def variables?
-  #      not @variables.empty?
-  #    end
-  #
-  #    def kind
-  #      unless @variants.empty?
-  #        if @fields.empty?
-  #          Variant
-  #        else
-  #          ProductVariant
-  #        end
-  #      else
-  #        if @fields.empty?
-  #          Atom
-  #        else
-  #          Product
-  #        end
-  #      end
-  #    end
-  #  end
-  #
-  #  class TypeConstructor
-  #    include TypeCheck
-  #    attr_reader :const_name
-  #
-  #    def initialize(pre_types, const_name, variables)
-  #      warn "types with variables are experimental\n#{caller[0]}"
-  #      @pre_types  = is_kind_of! pre_types, Hash
-  #      @const_name = is_kind_of! const_name, String
-  #      @variables  = is_kind_of! variables, Array
-  #      @cache      = {}
-  #    end
-  #
-  #    def [](*variables)
-  #      variables.size == @variables.size or
-  #          raise ArgumentError, "variables size differs from #{@variables}"
-  #      @cache[variables] ||= begin
-  #
-  #        TypeFactory.new(@pre_types, Hash[@variables.zip(variables)]).define.tap do |types|
-  #          types.each do |name, type|
-  #
-  #          end
-  #        end
-  #      end
-  #    end
-  #
-  #    def to_s
-  #      const_name + @variables.inspect
-  #    end
-  #
-  #    def inspect
-  #      to_s
-  #    end
-  #  end
-  #
-  #  class TypeFactory
-  #    include TypeCheck
-  #
-  #    def initialize(pre_types, variable_mapping)
-  #      @pre_types        = is_kind_of! pre_types, Hash
-  #      @variable_mapping = is_kind_of! variable_mapping, Hash
-  #      @types            = {}
-  #    end
-  #
-  #    def define
-  #      define_types
-  #      define_fields_and_variants
-  #      eval_definitions
-  #
-  #      @types
-  #    end
-  #
-  #    private
-  #
-  #    def define_types
-  #      @pre_types.each do |name, pre_type|
-  #        @types[name] = pre_type.kind.allocate
-  #      end
-  #    end
-  #
-  #    def define_fields_and_variants
-  #      select = ->(klass, &block) do
-  #        @pre_types.select { |_, pre_type| pre_type.kind == klass }.each &block
-  #      end
-  #
-  #      select.(Atom) do |name, pre_type|
-  #        @types[name].send :initialize, type_name(pre_type)
-  #      end
-  #
-  #      select.(Product) do |name, pre_type|
-  #        @types[name].send :initialize, type_name(pre_type), *pre_type.fields.map { |f| get_class f }
-  #      end
-  #
-  #      select.(Variant) do |name, pre_type|
-  #        @types[name].send :initialize, type_name(pre_type), *pre_type.variants.map { |v| get_class v }
-  #      end
-  #
-  #      select.(ProductVariant) do |name, pre_type|
-  #        @types[name].send :initialize, type_name(pre_type),
-  #                          pre_type.fields.map { |f| get_class f },
-  #                          pre_type.variants.map { |v| get_class v }
-  #      end
-  #    end
-  #
-  #    def eval_definitions
-  #      @pre_types.each do |name, pre_type|
-  #        next unless pre_type.definition
-  #        type = get_class name
-  #        type.module_eval &pre_type.definition
-  #      end
-  #    end
-  #
-  #    def get_class(key)
-  #      if key.kind_of? Symbol
-  #        @variable_mapping[key] or raise "missing variable mapping for #{key}"
-  #      elsif key.kind_of? String
-  #        @types[key] or raise ArgumentError
-  #      elsif key.kind_of? PreType
-  #        @types[key.name]
-  #      elsif key.kind_of? Hash
-  #        key.each { |k, v| key[k] = get_class v }
-  #      else
-  #        key
-  #      end
-  #    end
-  #
-  #    def type_name(pre_type)
-  #      pre_type.const_name + if pre_type.variables?
-  #                              '[' + pre_type.variables.map { |v| @variable_mapping[v] } * ',' + ']'
-  #                            else
-  #                              ''
-  #                            end
-  #    end
-  #  end
-  #
-  #  class Environment
-  #    attr_reader :pre_types
-  #    def initialize(&definition)
-  #      @pre_types = {}
-  #      @types     = {}
-  #      instance_eval &definition
-  #    end
-  #
-  #    def method_missing(method, *fields, &definition)
-  #      name                        = method.to_s
-  #      @pre_types[name]            ||= PreType.new(self, name)
-  #      @pre_types[name].fields     = fields unless fields.empty?
-  #      @pre_types[name].definition = definition if definition
-  #      @pre_types[name]
-  #    end
-  #
-  #    def run
-  #      pre_types = @pre_types.select { |_, pt| pt.no_variables? }
-  #      types     = TypeFactory.new(pre_types, {}).define
-  #      constants = pre_types.inject({}) do |hash, (name, pre_type)|
-  #        hash.update pre_type.const_name => types[name]
-  #      end
-  #
-  #      pre_constructors = @pre_types.select { |_, pt| pt.variables? }
-  #      constructors     = pre_constructors.inject({}) do |hash, (name, pt)|
-  #        pre_types = Hash[([pt] + pt.dependent).map { |pt| [pt.name, pt] }]
-  #        hash.update name => TypeConstructor.new(pre_types, pt.const_name, pt.variables)
-  #      end
-  #
-  #      constants.update Hash[constructors.map { |name, c| [c.const_name, c] }]
-  #
-  #      @pre_types.map { |name, pre_type| types[name] || constructors[name] || raise("missing #{name}") }
-  #    end
-  #
-  #    private
-  #
-  #    #def define_constants(map)
-  #    #  map.each { |const_name, value| @base.const_set const_name.to_sym, value } if @base
-  #    #end
-  #  end
-  #
-  #  def type_def(&definition)
-  #    Environment.new(&definition).run
-  #  end
-  #end
-
-  #extend DSL
 end
