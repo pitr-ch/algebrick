@@ -78,7 +78,7 @@
   
   
     <dt class="r1">Included in:</dt>
-    <dd class="r1"><span class='object_link'><a href="Matchers/Abstract.html" title="Algebrick::Matchers::Abstract (class)">Matchers::Abstract</a></span>, <span class='object_link'><a href="Type.html" title="Algebrick::Type (class)">Type</a></span>, <span class='object_link'><a href="Value.html" title="Algebrick::Value (module)">Value</a></span></dd>
+    <dd class="r1"><span class='object_link'><a href="DSL/TypeDefinitionScope.html" title="Algebrick::DSL::TypeDefinitionScope (class)">DSL::TypeDefinitionScope</a></span>, <span class='object_link'><a href="Matchers/Abstract.html" title="Algebrick::Matchers::Abstract (class)">Matchers::Abstract</a></span>, <span class='object_link'><a href="ParametrizedType.html" title="Algebrick::ParametrizedType (class)">ParametrizedType</a></span>, <span class='object_link'><a href="Type.html" title="Algebrick::Type (class)">Type</a></span>, <span class='object_link'><a href="Value.html" title="Algebrick::Value (module)">Value</a></span></dd>
     
   
   
@@ -120,7 +120,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+</div></span>
   
 </li>
 
@@ -142,7 +143,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+</div></span>
   
 </li>
 
@@ -164,7 +166,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+</div></span>
   
 </li>
 
@@ -186,7 +189,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+</div></span>
   
 </li>
 
@@ -208,7 +212,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+</div></span>
   
 </li>
 
@@ -237,6 +242,12 @@
       <pre class="lines">
 
 
+54
+55
+56
+57
+58
+59
 60
 61
 62
@@ -246,16 +257,10 @@
 66
 67
 68
-69
-70
-71
-72
-73
-74
-75</pre>
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_a_type_check'>a_type_check</span><span class='lparen'>(</span><span class='id identifier rubyid_which'>which</span><span class='comma'>,</span> <span class='id identifier rubyid_bang'>bang</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ok'>ok</span> <span class='op'>=</span> <span class='id identifier rubyid_types'>types</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span>
@@ -293,12 +298,12 @@
       <pre class="lines">
 
 
-46
-47
-48</pre>
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_kind_of!'>is_kind_of!</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a_type_check'>a_type_check</span> <span class='symbol'>:kind_of?</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
@@ -320,6 +325,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
+
 
   </div>
 </div>
@@ -345,12 +351,12 @@
       <pre class="lines">
 
 
-42
-43
-44</pre>
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_kind_of?'>is_kind_of?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a_type_check'>a_type_check</span> <span class='symbol'>:kind_of?</span><span class='comma'>,</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
@@ -375,12 +381,12 @@
       <pre class="lines">
 
 
-54
-55
-56</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_matching!'>is_matching!</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a_type_check'>a_type_check</span> <span class='symbol'>:===</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
@@ -402,6 +408,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
+
 
   </div>
 </div>
@@ -427,12 +434,12 @@
       <pre class="lines">
 
 
-50
-51
-52</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_matching?'>is_matching?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a_type_check'>a_type_check</span> <span class='symbol'>:===</span><span class='comma'>,</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span>
@@ -447,9 +454,9 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Sep 19 13:23:12 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Wed Oct  2 18:50:03 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.1 (ruby-2.0.0).
+  0.8.7.2 (ruby-2.0.0).
 </div>
 
 <script>

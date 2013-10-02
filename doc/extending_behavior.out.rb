@@ -18,17 +18,22 @@ None.maybe { |_| raise 'never ever happens' }      # => nil
 # block is called with the value
 Some[1].maybe { |v| v*2 }                          # => 2
 
-# when only a Some is extended
+# when only subtypes are extended
 module Some
   def i_am
     true
   end
 end                                                # => nil
 
-begin
-  None.i_am
-rescue => e
-  e
-end
+module None
+  def i_am_not
+    true
+  end
+end                                                # => nil
+
+None.i_am rescue $!
 # => #<NoMethodError: undefined method `i_am' for None:Algebrick::Atom>
-Some[1].i_am                                       # => true
+None.i_am_not rescue $!                            # => true
+Some[1].i_am rescue $!                             # => true
+Some[1].i_am_not rescue $!
+# => #<NoMethodError: undefined method `i_am_not' for Some[1]:#<Class:0x007fd968aa6da8>>

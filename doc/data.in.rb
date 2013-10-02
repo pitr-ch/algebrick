@@ -27,47 +27,36 @@ tree.depth
 
 # Domain model specification
 Arch = Algebrick.type do
-  I386  = type
-  Amd64 = type
-  Armel = type
-  # ... other architectures omitted
-
-  variants I386, Amd64, Armel
+  variants I386 = atom, Amd64 = atom, Armel = atom
 end
 
 Package = Algebrick.type do
   Deb = type do
-    fields id:       String,
-           version:  String,
-           revision: Integer,
-           arch:     Arch
-    all_readers
+    fields! id:       String, version: String,
+            revision: Integer, arch: Arch
   end
   Rpm = type do
-    fields id:      String,
-           version: String,
-           release: Integer,
-           arch:    Arch
-    all_readers
+    fields! id:      String, version: String,
+            release: Integer, arch: Arch
   end
-
   variants Deb, Rpm
 end
 
 module Package
   def pkg_name
     match self,
-          Deb >-> { "#{id}_#{version}-#{revision}_#{arch.pkg_name}.deb" },
-          Rpm >-> { "#{id}-#{version}-#{release}-#{arch.pkg_name}.rpm" }
+          Deb >-> { '%s_%s-%s_%s.deb' % self },
+          Rpm >-> { '%s-%s-%s-%s.rpm' % self }
   end
 end
 
 module Arch
-  def pkg_name
-    match self,
-          I386  => 'i386',
-          Amd64 => 'amd64',
-          Armel => 'armel'
+  def to_s
+    name.downcase
+    #match self,
+    #      I386  => 'i386',
+    #      Amd64 => 'amd64',
+    #      Armel => 'armel'
   end
 end
 

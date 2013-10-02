@@ -78,7 +78,7 @@
   
   
     <dt class="r1">Included in:</dt>
-    <dd class="r1"><span class='object_link'><a href="OuterShellImpl.html" title="Algebrick::DSL::OuterShellImpl (class)">OuterShellImpl</a></span>, <span class='object_link'><a href="TypeDefinitionScope.html" title="Algebrick::DSL::TypeDefinitionScope (class)">TypeDefinitionScope</a></span></dd>
+    <dd class="r1"><span class='object_link'><a href="OuterShell.html" title="Algebrick::DSL::OuterShell (class)">OuterShell</a></span>, <span class='object_link'><a href="TypeDefinitionScope.html" title="Algebrick::DSL::TypeDefinitionScope (class)">TypeDefinitionScope</a></span></dd>
     
   
   
@@ -120,7 +120,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+</div></span>
   
 </li>
 
@@ -128,7 +129,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#type-instance_method" title="#type (instance method)">- (Object) <strong>type</strong>(&amp;block) </a>
+      <a href="#type-instance_method" title="#type (instance method)">- (Object) <strong>type</strong>(*variables, &amp;block) </a>
     
 
     
@@ -142,7 +143,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+</div></span>
   
 </li>
 
@@ -171,12 +173,12 @@
       <pre class="lines">
 
 
-568
-569
-570</pre>
+655
+656
+657</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 568</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 655</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_atom'>atom</span>
   <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_atom'>atom</span>
@@ -189,7 +191,7 @@
       <div class="method_details ">
   <h3 class="signature " id="type-instance_method">
   
-    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>type</strong>(&amp;block) 
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>type</strong>(*variables, &amp;block) 
   
 
   
@@ -201,15 +203,15 @@
       <pre class="lines">
 
 
-564
-565
-566</pre>
+651
+652
+653</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 564</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 651</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_variables'>variables</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>*</span><span class='id identifier rubyid_variables'>variables</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -221,9 +223,9 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Sep 19 13:23:12 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Wed Oct  2 18:50:03 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.1 (ruby-2.0.0).
+  0.8.7.2 (ruby-2.0.0).
 </div>
 
 <script>

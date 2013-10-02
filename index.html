@@ -61,17 +61,17 @@
 
     <iframe id="search_frame"></iframe>
 
-    <div id="content"><div id='filecontents'><h1>Algebrick</h1>
+    <div id="content"><div id='filecontents'><h1 id="algebrick">Algebrick</h1>
 
 <p>Is a small gem providing <strong>algebraic types</strong> and <strong>pattern matching</strong> on them for Ruby.</p>
 
 <ul>
-<li>  Documentation: <a href="http://blog.pitr.ch/algebrick">http://blog.pitr.ch/algebrick</a></li>
-<li>  Source: <a href="https://github.com/pitr-ch/algebrick">https://github.com/pitr-ch/algebrick</a></li>
-<li>  Blog: <a href="http://blog.pitr.ch/blog/categories/algebrick/">http://blog.pitr.ch/blog/categories/algebrick/</a></li>
+  <li>Documentation: <a href="http://blog.pitr.ch/algebrick">http://blog.pitr.ch/algebrick</a></li>
+  <li>Source: <a href="https://github.com/pitr-ch/algebrick">https://github.com/pitr-ch/algebrick</a></li>
+  <li>Blog: <a href="http://blog.pitr.ch/blog/categories/algebrick/">http://blog.pitr.ch/blog/categories/algebrick/</a></li>
 </ul>
 
-<h2>Quick example</h2>
+<h2 id="quick-example">Quick example</h2>
 
 <p><pre class="code ruby"><span class='comment'># define algebraic types
 </span><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
@@ -102,7 +102,7 @@
 </span><span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>4</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>                         <span class='comment'># =&gt; 2
 </span><span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>            <span class='comment'># =&gt; 3</span></pre></p>
 
-<h2>Algebraic types: what is it?</h2>
+<h2 id="algebraic-types-what-is-it">Algebraic types: what is it?</h2>
 
 <p>If you ever read something about Haskell that you probably know:</p>
 
@@ -133,15 +133,15 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 <p>There are 4 kinds of algebraic types:</p>
 
 <ol>
-<li> <strong>Atom</strong> a type that has only one value e.g. <code>Empty</code>.</li>
-<li> <strong>Product</strong> a type that has a set number of fields with given type e.g. <code>Leaf(Integer)</code></li>
-<li> <strong>Variant</strong> a type that does have set number of variants e.g. <code>Tree(Empty | Leaf(Integer) | Node(Tree, Tree)</code>. It means that values of <code>Empty</code>, <code>Leaf[1]</code>, <code>Node[Empty, Empry]</code> are all of type <code>Tree</code>.</li>
-<li> <strong>ProductVariant</strong> will be created when a recursive type like <code>List(Empty | List(Integer, List))</code> is defined. <code>List</code> has two variants <code>Empty</code> and itself, and simultaneously it has fields as product type.</li>
+  <li><strong>Atom</strong> a type that has only one value e.g. <code>Empty</code>.</li>
+  <li><strong>Product</strong> a type that has a set number of fields with given type e.g. <code>Leaf(Integer)</code></li>
+  <li><strong>Variant</strong> a type that does have set number of variants e.g. <code>Tree(Empty | Leaf(Integer) | Node(Tree, Tree)</code>. It means that values of <code>Empty</code>, <code>Leaf[1]</code>, <code>Node[Empty, Empry]</code> are all of type <code>Tree</code>.</li>
+  <li><strong>ProductVariant</strong> will be created when a recursive type like <code>List(Empty | List(Integer, List))</code> is defined. <code>List</code> has two variants <code>Empty</code> and itself, and simultaneously it has fields as product type.</li>
 </ol>
 
 <p>Atom type is implemented with <span class='object_link'><a href="Algebrick/Atom.html" title="Algebrick::Atom (class)">Algebrick::Atom</a></span> and the rest is implemented with <span class='object_link'><a href="Algebrick/ProductVariant.html" title="Algebrick::ProductVariant (class)">Algebrick::ProductVariant</a></span> which behaves differently based on what is set: fields, variants or both.</p>
 
-<h3>Type definition</h3>
+<h3 id="type-definition">Type definition</h3>
 
 <p><pre class="code ruby"><span class='comment'># Let&#39;s define some types
 </span><span class='const'>None</span>  <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>                             <span class='comment'># =&gt; None
@@ -161,9 +161,12 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
   <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Leaf</span><span class='comma'>,</span> <span class='const'>Node</span>
-<span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree(Empty | Leaf | Node)</span></pre></p>
+<span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree(Empty | Leaf | Node)
+</span><span class='const'>Empty</span>                                              <span class='comment'># =&gt; Empty
+</span><span class='const'>Leaf</span>                                               <span class='comment'># =&gt; Leaf(Integer)
+</span><span class='const'>Node</span>                                               <span class='comment'># =&gt; Node(Tree, Tree)</span></pre></p>
 
-<h3>Value creation</h3>
+<h3 id="value-creation">Value creation</h3>
 
 <p><pre class="code ruby"><span class='comment'># lets define a Tree
 </span><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
@@ -225,13 +228,13 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
     <span class='id identifier rubyid_e'>e</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>
-<span class='comment'># =&gt; #&lt;Proc:0x007fabc28fc198@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:56 (lambda)&gt;
+<span class='comment'># =&gt; #&lt;Proc:0x007fd9699e23a8@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:56 (lambda)&gt;
 </span><span class='id identifier rubyid_try'>try</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='lbrace'>{</span> <span class='const'>Leaf</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
 <span class='comment'># =&gt; #&lt;TypeError: value (String) &#39;a&#39; is not #kind_of? any of Integer&gt;
 </span><span class='id identifier rubyid_try'>try</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='lbrace'>{</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
 <span class='comment'># =&gt; #&lt;TypeError: value (NilClass) &#39;&#39; is not #kind_of? any of Tree(Empty | Leaf | Node)&gt;</span></pre></p>
 
-<h3>Extending behavior</h3>
+<h3 id="extending-behavior">Extending behavior</h3>
 
 <p><pre class="code ruby"><span class='const'>None</span>  <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>                             <span class='comment'># =&gt; None
 </span><span class='const'>Some</span>  <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Object</span> <span class='rbrace'>}</span>           <span class='comment'># =&gt; Some(Object)
@@ -253,22 +256,27 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 </span><span class='comment'># block is called with the value
 </span><span class='const'>Some</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_maybe'>maybe</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_v'>v</span><span class='op'>*</span><span class='int'>2</span> <span class='rbrace'>}</span>                          <span class='comment'># =&gt; 2
 </span>
-<span class='comment'># when only a Some is extended
+<span class='comment'># when only subtypes are extended
 </span><span class='kw'>module</span> <span class='const'>Some</span>
   <span class='kw'>def</span> <span class='id identifier rubyid_i_am'>i_am</span>
     <span class='kw'>true</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
 </span>
-<span class='kw'>begin</span>
-  <span class='const'>None</span><span class='period'>.</span><span class='id identifier rubyid_i_am'>i_am</span>
-<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-  <span class='id identifier rubyid_e'>e</span>
-<span class='kw'>end</span>
+<span class='kw'>module</span> <span class='const'>None</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_i_am_not'>i_am_not</span>
+    <span class='kw'>true</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
+</span>
+<span class='const'>None</span><span class='period'>.</span><span class='id identifier rubyid_i_am'>i_am</span> <span class='kw'>rescue</span> <span class='gvar'>$!</span>
 <span class='comment'># =&gt; #&lt;NoMethodError: undefined method `i_am&#39; for None:Algebrick::Atom&gt;
-</span><span class='const'>Some</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_i_am'>i_am</span>                                       <span class='comment'># =&gt; true</span></pre></p>
+</span><span class='const'>None</span><span class='period'>.</span><span class='id identifier rubyid_i_am_not'>i_am_not</span> <span class='kw'>rescue</span> <span class='gvar'>$!</span>                            <span class='comment'># =&gt; true
+</span><span class='const'>Some</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_i_am'>i_am</span> <span class='kw'>rescue</span> <span class='gvar'>$!</span>                             <span class='comment'># =&gt; true
+</span><span class='const'>Some</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_i_am_not'>i_am_not</span> <span class='kw'>rescue</span> <span class='gvar'>$!</span>
+<span class='comment'># =&gt; #&lt;NoMethodError: undefined method `i_am_not&#39; for Some[1]:#&lt;Class:0x007fd968aa6da8&gt;&gt;</span></pre></p>
 
-<h3>Pattern matching</h3>
+<h3 id="pattern-matching">Pattern matching</h3>
 
 <p>Algebraic matchers are helper objects to match algebraic values and others with
 <code>#===</code> method based on theirs initialization values.</p>
@@ -395,9 +403,41 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
         <span class='lbracket'>[</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_right_value'>right_value</span><span class='rbracket'>]</span>
       <span class='kw'>end</span>                                          <span class='comment'># =&gt; [1.5, 4.5]</span></pre></p>
 
-<h2>What is it good for?</h2>
+<h3 id="parametrized-types">Parametrized types</h3>
 
-<h3>Defining data with a given structure</h3>
+<p><pre class="code ruby"><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='symbol'>:v</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
+  <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span>
+  <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='symbol'>:v</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>value:</span> <span class='symbol'>:v</span> <span class='rbrace'>}</span>
+  <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='symbol'>:v</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>left:</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Leaf</span><span class='comma'>,</span> <span class='const'>Node</span>
+<span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree[v]
+</span>
+<span class='kw'>module</span> <span class='const'>Tree</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_depth'>depth</span>
+    <span class='id identifier rubyid_match'>match</span> <span class='kw'>self</span><span class='comma'>,</span>
+          <span class='const'>Empty</span> <span class='op'>&gt;&gt;</span> <span class='int'>0</span><span class='comma'>,</span>
+          <span class='const'>Leaf</span> <span class='op'>&gt;&gt;</span> <span class='int'>1</span><span class='comma'>,</span>
+          <span class='const'>Node</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='comma'>,</span> <span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='rparen'>)</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span> <span class='kw'>do</span>
+            <span class='int'>1</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='id identifier rubyid_left'>left</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
+          <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
+</span>
+<span class='const'>Leaf</span><span class='lbracket'>[</span><span class='const'>Integer</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='kw'>rescue</span> <span class='gvar'>$!</span>
+<span class='comment'># =&gt; #&lt;TypeError: value (String) &#39;1&#39; is not #kind_of? any of Integer&gt;
+</span><span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Integer</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='const'>String</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span> <span class='kw'>rescue</span> <span class='gvar'>$!</span>
+<span class='comment'># =&gt; #&lt;TypeError: value (#&lt;Class:0x007fd968aad8b0&gt;) &#39;Leaf[String][value: a]&#39; is not #kind_of? any of Tree[Integer](Empty | Leaf[Integer] | Node[Integer])&gt;
+</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='const'>String</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>                                  <span class='comment'># =&gt; Leaf[String][value: 1]
+</span>
+<span class='id identifier rubyid_itree'>itree</span> <span class='op'>=</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Integer</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='const'>Integer</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span>
+<span class='comment'># =&gt; Node[Integer][left: Leaf[Integer][value: 2], right: Empty]
+</span><span class='id identifier rubyid_itree'>itree</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>                                        <span class='comment'># =&gt; 2
+</span><span class='id identifier rubyid_stree'>stree</span> <span class='op'>=</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>String</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span>                 <span class='comment'># =&gt; Node[String][left: Empty, right: Empty]
+</span><span class='id identifier rubyid_stree'>stree</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>                                        <span class='comment'># =&gt; 1</span></pre></p>
+
+<h2 id="what-is-it-good-for">What is it good for?</h2>
+
+<h3 id="defining-data-with-a-given-structure">Defining data with a given structure</h3>
 
 <p><pre class="code ruby"><span class='id identifier rubyid_extend'>extend</span> <span class='const'>Algebrick</span><span class='op'>::</span><span class='const'>Matching</span>                         <span class='comment'># =&gt; main
 </span>
@@ -429,54 +469,43 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 </span>
 <span class='comment'># Domain model specification
 </span><span class='const'>Arch</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span>
-  <span class='const'>I386</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='const'>Amd64</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='const'>Armel</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='comment'># ... other architectures omitted
-</span>
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>I386</span><span class='comma'>,</span> <span class='const'>Amd64</span><span class='comma'>,</span> <span class='const'>Armel</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>I386</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span> <span class='const'>Amd64</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span> <span class='const'>Armel</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Arch(I386 | Amd64 | Armel)
 </span>
 <span class='const'>Package</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span>
   <span class='const'>Deb</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_fields'>fields</span> <span class='label'>id:</span>       <span class='const'>String</span><span class='comma'>,</span>
-           <span class='label'>version:</span>  <span class='const'>String</span><span class='comma'>,</span>
-           <span class='label'>revision:</span> <span class='const'>Integer</span><span class='comma'>,</span>
-           <span class='label'>arch:</span>     <span class='const'>Arch</span>
-    <span class='id identifier rubyid_all_readers'>all_readers</span>
+    <span class='id identifier rubyid_fields!'>fields!</span> <span class='label'>id:</span>       <span class='const'>String</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='const'>String</span><span class='comma'>,</span>
+            <span class='label'>revision:</span> <span class='const'>Integer</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='const'>Arch</span>
   <span class='kw'>end</span>
   <span class='const'>Rpm</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_fields'>fields</span> <span class='label'>id:</span>      <span class='const'>String</span><span class='comma'>,</span>
-           <span class='label'>version:</span> <span class='const'>String</span><span class='comma'>,</span>
-           <span class='label'>release:</span> <span class='const'>Integer</span><span class='comma'>,</span>
-           <span class='label'>arch:</span>    <span class='const'>Arch</span>
-    <span class='id identifier rubyid_all_readers'>all_readers</span>
+    <span class='id identifier rubyid_fields!'>fields!</span> <span class='label'>id:</span>      <span class='const'>String</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='const'>String</span><span class='comma'>,</span>
+            <span class='label'>release:</span> <span class='const'>Integer</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='const'>Arch</span>
   <span class='kw'>end</span>
-
   <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Deb</span><span class='comma'>,</span> <span class='const'>Rpm</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Package(Deb | Rpm)
 </span>
 <span class='kw'>module</span> <span class='const'>Package</span>
   <span class='kw'>def</span> <span class='id identifier rubyid_pkg_name'>pkg_name</span>
     <span class='id identifier rubyid_match'>match</span> <span class='kw'>self</span><span class='comma'>,</span>
-          <span class='const'>Deb</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_revision'>revision</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_arch'>arch</span><span class='period'>.</span><span class='id identifier rubyid_pkg_name'>pkg_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.deb</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
-          <span class='const'>Rpm</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_release'>release</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_arch'>arch</span><span class='period'>.</span><span class='id identifier rubyid_pkg_name'>pkg_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.rpm</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+          <span class='const'>Deb</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%s_%s-%s_%s.deb</span><span class='tstring_end'>&#39;</span></span> <span class='op'>%</span> <span class='kw'>self</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+          <span class='const'>Rpm</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%s-%s-%s-%s.rpm</span><span class='tstring_end'>&#39;</span></span> <span class='op'>%</span> <span class='kw'>self</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
 </span>
 <span class='kw'>module</span> <span class='const'>Arch</span>
-  <span class='kw'>def</span> <span class='id identifier rubyid_pkg_name'>pkg_name</span>
-    <span class='id identifier rubyid_match'>match</span> <span class='kw'>self</span><span class='comma'>,</span>
-          <span class='const'>I386</span>  <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>i386</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-          <span class='const'>Amd64</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>amd64</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-          <span class='const'>Armel</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>armel</span><span class='tstring_end'>&#39;</span></span>
-  <span class='kw'>end</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
+    <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span>
+    <span class='comment'>#match self,
+</span>    <span class='comment'>#      I386  =&gt; &#39;i386&#39;,
+</span>    <span class='comment'>#      Amd64 =&gt; &#39;amd64&#39;,
+</span>    <span class='comment'>#      Armel =&gt; &#39;armel&#39;
+</span>  <span class='kw'>end</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
 </span>
 <span class='id identifier rubyid_dep'>dep</span> <span class='op'>=</span> <span class='const'>Deb</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>apt</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.2.3</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>4</span><span class='comma'>,</span> <span class='const'>I386</span><span class='rbracket'>]</span>
-<span class='comment'># =&gt; Deb[id: apt, version: 1.2.3, revision: 4, arch: I386]
+<span class='comment'># =&gt; Deb[id: apt, version: 1.2.3, revision: 4, arch: i386]
 </span><span class='id identifier rubyid_rom'>rom</span> <span class='op'>=</span> <span class='const'>Rpm</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>yum</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.2.3</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>4</span><span class='comma'>,</span> <span class='const'>Amd64</span><span class='rbracket'>]</span>
-<span class='comment'># =&gt; Rpm[id: yum, version: 1.2.3, release: 4, arch: Amd64]
+<span class='comment'># =&gt; Rpm[id: yum, version: 1.2.3, release: 4, arch: amd64]
 </span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_pkg_name'>pkg_name</span>                                       <span class='comment'># =&gt; &quot;apt_1.2.3-4_i386.deb&quot;
 </span><span class='id identifier rubyid_rom'>rom</span><span class='period'>.</span><span class='id identifier rubyid_pkg_name'>pkg_name</span>                                       <span class='comment'># =&gt; &quot;yum-1.2.3-4-amd64.rpm&quot;
 </span>
@@ -499,7 +528,7 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 </span><span class='id identifier rubyid_add'>add</span> <span class='int'>2</span> <span class='kw'>rescue</span> <span class='gvar'>$!</span>
 <span class='comment'># =&gt; #&lt;RuntimeError: no match for (Fixnum) &#39;2&#39; by any of None.to_m, Some.(~any)&gt;</span></pre></p>
 
-<h3>Serialization</h3>
+<h3 id="serialization">Serialization</h3>
 
 <p>Algebraic types also play nice with JSON serialization and deserialization. It is ideal for defining
 messege-based cross-process comunication.</p>
@@ -545,7 +574,7 @@ messege-based cross-process comunication.</p>
 <span class='comment'># receive response
 </span><span class='const'>Message</span><span class='period'>.</span><span class='id identifier rubyid_from_hash'>from_hash</span><span class='lparen'>(</span><span class='const'>MultiJson</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_response_raw'>response_raw</span><span class='rparen'>)</span><span class='rparen'>)</span>    <span class='comment'># =&gt; Success[User[login: root, password: lajDh4]]</span></pre></p>
 
-<h3>Null Object Pattern</h3>
+<h3 id="null-object-pattern">Null Object Pattern</h3>
 
 <p>see <a href="http://en.wikipedia.org/wiki/Null_Object_pattern#Ruby" target="_parent" title="http://en.wikipedia.org/wiki/Null_Object_pattern#Ruby">http://en.wikipedia.org/wiki/Null_Object_pattern#Ruby</a>.</p>
 
@@ -555,34 +584,27 @@ messege-based cross-process comunication.</p>
   <span class='kw'>true</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
 </span>
-<span class='const'>Contact</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span>
-  <span class='const'>Null</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Null</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span>
+<span class='const'>Contact</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_contact'>contact</span><span class='op'>|</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Null</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span> <span class='id identifier rubyid_contact'>contact</span>
   <span class='id identifier rubyid_fields'>fields</span> <span class='label'>username:</span> <span class='const'>String</span><span class='comma'>,</span> <span class='label'>email:</span> <span class='const'>String</span>
 <span class='kw'>end</span>
 <span class='comment'># =&gt; Contact(Null | Contact(username: String, email: String))
 </span>
 <span class='kw'>module</span> <span class='const'>Contact</span>
-  <span class='kw'>def</span> <span class='id identifier rubyid_null?'>null?</span>
-    <span class='const'>Null</span> <span class='op'>===</span> <span class='kw'>self</span>
-  <span class='kw'>end</span>
-
   <span class='kw'>def</span> <span class='id identifier rubyid_username'>username</span>
     <span class='id identifier rubyid_match'>match</span> <span class='kw'>self</span><span class='comma'>,</span>
-          <span class='const'>Null</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span> <span class='op'>&gt;&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>no name</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-          <span class='const'>Contact</span><span class='period'>.</span><span class='lparen'>(</span><span class='rparen'>)</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:username</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+          <span class='const'>Null</span> <span class='op'>&gt;&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>no name</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+          <span class='const'>Contact</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:username</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
-
   <span class='kw'>def</span> <span class='id identifier rubyid_email'>email</span>
     <span class='id identifier rubyid_match'>match</span> <span class='kw'>self</span><span class='comma'>,</span>
-          <span class='const'>Null</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span> <span class='op'>&gt;&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>no email</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-          <span class='const'>Contact</span><span class='period'>.</span><span class='lparen'>(</span><span class='rparen'>)</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:email</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+          <span class='const'>Null</span> <span class='op'>&gt;&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>no email</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+          <span class='const'>Contact</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:email</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
-
   <span class='kw'>def</span> <span class='id identifier rubyid_deliver_personalized_email'>deliver_personalized_email</span>
     <span class='id identifier rubyid_match'>match</span> <span class='kw'>self</span><span class='comma'>,</span>
-          <span class='const'>Null</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span> <span class='op'>&gt;&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
-          <span class='const'>Contact</span><span class='period'>.</span><span class='lparen'>(</span><span class='rparen'>)</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_deliver_email'>deliver_email</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+          <span class='const'>Null</span> <span class='op'>&gt;&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+          <span class='const'>Contact</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_deliver_email'>deliver_email</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
 </span>
@@ -599,7 +621,7 @@ messege-based cross-process comunication.</p>
 <p>This has advantage over a classical approach that the methods are defined
 on one place, no need to track methods in two separate classes <code>User</code> and <code>NullUser</code>.</p>
 
-<h3>Message matching in Actor pattern</h3>
+<h3 id="message-matching-in-actor-pattern">Message matching in Actor pattern</h3>
 
 <p>Just small snippet from a gem I am still working on.</p>
 
@@ -620,9 +642,9 @@ on one place, no need to track methods in two separate classes <code>User</code>
 </div></div>
 
     <div id="footer">
-  Generated on Thu Sep 19 13:23:10 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Wed Oct  2 18:50:02 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.1 (ruby-2.0.0).
+  0.8.7.2 (ruby-2.0.0).
 </div>
 
 <script>

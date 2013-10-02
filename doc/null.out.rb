@@ -4,34 +4,27 @@ def deliver_email(email)
   true
 end                                                # => nil
 
-Contact = Algebrick.type do |c|
-  Null = type
-  variants Null, c
+Contact = Algebrick.type do |contact|
+  variants Null = atom, contact
   fields username: String, email: String
 end
 # => Contact(Null | Contact(username: String, email: String))
 
 module Contact
-  def null?
-    Null === self
-  end
-
   def username
     match self,
-          Null.to_m >> 'no name',
-          Contact.() >-> { self[:username] }
+          Null >> 'no name',
+          Contact >-> { self[:username] }
   end
-
   def email
     match self,
-          Null.to_m >> 'no email',
-          Contact.() >-> { self[:email] }
+          Null >> 'no email',
+          Contact >-> { self[:email] }
   end
-
   def deliver_personalized_email
     match self,
-          Null.to_m >> true,
-          Contact.() >-> { deliver_email(self.email) }
+          Null >> true,
+          Contact >-> { deliver_email(self.email) }
   end
 end                                                # => nil
 
