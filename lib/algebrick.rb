@@ -129,10 +129,6 @@ module Algebrick
       !to_m
     end
 
-    def -(block)
-      to_m - block
-    end
-
     def case(&block)
       to_m.case &block
     end
@@ -378,23 +374,6 @@ module Algebrick
 
     def add_all_field_method_readers
       add_field_method_readers *@field_names
-    end
-
-    raise 'remove deprecation' if Algebrick.version >= Gem::Version.new('0.3')
-
-    def add_all_field_method_accessors
-      warn "add_all_field_method_accessors is deprecated, it'll be removed in 0.3\n#{caller[0]}"
-      add_all_field_method_readers
-    end
-
-    def add_field_method_accessors(*fields)
-      warn "add_all_field_method_accessors is deprecated, it'll be removed in 0.3\n#{caller[0]}"
-      add_field_method_readers *fields
-    end
-
-    def add_field_method_accessor(field)
-      warn "add_all_field_method_accessors is deprecated, it'll be removed in 0.3\n#{caller[0]}"
-      add_field_method_reader field
     end
 
     def set_variants(variants)
@@ -764,19 +743,11 @@ module Algebrick
         return self, block
       end
 
-      raise 'remove deprecation' if Algebrick.version >= Gem::Version.new('0.3')
-
-      def -(block)
-        warn "a 'matcher --> {}' and 'matcher +-> {}' is deprecated, it'll be removed in 0.3\n#{caller[0]}"
-        self > block
-      end
-
       def >(block)
         return self, block
       end
 
       alias_method :>>, :>
-      alias_method :+, :-
 
       def ~
         @assign = true
