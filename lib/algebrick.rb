@@ -19,6 +19,7 @@
 # TODO Menu modeling example, add TypedArray
 # TODO update actor pattern example when gem is done
 # TODO gemmify reclude
+# TODO gemmify typecheck
 
 require 'monitor'
 
@@ -57,39 +58,66 @@ module Algebrick
   end
 
   module TypeCheck
-    def is_kind_of?(value, *types)
-      a_type_check :kind_of?, false, value, *types
+    def Type?(value, *types)
+      types.any? { |t| value.is_a? t }
     end
 
-    def is_kind_of!(value, *types)
-      a_type_check :kind_of?, true, value, *types
+    def Type!(value, *types)
+      Type?(value, *types) or
+          TypeCheck.error(value, 'is not', types)
+      value
     end
 
-    def is_matching?(value, *types)
-      a_type_check :===, false, value, *types
+    def Match?(value, *types)
+      types.any? { |t| t === value }
     end
 
-    def is_matching!(value, *types)
-      a_type_check :===, true, value, *types
+    def Match!(value, *types)
+      Match?(value, *types) or
+          TypeCheck.error(value, 'is not matching', types)
+      value
+    end
+
+    def Child?(value, *types)
+      Type?(value, Class) &&
+          types.any? { |t| value <= t }
+    end
+
+    def Child!(value, *types)
+      Child?(value, *types) or
+          TypeCheck.error(value, 'is not child', types)
+      value
     end
 
     private
 
-    def a_type_check(which, bang, value, *types)
-      ok = types.any? do |t|
-        case which
-        when :===
-          t === value
-        when :kind_of?
-          value.kind_of? t
-        else
-          raise ArgumentError
-        end
-      end
-      bang && !ok and
-          raise TypeError,
-                "value (#{value.class}) '#{value}' is not ##{which} any of #{types.join(', ')}"
-      bang ? value : ok
+    def self.error(value, message, types)
+      raise TypeError,
+            "value (#{value.class}) '#{value}' #{message} any of #{types.join(', ')}"
+    end
+
+    public
+
+    raise 'remove deprecations' if Algebrick.version >= Gem::Version.new('0.4')
+
+    def is_kind_of?(value, *types)
+      warn "is_kind_of? is deprecated use Type?\n#{caller[0]}"
+      Type? value, *types
+    end
+
+    def is_kind_of!(value, *types)
+      warn "Type! is deprecated use Type!\n#{caller[0]}"
+      Type! value, *types
+    end
+
+    def is_matching?(value, *types)
+      warn "is_matching? is deprecated use Match?\n#{caller[0]}"
+      Match? value, *types
+    end
+
+    def is_matching!(value, *types)
+      warn "is_matching! is deprecated use Match!\n#{caller[0]}"
+      Match! value, *types
     end
   end
 
@@ -113,6 +141,8 @@ module Algebrick
       end
       raise "no match for (#{value.class}) '#{value}' by any of #{cases.map(&:first).join ', '}"
     end
+
+    # TODO #match! raise when match is not complete on a given type
 
     private
 
@@ -283,9 +313,7 @@ module Algebrick
       if fields.size == 1 && fields.first.is_a?(Hash)
         fields = type.field_names.map { |k| fields.first[k] }
       end
-      @fields = fields.zip(self.class.type.fields).map do |field, type|
-        is_kind_of! field, type
-      end.freeze
+      @fields = fields.zip(self.class.type.fields).map { |field, type| Type! field, type }.freeze
     end
 
     def to_s
@@ -361,9 +389,9 @@ module Algebrick
                        raise ArgumentError
                      end
 
-      set_field_names keys if keys
+      add_field_names keys if keys
 
-      fields.all? { |f| is_kind_of! f, Type, Class, Module }
+      fields.all? { |f| Type! f, Type, Class, Module }
       raise TypeError, 'there is no product with zero fields' unless fields.size > 0
       define_method(:value) { @fields.first } if fields.size == 1
       @fields      = fields
@@ -403,7 +431,7 @@ module Algebrick
 
     def set_variants(variants)
       raise TypeError, 'can be set only once' if @variants
-      variants.all? { |v| is_kind_of! v, Type, Class }
+      variants.all? { |v| Type! v, Type, Class }
       @variants = variants
       apply_be_kind_of
       variants.each do |v|
@@ -525,9 +553,9 @@ module Algebrick
       "#{name}(#{fields_str.join ', '})"
     end
 
-    def set_field_names(names)
+    def add_field_names(names)
       @field_names = names
-      names.all? { |k| is_kind_of! k, Symbol }
+      names.all? { |k| Type! k, Symbol }
       dict = @field_indexes =
           Hash.new { |h, k| raise ArgumentError, "unknown field #{k.inspect} in #{self}" }.
               update names.each_with_index.inject({}) { |h, (k, i)| h.update k => i }
@@ -541,7 +569,7 @@ module Algebrick
 
       fields = hash[FIELDS_KEY] || hash[FIELDS_KEY.to_s] ||
           hash.reject { |k, _| k.to_s == TYPE_KEY.to_s }
-      is_kind_of! fields, Hash, Array
+      Type! fields, Hash, Array
 
       case fields
       when Array
@@ -580,7 +608,7 @@ module Algebrick
     attr_reader :variables, :fields, :variants
 
     def initialize(variables)
-      @variables     = variables.each { |v| is_kind_of! v, Symbol }
+      @variables     = variables.each { |v| Type! v, Symbol }
       @fields        = nil
       @variants      = nil
       @cache         = {}
@@ -588,7 +616,7 @@ module Algebrick
     end
 
     def set_fields(fields)
-      @fields = is_kind_of! fields, Hash, Array
+      @fields = Type! fields, Hash, Array
     end
 
     def field_names
@@ -603,7 +631,7 @@ module Algebrick
     end
 
     def set_variants(variants)
-      @variants = is_kind_of! variants, Array
+      @variants = Type! variants, Array
     end
 
     def [](*assigned_types)
@@ -689,7 +717,7 @@ module Algebrick
       attr_reader :new_type
 
       def initialize(new_type, &block)
-        @new_type = is_kind_of! new_type, ProductVariant, ParametrizedType
+        @new_type = Type! new_type, ProductVariant, ParametrizedType
         instance_exec @new_type, &block
         @new_type.kind if @new_type.is_a? ProductVariant
       end
@@ -1064,7 +1092,7 @@ module Algebrick
 
       def initialize(algebraic_type, *field_matchers)
         super()
-        @algebraic_type = is_kind_of! algebraic_type, Algebrick::ProductVariant, Algebrick::ParametrizedType
+        @algebraic_type = Type! algebraic_type, Algebrick::ProductVariant, Algebrick::ParametrizedType
         raise ArgumentError unless algebraic_type.fields
         @field_matchers = case
 
@@ -1127,7 +1155,7 @@ module Algebrick
     class Variant < Wrapper
       def initialize(something)
         raise ArgumentError unless something.variants
-        is_kind_of! something, Algebrick::ProductVariant
+        Type! something, Algebrick::ProductVariant
         super something
       end
 
@@ -1138,7 +1166,7 @@ module Algebrick
 
     class Atom < Wrapper
       def initialize(something)
-        is_kind_of! something, Algebrick::Atom
+        Type! something, Algebrick::Atom
         super something
       end
 
