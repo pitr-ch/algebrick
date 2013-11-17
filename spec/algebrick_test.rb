@@ -248,6 +248,21 @@ describe 'AlgebrickTest' do
     it { assert List[1, Empty].kind_of? List }
   end
 
+  describe 'module including' do
+    type = Algebrick.type { fields! Numeric }
+    type.module_eval do
+      include Comparable
+      def <=>(other)
+        value <=> other.value
+      end
+    end
+    it 'compares' do
+      type
+      assert type[1] < type[2]
+    end
+  end
+
+
   describe 'tree' do
     it { assert Leaf > Tree }
   end

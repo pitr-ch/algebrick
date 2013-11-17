@@ -18,6 +18,7 @@
 # TODO add method matcher (:size, matcher)
 # TODO Menu modeling example, add TypedArray
 # TODO update actor pattern example when gem is done
+# TODO gemmify reclude
 
 require 'monitor'
 
@@ -30,6 +31,29 @@ module Algebrick
 
   def self.version
     @version ||= Gem::Version.new File.read(File.join(File.dirname(__FILE__), '..', 'VERSION'))
+  end
+
+  # fix module to re-include itself to where it was already included when a module is included into it
+  module Reclude
+    def included(base)
+      included_into << base
+      super base
+    end
+
+    def include(*modules)
+      super(*modules)
+      modules.reverse.each do |module_being_included|
+        included_into.each do |mod|
+          mod.send :include, module_being_included
+        end
+      end
+    end
+
+    private
+
+    def included_into
+      @included_into ||= []
+    end
   end
 
   module TypeCheck
@@ -147,6 +171,7 @@ module Algebrick
     include TypeCheck
     include Matching
     include MatcherDelegations
+    include Reclude
 
     def initialize(name, &definition)
       super &definition
