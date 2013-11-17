@@ -1,10 +1,8 @@
 # lets define a Tree
 Tree = Algebrick.type do |tree|
-  Empty = type
-  Leaf  = type { fields Integer }
-  Node  = type { fields tree, tree }
-
-  variants Empty, Leaf, Node
+  variants Empty = type,
+           Leaf  = type { fields Integer },
+           Node  = type { fields tree, tree }
 end
 
 # values of atomic types are represented by itself,
@@ -36,7 +34,8 @@ BTree[0, Tip, tree1]
 # 1. method #value when type has only one field.
 Leaf[1].value
 # 2. multi-assign when type has more fields
-v, left, right = *BTree[value: 1, left: Tip, right: Tip]
+v, left, right = BTree[value: 1, left: Tip, right: Tip]
+[v, left, right]
 # 3. or #[] when fields are named
 BTree[value: 1, left: Tip, right: Tip][:value]
 BTree[value: 1, left: Tip, right: Tip][:left]

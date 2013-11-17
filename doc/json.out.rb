@@ -2,18 +2,15 @@ extend Algebrick::Matching                         # => main
 
 # lets define message-protocol for a cross-process communication
 Request = Algebrick.type do
-  User       = type { fields login: String, password: String }
-  CreateUser = type { fields User }
-  GetUser    = type { fields login: String }
+  User = type { fields login: String, password: String }
 
-  variants CreateUser, GetUser
+  variants CreateUser = type { fields User },
+           GetUser    = type { fields login: String }
 end                                                # => Request(CreateUser | GetUser)
 
 Response = Algebrick.type do
-  Success = type { fields Object }
-  Failure = type { fields error: String }
-
-  variants Success, Failure
+  variants Success = type { fields Object },
+           Failure = type { fields error: String }
 end                                                # => Response(Success | Failure)
 
 Message = Algebrick.type { variants Request, Response }

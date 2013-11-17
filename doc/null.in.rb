@@ -5,7 +5,8 @@ def deliver_email(email)
 end
 
 Contact = Algebrick.type do |contact|
-  variants Null = atom, contact
+  variants Null = atom,
+           contact
   fields username: String, email: String
 end
 

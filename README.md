@@ -20,7 +20,7 @@ Let's define a Tree
 
 ```ruby
 Tree = Algebrick.type do |tree|
-  variatns Empty = atom,
+  variants Empty = atom,
            Leaf  = type { fields Integer },
            Node  = type { fields tree, tree }
 end

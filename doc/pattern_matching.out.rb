@@ -1,15 +1,12 @@
 # lets define a trees to demonstrate the pattern matching abilities
 Tree = Algebrick.type do |tree|
-  Empty = type
-  Leaf  = type { fields Integer }
-  Node  = type { fields tree, tree }
-
-  variants Empty, Leaf, Node
+  variants Empty = type,
+           Leaf  = type { fields Integer },
+           Node  = type { fields tree, tree }
 end                                                # => Tree(Empty | Leaf | Node)
 
 BTree = Algebrick.type do |btree|
-  fields value: Comparable, left: btree, right: btree
-  all_readers
+  fields! value: Comparable, left: btree, right: btree
   variants Empty, btree
 end
 # => BTree(Empty | BTree(value: Comparable, left: BTree, right: BTree))
@@ -81,7 +78,7 @@ begin
 rescue => e
   e
 end
-# => #<RuntimeError: no match for (#<Class:0x007fabc40535f8>) 'Leaf[1]' by any of Node.(any,any)>
+# => #<RuntimeError: no match for (#<Class:0x007fbfdb0c77e8>) 'Leaf[1]' by any of Node.(any,any)>
 
 # alternative syntax are
 match Leaf[0],

@@ -36,4 +36,4 @@ None.i_am rescue $!
 None.i_am_not rescue $!                            # => true
 Some[1].i_am rescue $!                             # => true
 Some[1].i_am_not rescue $!
-# => #<NoMethodError: undefined method `i_am_not' for Some[1]:#<Class:0x007fd968aa6da8>>
+# => #<NoMethodError: undefined method `i_am_not' for Some[1]:#<Class:0x007fbfda8fe610>>

@@ -2,10 +2,8 @@ extend Algebrick::Matching
 
 # Definition of data structures
 Tree = Algebrick.type do |tree|
-  Tip  = type
-  Node = type { fields value: Object, left: tree, right: tree }
-
-  variants Tip, Node
+  variants Tip  = type,
+           Node = type { fields value: Object, left: tree, right: tree }
 end
 
 module Tree
@@ -67,9 +65,8 @@ rom.pkg_name
 
 # Avoiding nil errors with Maybe
 Maybe = Algebrick.type do
-  None = type
-  Some = type { fields Integer }
-  variants None, Some
+  variants None = type,
+           Some = type { fields Integer }
 end
 # wrap values which can be nil into maybe and then match to avoid nil errors
 def add(value)

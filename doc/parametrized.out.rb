@@ -1,8 +1,7 @@
 Tree = Algebrick.type(:v) do |tree|
-  Empty = atom
-  Leaf  = type(:v) { fields value: :v }
-  Node  = type(:v) { fields left: tree, right: tree }
-  variants Empty, Leaf, Node
+  variants Empty = atom,
+           Leaf  = type(:v) { fields value: :v },
+           Node  = type(:v) { fields left: tree, right: tree }
 end                                                # => Tree[v]
 
 module Tree
@@ -17,9 +16,9 @@ module Tree
 end                                                # => nil
 
 Leaf[Integer]['1'] rescue $!
-# => #<TypeError: value (String) '1' is not #kind_of? any of Integer>
+# => #<TypeError: value (String) '1' is not any of Integer>
 Node[Integer][Leaf[String]['a'], Empty] rescue $!
-# => #<TypeError: value (#<Class:0x007fd968aad8b0>) 'Leaf[String][value: a]' is not #kind_of? any of Tree[Integer](Empty | Leaf[Integer] | Node[Integer])>
+# => #<TypeError: value (#<Class:0x007fbfda8f40e8>) 'Leaf[String][value: a]' is not any of Tree[Integer](Empty | Leaf[Integer] | Node[Integer])>
 Leaf[String]['1']                                  # => Leaf[String][value: 1]
 
 itree = Node[Integer][Leaf[Integer][2], Empty]
