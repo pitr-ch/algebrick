@@ -37,11 +37,11 @@ Leaf.(2) === Leaf[1]                               # => false
 # any is aliased as _
 (m = ~Node.(_, ~Leaf.(~any))) === Node[Leaf[2], Leaf[3]]
 # => true
-m.assigns                                          # => [Node[Leaf[2],Leaf[3]], Leaf[3], 3]
+m.assigns                                          # => [Node[Leaf[2], Leaf[3]], Leaf[3], 3]
 
 # #assigns accepts block
 (m = Node.(~any, ~any)) === Node[Leaf[2], Empty]   # => true
-m.assigns { |l, r| Node[r, l] }                    # => Node[Empty,Leaf[2]]
+m.assigns { |l, r| Node[r, l] }                    # => Node[Empty, Leaf[2]]
 
 # matcher can be combined with any object responding to #===
 Leaf.(-> v { v > 1 }) === Leaf[2]                  # => true

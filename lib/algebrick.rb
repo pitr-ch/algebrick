@@ -322,8 +322,39 @@ module Algebrick
           if type.field_names?
             type.field_names.map { |name| "#{name}: #{self[name].to_s}" }.join(', ')
           else
-            fields.map(&:to_s).join(',')
+            fields.map(&:to_s).join(', ')
           end + ']'
+    end
+
+    def pretty_print(q)
+      q.group(1, "#{self.class.type.name}[", ']') do
+        if type.field_names?
+          type.field_names.each_with_index do |name, i|
+            if i == 0
+              q.breakable ''
+            else
+              q.text ','
+              q.breakable ' '
+            end
+            q.text name.to_s
+            q.text ':'
+            q.group(1) do
+              q.breakable ' '
+              q.pp self[name]
+            end
+          end
+        else
+          fields.each_with_index do |value, i|
+            if i == 0
+              q.breakable ''
+            else
+              q.text ','
+              q.breakable ' '
+            end
+            q.pp value
+          end
+        end
+      end
     end
 
     def to_ary

@@ -248,6 +248,61 @@ describe 'AlgebrickTest' do
     it { assert List[1, Empty].kind_of? List }
   end
 
+  describe 'inspecting' do
+    let :tree do
+      tree = Node[Leaf[1], Node[Leaf[2], Empty]]
+      tree = Node[tree, tree]
+      Node[tree, tree]
+    end
+
+    it { tree.to_s.must_equal 'Node[Node[Node[Leaf[1], Node[Leaf[2], Empty]], Node[Leaf[1], Node[Leaf[2], Empty]]], Node[Node[Leaf[1], Node[Leaf[2], Empty]], Node[Leaf[1], Node[Leaf[2], Empty]]]]' }
+    it { tree.inspect.must_equal tree.to_s }
+    it do
+      tree.pretty_inspect.must_equal <<-TXT
+Node[
+ Node[
+  Node[Leaf[1], Node[Leaf[2], Empty]],
+  Node[Leaf[1], Node[Leaf[2], Empty]]],
+ Node[
+  Node[Leaf[1], Node[Leaf[2], Empty]],
+  Node[Leaf[1], Node[Leaf[2], Empty]]]]
+      TXT
+    end
+
+    let :named do
+      n = Named[-1, 'as'*40]
+      4.times do |i|
+        n = Named[i, n]
+      end
+      n
+    end
+
+    it { named.to_s.must_equal 'Named[a: 3, b: Named[a: 2, b: Named[a: 1, b: Named[a: 0, b: Named[a: -1, b: asasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasas]]]]]' }
+    it { named.inspect.must_equal named.to_s }
+    it do
+      named.pretty_inspect.must_equal <<-TXT
+Named[
+ a: 3,
+ b:
+  Named[
+   a: 2,
+   b:
+    Named[
+     a: 1,
+     b:
+      Named[
+       a: 0,
+       b:
+        Named[
+         a: -1,
+         b:
+          "asasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasasas"]]]]]
+      TXT
+    end
+
+
+  end
+
   describe 'module including' do
     type = Algebrick.type { fields! Numeric }
     type.module_eval do
