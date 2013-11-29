@@ -291,7 +291,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../TypeCheck.html#a_type_check-instance_method" title="Algebrick::TypeCheck#a_type_check (method)">#a_type_check</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_kind_of%21-instance_method" title="Algebrick::TypeCheck#is_kind_of! (method)">#is_kind_of!</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_kind_of%3F-instance_method" title="Algebrick::TypeCheck#is_kind_of? (method)">#is_kind_of?</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_matching%21-instance_method" title="Algebrick::TypeCheck#is_matching! (method)">#is_matching!</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_matching%3F-instance_method" title="Algebrick::TypeCheck#is_matching? (method)">#is_matching?</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../TypeCheck.html#Child%21-instance_method" title="Algebrick::TypeCheck#Child! (method)">#Child!</a></span>, <span class='object_link'><a href="../TypeCheck.html#Child%3F-instance_method" title="Algebrick::TypeCheck#Child? (method)">#Child?</a></span>, <span class='object_link'><a href="../TypeCheck.html#Match%21-instance_method" title="Algebrick::TypeCheck#Match! (method)">#Match!</a></span>, <span class='object_link'><a href="../TypeCheck.html#Match%3F-instance_method" title="Algebrick::TypeCheck#Match? (method)">#Match?</a></span>, <span class='object_link'><a href="../TypeCheck.html#Type%21-instance_method" title="Algebrick::TypeCheck#Type! (method)">#Type!</a></span>, <span class='object_link'><a href="../TypeCheck.html#Type%3F-instance_method" title="Algebrick::TypeCheck#Type? (method)">#Type?</a></span>, <span class='object_link'><a href="../TypeCheck.html#error-class_method" title="Algebrick::TypeCheck.error (method)">error</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_kind_of%21-instance_method" title="Algebrick::TypeCheck#is_kind_of! (method)">#is_kind_of!</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_kind_of%3F-instance_method" title="Algebrick::TypeCheck#is_kind_of? (method)">#is_kind_of?</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_matching%21-instance_method" title="Algebrick::TypeCheck#is_matching! (method)">#is_matching!</a></span>, <span class='object_link'><a href="../TypeCheck.html#is_matching%3F-instance_method" title="Algebrick::TypeCheck#is_matching? (method)">#is_matching?</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -319,13 +319,13 @@
       <pre class="lines">
 
 
-906
-907
-908
-909</pre>
+991
+992
+993
+994</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 906</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 991</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assigns_size'>assigns_size</span>
   <span class='comment'># TODO is it efficient?
@@ -351,12 +351,12 @@
       <pre class="lines">
 
 
-893
-894
-895</pre>
+978
+979
+980</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 893</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 978</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_children'>children</span>
   <span class='kw'>super</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='op'>&amp;</span><span class='symbol'>:matched?</span>
@@ -381,15 +381,15 @@
       <pre class="lines">
 
 
-899
-900
-901
-902
-903
-904</pre>
+984
+985
+986
+987
+988
+989</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 899</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 984</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_collect_assigns'>collect_assigns</span>
   <span class='kw'>super</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_assigns'>assigns</span><span class='op'>|</span>
@@ -417,10 +417,10 @@
       <pre class="lines">
 
 
-890</pre>
+975</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 890</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 975</span>
 
 <span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:super_children</span><span class='comma'>,</span> <span class='symbol'>:children</span></pre>
     </td>
@@ -443,12 +443,12 @@
       <pre class="lines">
 
 
-886
-887
-888</pre>
+971
+972
+973</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 886</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 971</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_matchers'>matchers</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> ^ </span><span class='tstring_end'>&#39;</span></span>
@@ -463,9 +463,9 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Oct  2 18:50:05 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Fri Nov 29 12:14:45 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.2 (ruby-2.0.0).
+  0.8.7.3 (ruby-2.0.0).
 </div>
 
 <script>

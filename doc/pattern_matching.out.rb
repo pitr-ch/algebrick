@@ -1,15 +1,12 @@
 # lets define a trees to demonstrate the pattern matching abilities
 Tree = Algebrick.type do |tree|
-  Empty = type
-  Leaf  = type { fields Integer }
-  Node  = type { fields tree, tree }
-
-  variants Empty, Leaf, Node
+  variants Empty = type,
+           Leaf  = type { fields Integer },
+           Node  = type { fields tree, tree }
 end                                                # => Tree(Empty | Leaf | Node)
 
 BTree = Algebrick.type do |btree|
-  fields value: Comparable, left: btree, right: btree
-  all_readers
+  fields! value: Comparable, left: btree, right: btree
   variants Empty, btree
 end
 # => BTree(Empty | BTree(value: Comparable, left: BTree, right: BTree))
@@ -40,11 +37,11 @@ Leaf.(2) === Leaf[1]                               # => false
 # any is aliased as _
 (m = ~Node.(_, ~Leaf.(~any))) === Node[Leaf[2], Leaf[3]]
 # => true
-m.assigns                                          # => [Node[Leaf[2],Leaf[3]], Leaf[3], 3]
+m.assigns                                          # => [Node[Leaf[2], Leaf[3]], Leaf[3], 3]
 
 # #assigns accepts block
 (m = Node.(~any, ~any)) === Node[Leaf[2], Empty]   # => true
-m.assigns { |l, r| Node[r, l] }                    # => Node[Empty,Leaf[2]]
+m.assigns { |l, r| Node[r, l] }                    # => Node[Empty, Leaf[2]]
 
 # matcher can be combined with any object responding to #===
 Leaf.(-> v { v > 1 }) === Leaf[2]                  # => true
@@ -81,7 +78,7 @@ begin
 rescue => e
   e
 end
-# => #<RuntimeError: no match for (#<Class:0x007fabc40535f8>) 'Leaf[1]' by any of Node.(any,any)>
+# => #<RuntimeError: no match for (#<Class:0x007fbfdb0c77e8>) 'Leaf[1]' by any of Node.(any,any)>
 
 # alternative syntax are
 match Leaf[0],
@@ -110,6 +107,28 @@ match Leaf[6],
 # => [2]
 (m = Leaf.(~!-> v { v > 1 }.to_m)) === Leaf[0]; m.assigns
 # => [0]
+
+Color = Algebrick.type do
+  variants Black = atom,
+           White = atom,
+           Pink  = atom,
+           Grey  = type { fields scale: Float }
+end                                                # => Color(Black | White | Pink | Grey)
+
+def what_color?(color)
+  match color,
+        Black | Grey.(-> v { v < 0.2 }) >-> { 'black-ish' },
+        White | Grey.(-> v { v > 0.8 }) >-> { 'white-ish' },
+        Grey.(-> v { v >= 0.2 }.to_m & -> v { v <= 0.8 }.to_m) >-> { 'grey-ish' },
+        Pink >> "that's not a color"
+end                                                # => nil
+
+what_color? Black                                  # => "black-ish"
+what_color? Grey[0.1]                              # => "black-ish"
+what_color? Grey[0.3]                              # => "grey-ish"
+what_color? Grey[0.9]                              # => "white-ish"
+what_color? White                                  # => "white-ish"
+what_color? Pink                                   # => "that's not a color"
 
 # There are also shortcuts to match on named fields
 match BTree[1.5, Empty, Empty],

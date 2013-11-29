@@ -1,15 +1,12 @@
 # lets define a trees to demonstrate the pattern matching abilities
 Tree = Algebrick.type do |tree|
-  Empty = type
-  Leaf  = type { fields Integer }
-  Node  = type { fields tree, tree }
-
-  variants Empty, Leaf, Node
+  variants Empty = type,
+           Leaf  = type { fields Integer },
+           Node  = type { fields tree, tree }
 end
 
 BTree = Algebrick.type do |btree|
-  fields value: Comparable, left: btree, right: btree
-  all_readers
+  fields! value: Comparable, left: btree, right: btree
   variants Empty, btree
 end
 
@@ -97,6 +94,28 @@ match Leaf[6],
 (m = Leaf.(~-> v { v > 1 }.to_m | ~-> v { v < 3 }.to_m)) === Leaf[2]; m.assigns
 (m = Leaf.(~-> v { v > 1 }.to_m ^ ~-> v { v < 3 }.to_m)) === Leaf[2]; m.assigns
 (m = Leaf.(~!-> v { v > 1 }.to_m)) === Leaf[0]; m.assigns
+
+Color = Algebrick.type do
+  variants Black = atom,
+           White = atom,
+           Pink  = atom,
+           Grey  = type { fields scale: Float }
+end
+
+def what_color?(color)
+  match color,
+        Black | Grey.(-> v { v < 0.2 }) >-> { 'black-ish' },
+        White | Grey.(-> v { v > 0.8 }) >-> { 'white-ish' },
+        Grey.(-> v { v >= 0.2 }.to_m & -> v { v <= 0.8 }.to_m) >-> { 'grey-ish' },
+        Pink >> "that's not a color"
+end
+
+what_color? Black
+what_color? Grey[0.1]
+what_color? Grey[0.3]
+what_color? Grey[0.9]
+what_color? White
+what_color? Pink
 
 # There are also shortcuts to match on named fields
 match BTree[1.5, Empty, Empty],

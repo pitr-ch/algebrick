@@ -99,11 +99,9 @@
 <p><strong>Quick example</strong>
 <pre class="code ruby"><span class='comment'># define algebraic types
 </span><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
-  <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span>
-  <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
-
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Leaf</span><span class='comma'>,</span> <span class='const'>Node</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span>
+           <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+           <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree(Empty | Leaf | Node)
 </span>
 <span class='comment'># add some methods
@@ -136,7 +134,7 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Algebrick/DSL.html" title="Algebrick::DSL (module)">DSL</a></span>, <span class='object_link'><a href="Algebrick/MatcherDelegations.html" title="Algebrick::MatcherDelegations (module)">MatcherDelegations</a></span>, <span class='object_link'><a href="Algebrick/Matchers.html" title="Algebrick::Matchers (module)">Matchers</a></span>, <span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span>, <span class='object_link'><a href="Algebrick/TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span>, <span class='object_link'><a href="Algebrick/Value.html" title="Algebrick::Value (module)">Value</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Algebrick/DSL.html" title="Algebrick::DSL (module)">DSL</a></span>, <span class='object_link'><a href="Algebrick/MatcherDelegations.html" title="Algebrick::MatcherDelegations (module)">MatcherDelegations</a></span>, <span class='object_link'><a href="Algebrick/Matchers.html" title="Algebrick::Matchers (module)">Matchers</a></span>, <span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span>, <span class='object_link'><a href="Algebrick/Reclude.html" title="Algebrick::Reclude (module)">Reclude</a></span>, <span class='object_link'><a href="Algebrick/TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span>, <span class='object_link'><a href="Algebrick/Value.html" title="Algebrick::Value (module)">Value</a></span>
     
   
     
@@ -303,12 +301,12 @@
       <pre class="lines">
 
 
-724
-725
-726</pre>
+809
+810
+811</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 724</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 809</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_atom'>atom</span>
   <span class='const'>Atom</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>nil</span>
@@ -333,21 +331,21 @@
       <pre class="lines">
 
 
-711
-712
-713
-714
-715
-716
-717
-718
-719
-720
-721
-722</pre>
+796
+797
+798
+799
+800
+801
+802
+803
+804
+805
+806
+807</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 711</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 796</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_variables'>variables</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -381,12 +379,12 @@
       <pre class="lines">
 
 
-728
-729
-730</pre>
+813
+814
+815</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 728</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 813</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_types'>types</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'>DSL</span><span class='op'>::</span><span class='const'>OuterShell</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
@@ -411,12 +409,12 @@
       <pre class="lines">
 
 
-31
-32
-33</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
   <span class='ivar'>@version</span> <span class='op'>||=</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_dirname'>dirname</span><span class='lparen'>(</span><span class='kw'>__FILE__</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>..</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>VERSION</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -431,9 +429,9 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Oct  2 18:50:03 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Fri Nov 29 12:14:43 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.2 (ruby-2.0.0).
+  0.8.7.3 (ruby-2.0.0).
 </div>
 
 <script>

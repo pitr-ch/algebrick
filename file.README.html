@@ -85,15 +85,13 @@
 
 <p>Let’s define a Tree</p>
 
-<p>```ruby
+<p><code>ruby
 Tree = Algebrick.type do |tree|
-  Empty = type
-  Leaf  = type { fields Integer }
-  Node  = type { fields tree, tree }</p>
-
-<p>variants Empty, Leaf, Node
+  variants Empty = atom,
+           Leaf  = type { fields Integer },
+           Node  = type { fields tree, tree }
 end
-```</p>
+</code></p>
 
 <p>Now types <code>Tree(Empty | Leaf | Node)</code>, <code>Empty</code>, <code>Leaf(Integer)</code> and <code>Node(Tree, Tree)</code> are defined.
 Add some methods, don’t miss the <strong>pattern matching</strong> example.</p>
@@ -124,9 +122,9 @@ Node[Empty, Node[Leaf[1], Empty]].depth            # =&gt; 3
 </div></div>
 
     <div id="footer">
-  Generated on Wed Oct  2 18:50:03 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Fri Nov 29 12:14:43 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.2 (ruby-2.0.0).
+  0.8.7.3 (ruby-2.0.0).
 </div>
 
 <script>

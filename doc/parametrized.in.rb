@@ -1,8 +1,7 @@
 Tree = Algebrick.type(:v) do |tree|
-  Empty = atom
-  Leaf  = type(:v) { fields value: :v }
-  Node  = type(:v) { fields left: tree, right: tree }
-  variants Empty, Leaf, Node
+  variants Empty = atom,
+           Leaf  = type(:v) { fields value: :v },
+           Node  = type(:v) { fields left: tree, right: tree }
 end
 
 module Tree

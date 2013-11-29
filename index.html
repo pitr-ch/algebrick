@@ -75,11 +75,9 @@
 
 <p><pre class="code ruby"><span class='comment'># define algebraic types
 </span><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
-  <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span>
-  <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
-
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Leaf</span><span class='comma'>,</span> <span class='const'>Node</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span>
+           <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+           <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree(Empty | Leaf | Node)
 </span>
 <span class='comment'># add some methods
@@ -118,11 +116,9 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 <p>Same thing can be defined with this gem:</p>
 
 <p><pre class="code ruby"><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
-  <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span>
-  <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
-
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Leaf</span><span class='comma'>,</span> <span class='const'>Node</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span>
+           <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+           <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree(Empty | Leaf | Node)
 </span><span class='comment'># Which sets 4 modules representing these types in current module/class
 </span><span class='const'>Tree</span>                                               <span class='comment'># =&gt; Tree(Empty | Leaf | Node)
@@ -144,9 +140,10 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 <h3 id="type-definition">Type definition</h3>
 
 <p><pre class="code ruby"><span class='comment'># Let&#39;s define some types
-</span><span class='const'>None</span>  <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>                             <span class='comment'># =&gt; None
-</span><span class='const'>Some</span>  <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Object</span> <span class='rbrace'>}</span>           <span class='comment'># =&gt; Some(Object)
-</span><span class='const'>Maybe</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_variants'>variants</span> <span class='const'>None</span><span class='comma'>,</span> <span class='const'>Some</span> <span class='rbrace'>}</span>     <span class='comment'># =&gt; Maybe(None | Some)
+</span><span class='const'>Maybe</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>None</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span>
+           <span class='const'>Some</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Numeric</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span>                                                <span class='comment'># =&gt; Maybe(None | Some)
 </span>
 <span class='comment'># where the Maybe actually is:
 </span><span class='const'>Maybe</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span>                                        <span class='comment'># =&gt; Algebrick::ProductVariant
@@ -156,11 +153,9 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 </span>
 <span class='comment'># if there is a circular dependency you can define the dependent types inside the block like this:
 </span><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
-  <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span>
-  <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
-
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Leaf</span><span class='comma'>,</span> <span class='const'>Node</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span>
+           <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+           <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree(Empty | Leaf | Node)
 </span><span class='const'>Empty</span>                                              <span class='comment'># =&gt; Empty
 </span><span class='const'>Leaf</span>                                               <span class='comment'># =&gt; Leaf(Integer)
@@ -170,11 +165,9 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 
 <p><pre class="code ruby"><span class='comment'># lets define a Tree
 </span><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
-  <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span>
-  <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
-
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Leaf</span><span class='comma'>,</span> <span class='const'>Node</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span>
+           <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+           <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree(Empty | Leaf | Node)
 </span>
 <span class='comment'># values of atomic types are represented by itself,
@@ -208,8 +201,9 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 </span><span class='comment'># 1. method #value when type has only one field.
 </span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>                                      <span class='comment'># =&gt; 1
 </span><span class='comment'># 2. multi-assign when type has more fields
-</span><span class='id identifier rubyid_v'>v</span><span class='comma'>,</span> <span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span> <span class='op'>=</span> <span class='op'>*</span><span class='const'>BTree</span><span class='lbracket'>[</span><span class='label'>value:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>left:</span> <span class='const'>Tip</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='const'>Tip</span><span class='rbracket'>]</span>
-<span class='comment'># =&gt; [1, Tip, Tip]
+</span><span class='id identifier rubyid_v'>v</span><span class='comma'>,</span> <span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span> <span class='op'>=</span> <span class='const'>BTree</span><span class='lbracket'>[</span><span class='label'>value:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>left:</span> <span class='const'>Tip</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='const'>Tip</span><span class='rbracket'>]</span>
+<span class='comment'># =&gt; BTree[value: 1, left: Tip, right: Tip]
+</span><span class='lbracket'>[</span><span class='id identifier rubyid_v'>v</span><span class='comma'>,</span> <span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span><span class='rbracket'>]</span>                                   <span class='comment'># =&gt; [1, Tip, Tip]
 </span><span class='comment'># 3. or #[] when fields are named
 </span><span class='const'>BTree</span><span class='lbracket'>[</span><span class='label'>value:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>left:</span> <span class='const'>Tip</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='const'>Tip</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:value</span><span class='rbracket'>]</span>     <span class='comment'># =&gt; 1
 </span><span class='const'>BTree</span><span class='lbracket'>[</span><span class='label'>value:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>left:</span> <span class='const'>Tip</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='const'>Tip</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:left</span><span class='rbracket'>]</span>      <span class='comment'># =&gt; Tip
@@ -228,11 +222,11 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
     <span class='id identifier rubyid_e'>e</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>
-<span class='comment'># =&gt; #&lt;Proc:0x007fd9699e23a8@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:56 (lambda)&gt;
+<span class='comment'># =&gt; #&lt;Proc:0x007fbfda8bc120@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:55 (lambda)&gt;
 </span><span class='id identifier rubyid_try'>try</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='lbrace'>{</span> <span class='const'>Leaf</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
-<span class='comment'># =&gt; #&lt;TypeError: value (String) &#39;a&#39; is not #kind_of? any of Integer&gt;
+<span class='comment'># =&gt; #&lt;TypeError: value (String) &#39;a&#39; is not any of Integer&gt;
 </span><span class='id identifier rubyid_try'>try</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='lbrace'>{</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
-<span class='comment'># =&gt; #&lt;TypeError: value (NilClass) &#39;&#39; is not #kind_of? any of Tree(Empty | Leaf | Node)&gt;</span></pre></p>
+<span class='comment'># =&gt; #&lt;TypeError: value (NilClass) &#39;&#39; is not any of Tree(Empty | Leaf | Node)&gt;</span></pre></p>
 
 <h3 id="extending-behavior">Extending behavior</h3>
 
@@ -274,7 +268,7 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 </span><span class='const'>None</span><span class='period'>.</span><span class='id identifier rubyid_i_am_not'>i_am_not</span> <span class='kw'>rescue</span> <span class='gvar'>$!</span>                            <span class='comment'># =&gt; true
 </span><span class='const'>Some</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_i_am'>i_am</span> <span class='kw'>rescue</span> <span class='gvar'>$!</span>                             <span class='comment'># =&gt; true
 </span><span class='const'>Some</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_i_am_not'>i_am_not</span> <span class='kw'>rescue</span> <span class='gvar'>$!</span>
-<span class='comment'># =&gt; #&lt;NoMethodError: undefined method `i_am_not&#39; for Some[1]:#&lt;Class:0x007fd968aa6da8&gt;&gt;</span></pre></p>
+<span class='comment'># =&gt; #&lt;NoMethodError: undefined method `i_am_not&#39; for Some[1]:#&lt;Class:0x007fbfda8fe610&gt;&gt;</span></pre></p>
 
 <h3 id="pattern-matching">Pattern matching</h3>
 
@@ -283,16 +277,13 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 
 <p><pre class="code ruby"><span class='comment'># lets define a trees to demonstrate the pattern matching abilities
 </span><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
-  <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span>
-  <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
-
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Leaf</span><span class='comma'>,</span> <span class='const'>Node</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span>
+           <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+           <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree(Empty | Leaf | Node)
 </span>
 <span class='const'>BTree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_btree'>btree</span><span class='op'>|</span>
-  <span class='id identifier rubyid_fields'>fields</span> <span class='label'>value:</span> <span class='const'>Comparable</span><span class='comma'>,</span> <span class='label'>left:</span> <span class='id identifier rubyid_btree'>btree</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='id identifier rubyid_btree'>btree</span>
-  <span class='id identifier rubyid_all_readers'>all_readers</span>
+  <span class='id identifier rubyid_fields!'>fields!</span> <span class='label'>value:</span> <span class='const'>Comparable</span><span class='comma'>,</span> <span class='label'>left:</span> <span class='id identifier rubyid_btree'>btree</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='id identifier rubyid_btree'>btree</span>
   <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='id identifier rubyid_btree'>btree</span>
 <span class='kw'>end</span>
 <span class='comment'># =&gt; BTree(Empty | BTree(value: Comparable, left: BTree, right: BTree))
@@ -323,11 +314,11 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 </span><span class='comment'># any is aliased as _
 </span><span class='lparen'>(</span><span class='id identifier rubyid_m'>m</span> <span class='op'>=</span> <span class='op'>~</span><span class='const'>Node</span><span class='period'>.</span><span class='lparen'>(</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='op'>~</span><span class='const'>Leaf</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>===</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>3</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
 <span class='comment'># =&gt; true
-</span><span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_assigns'>assigns</span>                                          <span class='comment'># =&gt; [Node[Leaf[2],Leaf[3]], Leaf[3], 3]
+</span><span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_assigns'>assigns</span>                                          <span class='comment'># =&gt; [Node[Leaf[2], Leaf[3]], Leaf[3], 3]
 </span>
 <span class='comment'># #assigns accepts block
 </span><span class='lparen'>(</span><span class='id identifier rubyid_m'>m</span> <span class='op'>=</span> <span class='const'>Node</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='comma'>,</span> <span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>===</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span>   <span class='comment'># =&gt; true
-</span><span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_assigns'>assigns</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_l'>l</span><span class='comma'>,</span> <span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_l'>l</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>                    <span class='comment'># =&gt; Node[Empty,Leaf[2]]
+</span><span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_assigns'>assigns</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_l'>l</span><span class='comma'>,</span> <span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_l'>l</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>                    <span class='comment'># =&gt; Node[Empty, Leaf[2]]
 </span>
 <span class='comment'># matcher can be combined with any object responding to #===
 </span><span class='const'>Leaf</span><span class='period'>.</span><span class='lparen'>(</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>&gt;</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='rparen'>)</span> <span class='op'>===</span> <span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span>                  <span class='comment'># =&gt; true
@@ -364,7 +355,7 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 <span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
   <span class='id identifier rubyid_e'>e</span>
 <span class='kw'>end</span>
-<span class='comment'># =&gt; #&lt;RuntimeError: no match for (#&lt;Class:0x007fabc40535f8&gt;) &#39;Leaf[1]&#39; by any of Node.(any,any)&gt;
+<span class='comment'># =&gt; #&lt;RuntimeError: no match for (#&lt;Class:0x007fbfdb0c77e8&gt;) &#39;Leaf[1]&#39; by any of Node.(any,any)&gt;
 </span>
 <span class='comment'># alternative syntax are
 </span><span class='id identifier rubyid_match'>match</span> <span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span>
@@ -394,6 +385,28 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 </span><span class='lparen'>(</span><span class='id identifier rubyid_m'>m</span> <span class='op'>=</span> <span class='const'>Leaf</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>~</span><span class='op'>!</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>&gt;</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>===</span> <span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='semicolon'>;</span> <span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_assigns'>assigns</span>
 <span class='comment'># =&gt; [0]
 </span>
+<span class='const'>Color</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Black</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span>
+           <span class='const'>White</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span>
+           <span class='const'>Pink</span>  <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span>
+           <span class='const'>Grey</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>scale:</span> <span class='const'>Float</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span>                                                <span class='comment'># =&gt; Color(Black | White | Pink | Grey)
+</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_what_color?'>what_color?</span><span class='lparen'>(</span><span class='id identifier rubyid_color'>color</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_match'>match</span> <span class='id identifier rubyid_color'>color</span><span class='comma'>,</span>
+        <span class='const'>Black</span> <span class='op'>|</span> <span class='const'>Grey</span><span class='period'>.</span><span class='lparen'>(</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>&lt;</span> <span class='float'>0.2</span> <span class='rbrace'>}</span><span class='rparen'>)</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>black-ish</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
+        <span class='const'>White</span> <span class='op'>|</span> <span class='const'>Grey</span><span class='period'>.</span><span class='lparen'>(</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>&gt;</span> <span class='float'>0.8</span> <span class='rbrace'>}</span><span class='rparen'>)</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>white-ish</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
+        <span class='const'>Grey</span><span class='period'>.</span><span class='lparen'>(</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>&gt;=</span> <span class='float'>0.2</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span> <span class='op'>&amp;</span> <span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>&lt;=</span> <span class='float'>0.8</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_m'>to_m</span><span class='rparen'>)</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>grey-ish</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
+        <span class='const'>Pink</span> <span class='op'>&gt;&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>that&#39;s not a color</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
+</span>
+<span class='id identifier rubyid_what_color?'>what_color?</span> <span class='const'>Black</span>                                  <span class='comment'># =&gt; &quot;black-ish&quot;
+</span><span class='id identifier rubyid_what_color?'>what_color?</span> <span class='const'>Grey</span><span class='lbracket'>[</span><span class='float'>0.1</span><span class='rbracket'>]</span>                              <span class='comment'># =&gt; &quot;black-ish&quot;
+</span><span class='id identifier rubyid_what_color?'>what_color?</span> <span class='const'>Grey</span><span class='lbracket'>[</span><span class='float'>0.3</span><span class='rbracket'>]</span>                              <span class='comment'># =&gt; &quot;grey-ish&quot;
+</span><span class='id identifier rubyid_what_color?'>what_color?</span> <span class='const'>Grey</span><span class='lbracket'>[</span><span class='float'>0.9</span><span class='rbracket'>]</span>                              <span class='comment'># =&gt; &quot;white-ish&quot;
+</span><span class='id identifier rubyid_what_color?'>what_color?</span> <span class='const'>White</span>                                  <span class='comment'># =&gt; &quot;white-ish&quot;
+</span><span class='id identifier rubyid_what_color?'>what_color?</span> <span class='const'>Pink</span>                                   <span class='comment'># =&gt; &quot;that&#39;s not a color&quot;
+</span>
 <span class='comment'># There are also shortcuts to match on named fields
 </span><span class='id identifier rubyid_match'>match</span> <span class='const'>BTree</span><span class='lbracket'>[</span><span class='float'>1.5</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span><span class='comma'>,</span>
       <span class='const'>BTree</span><span class='period'>.</span><span class='lparen'>(</span><span class='symbol'>:value</span><span class='rparen'>)</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_v'>v</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_v'>v</span> <span class='rbrace'>}</span>                   <span class='comment'># =&gt; 1.5
@@ -406,10 +419,9 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 <h3 id="parametrized-types">Parametrized types</h3>
 
 <p><pre class="code ruby"><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='symbol'>:v</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
-  <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span>
-  <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='symbol'>:v</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>value:</span> <span class='symbol'>:v</span> <span class='rbrace'>}</span>
-  <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='symbol'>:v</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>left:</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Leaf</span><span class='comma'>,</span> <span class='const'>Node</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span>
+           <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='symbol'>:v</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>value:</span> <span class='symbol'>:v</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+           <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='symbol'>:v</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>left:</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree[v]
 </span>
 <span class='kw'>module</span> <span class='const'>Tree</span>
@@ -424,9 +436,9 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
 </span>
 <span class='const'>Leaf</span><span class='lbracket'>[</span><span class='const'>Integer</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='kw'>rescue</span> <span class='gvar'>$!</span>
-<span class='comment'># =&gt; #&lt;TypeError: value (String) &#39;1&#39; is not #kind_of? any of Integer&gt;
+<span class='comment'># =&gt; #&lt;TypeError: value (String) &#39;1&#39; is not any of Integer&gt;
 </span><span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Integer</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='const'>String</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span> <span class='kw'>rescue</span> <span class='gvar'>$!</span>
-<span class='comment'># =&gt; #&lt;TypeError: value (#&lt;Class:0x007fd968aad8b0&gt;) &#39;Leaf[String][value: a]&#39; is not #kind_of? any of Tree[Integer](Empty | Leaf[Integer] | Node[Integer])&gt;
+<span class='comment'># =&gt; #&lt;TypeError: value (#&lt;Class:0x007fbfda8f40e8&gt;) &#39;Leaf[String][value: a]&#39; is not any of Tree[Integer](Empty | Leaf[Integer] | Node[Integer])&gt;
 </span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='const'>String</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>                                  <span class='comment'># =&gt; Leaf[String][value: 1]
 </span>
 <span class='id identifier rubyid_itree'>itree</span> <span class='op'>=</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Integer</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='const'>Integer</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span>
@@ -443,10 +455,8 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 </span>
 <span class='comment'># Definition of data structures
 </span><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
-  <span class='const'>Tip</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='const'>Node</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>value:</span> <span class='const'>Object</span><span class='comma'>,</span> <span class='label'>left:</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
-
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Tip</span><span class='comma'>,</span> <span class='const'>Node</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Tip</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span>
+           <span class='const'>Node</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>value:</span> <span class='const'>Object</span><span class='comma'>,</span> <span class='label'>left:</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='label'>right:</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree(Tip | Node)
 </span>
 <span class='kw'>module</span> <span class='const'>Tree</span>
@@ -511,9 +521,8 @@ See <a href="https://en.wikipedia.org/wiki/Algebraic_data_type" target="_parent"
 </span>
 <span class='comment'># Avoiding nil errors with Maybe
 </span><span class='const'>Maybe</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span>
-  <span class='const'>None</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span>
-  <span class='const'>Some</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>None</span><span class='comma'>,</span> <span class='const'>Some</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>None</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span>
+           <span class='const'>Some</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Maybe(None | Some)
 </span><span class='comment'># wrap values which can be nil into maybe and then match to avoid nil errors
 </span><span class='kw'>def</span> <span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
@@ -537,18 +546,15 @@ messege-based cross-process comunication.</p>
 </span>
 <span class='comment'># lets define message-protocol for a cross-process communication
 </span><span class='const'>Request</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span>
-  <span class='const'>User</span>       <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>login:</span> <span class='const'>String</span><span class='comma'>,</span> <span class='label'>password:</span> <span class='const'>String</span> <span class='rbrace'>}</span>
-  <span class='const'>CreateUser</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>User</span> <span class='rbrace'>}</span>
-  <span class='const'>GetUser</span>    <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>login:</span> <span class='const'>String</span> <span class='rbrace'>}</span>
+  <span class='const'>User</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>login:</span> <span class='const'>String</span><span class='comma'>,</span> <span class='label'>password:</span> <span class='const'>String</span> <span class='rbrace'>}</span>
 
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>CreateUser</span><span class='comma'>,</span> <span class='const'>GetUser</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>CreateUser</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>User</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+           <span class='const'>GetUser</span>    <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>login:</span> <span class='const'>String</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Request(CreateUser | GetUser)
 </span>
 <span class='const'>Response</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span>
-  <span class='const'>Success</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Object</span> <span class='rbrace'>}</span>
-  <span class='const'>Failure</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>error:</span> <span class='const'>String</span> <span class='rbrace'>}</span>
-
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Success</span><span class='comma'>,</span> <span class='const'>Failure</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Success</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Object</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+           <span class='const'>Failure</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='label'>error:</span> <span class='const'>String</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Response(Success | Failure)
 </span>
 <span class='const'>Message</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Request</span><span class='comma'>,</span> <span class='const'>Response</span> <span class='rbrace'>}</span>
@@ -585,7 +591,8 @@ messege-based cross-process comunication.</p>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
 </span>
 <span class='const'>Contact</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_contact'>contact</span><span class='op'>|</span>
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Null</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span> <span class='id identifier rubyid_contact'>contact</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Null</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span>
+           <span class='id identifier rubyid_contact'>contact</span>
   <span class='id identifier rubyid_fields'>fields</span> <span class='label'>username:</span> <span class='const'>String</span><span class='comma'>,</span> <span class='label'>email:</span> <span class='const'>String</span>
 <span class='kw'>end</span>
 <span class='comment'># =&gt; Contact(Null | Contact(username: String, email: String))
@@ -642,9 +649,9 @@ on one place, no need to track methods in two separate classes <code>User</code>
 </div></div>
 
     <div id="footer">
-  Generated on Wed Oct  2 18:50:02 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Fri Nov 29 12:14:43 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.2 (ruby-2.0.0).
+  0.8.7.3 (ruby-2.0.0).
 </div>
 
 <script>

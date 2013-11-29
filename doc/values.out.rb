@@ -1,10 +1,8 @@
 # lets define a Tree
 Tree = Algebrick.type do |tree|
-  Empty = type
-  Leaf  = type { fields Integer }
-  Node  = type { fields tree, tree }
-
-  variants Empty, Leaf, Node
+  variants Empty = type,
+           Leaf  = type { fields Integer },
+           Node  = type { fields tree, tree }
 end                                                # => Tree(Empty | Leaf | Node)
 
 # values of atomic types are represented by itself,
@@ -38,8 +36,9 @@ BTree[0, Tip, tree1]
 # 1. method #value when type has only one field.
 Leaf[1].value                                      # => 1
 # 2. multi-assign when type has more fields
-v, left, right = *BTree[value: 1, left: Tip, right: Tip]
-# => [1, Tip, Tip]
+v, left, right = BTree[value: 1, left: Tip, right: Tip]
+# => BTree[value: 1, left: Tip, right: Tip]
+[v, left, right]                                   # => [1, Tip, Tip]
 # 3. or #[] when fields are named
 BTree[value: 1, left: Tip, right: Tip][:value]     # => 1
 BTree[value: 1, left: Tip, right: Tip][:left]      # => Tip
@@ -58,10 +57,10 @@ try = -> &b do
     e
   end
 end
-# => #<Proc:0x007fd9699e23a8@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:56 (lambda)>
+# => #<Proc:0x007fbfda8bc120@/Users/pitr/Workspace/public/algebrick/doc/values.in.rb:55 (lambda)>
 try.call { Leaf['a'] }
-# => #<TypeError: value (String) 'a' is not #kind_of? any of Integer>
+# => #<TypeError: value (String) 'a' is not any of Integer>
 try.call { Node[nil, Empty] }
-# => #<TypeError: value (NilClass) '' is not #kind_of? any of Tree(Empty | Leaf | Node)>
+# => #<TypeError: value (NilClass) '' is not any of Tree(Empty | Leaf | Node)>
 
 
