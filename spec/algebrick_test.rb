@@ -496,6 +496,11 @@ describe 'AlgebrickTest' do
       Array.(Empty, Leaf.(-> v { v > 0 })) => [Empty, Leaf[1]],
       Array.(TrueClass)                    => [true],
 
+      BTree.(:value)                       => BTree[1, Empty, Empty],
+      BTree.(value: 1)                     => BTree[1, Empty, Empty],
+      Named.(b: false)                     => Named[a: 1, b: false],
+      !Named.(b: false)                    => Named[a: 1, b: true],
+
     }.each do |matcher, value|
       it "#{matcher} === #{value}" do
         assert matcher === value

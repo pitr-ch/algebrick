@@ -58,6 +58,7 @@ module Algebrick
   end
 
   module TypeCheck
+    # FIND: type checking of collections?
     def Type?(value, *types)
       types.any? { |t| value.is_a? t }
     end
@@ -1107,7 +1108,7 @@ module Algebrick
                               raise ArgumentError, "no #{dif} fields in #{algebraic_type}"
                             end
                             algebraic_type.field_names.map do |field|
-                              field_matchers[field] || Algebrick.any
+                              field_matchers.key?(field) ? field_matchers[field] : Algebrick.any
                             end
 
                             # AProduct.(:field_name)
