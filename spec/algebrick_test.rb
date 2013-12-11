@@ -473,7 +473,12 @@ Named[
 
     describe 'match' do
       it 'returns value from executed block' do
-        Algebrick.match(Empty, Empty >-> { 1 }).must_equal 1
+        r = Algebrick.match Empty,
+                            Empty >-> { 1 }
+        r.must_equal 1
+        r = Algebrick.match(Empty,
+                            on(Empty) { 1 })
+        r.must_equal 1
       end
 
       it 'passes assigned values' do
@@ -484,6 +489,12 @@ Named[
         v = Algebrick.match Leaf[5],
                             Leaf.(~any) => -> value { value }
         v.must_equal 5
+
+        v = Algebrick.match(Leaf[5],
+                            on(Leaf.(~any)) do |value|
+                              value
+                            end)
+        v.must_equal 5
       end
 
       it 'raises when no match' do
@@ -492,7 +503,7 @@ Named[
       end
 
       it 'does not pass any values when no matcher' do
-        Algebrick.match(Empty, Empty >-> *a { a }).must_equal []
+        Algebrick.match(Empty, on(Empty) { |*a| a }).must_equal []
       end
     end
 

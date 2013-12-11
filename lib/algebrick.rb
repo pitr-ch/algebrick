@@ -143,6 +143,16 @@ module Algebrick
       raise "no match for (#{value.class}) '#{value}' by any of #{cases.map(&:first).join ', '}"
     end
 
+    def on(matcher, value = nil, &block)
+      matcher = if matcher.is_a? Matchers::Abstract
+                  matcher
+                else
+                  matcher.to_m
+                end
+      raise ArgumentError, 'only one of block or value can be supplied' if block && value
+      [matcher, value || block]
+    end
+
     # TODO #match! raise when match is not complete on a given type
 
     private
@@ -828,6 +838,8 @@ module Algebrick
         return self, block
       end
 
+      alias_method :when, :case
+
       def >(block)
         return self, block
       end
@@ -871,6 +883,10 @@ module Algebrick
         collect_assigns.tap do
           return yield *assigns if block_given?
         end
+      end
+
+      def to_a
+        assigns
       end
 
       def ===(other)
