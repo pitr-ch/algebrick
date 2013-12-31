@@ -704,5 +704,12 @@ Named[
       person[:name].must_equal 'Peter Parker'
       person[:address][:city].must_equal "Springfield"
     end
+
+    it "accepts the types in the hash" do
+      person = Person.from_hash(name: 'Peter Parker',
+                                address: Person::Address["One two three", "Springfield", 60200])
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
   end
 end
