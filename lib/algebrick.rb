@@ -605,9 +605,6 @@ module Algebrick
     end
 
     def product_from_hash(hash)
-      type_name = hash[TYPE_KEY] || hash[TYPE_KEY.to_s] || name
-      raise ArgumentError, "#{type_name} is not #{name}" unless type_name == name
-
       fields_data = hash[FIELDS_KEY] || hash[FIELDS_KEY.to_s] ||
           hash.reject { |k, _| k.to_s == TYPE_KEY.to_s }
       Type! fields_data, Hash, Array
@@ -632,7 +629,11 @@ module Algebrick
     def field_from_hash(hash, default_type = self)
       return hash unless Hash === hash
       if type_name = hash[TYPE_KEY] || hash[TYPE_KEY.to_s]
-        type = constantize type_name
+        begin
+          type = constantize type_name
+        rescue NameError
+          type = default_type
+        end
       else
         type = default_type
       end

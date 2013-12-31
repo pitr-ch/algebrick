@@ -22,10 +22,6 @@ require 'algebrick'
 require 'pry'
 
 class Module
-  def const_missing const
-    raise "no constant #{const.inspect} in #{self}"
-  end
-
   # Return any modules we +extend+
   def extended_modules
     class << self
@@ -695,6 +691,16 @@ Named[
                                                  city:   "Springfield",
                                                  zip:     60200 })
       person = DensedPerson.from_hash(person.to_hash)
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+
+    it "doesn't give up when the algebrick key doesn't tell true" do
+      person = Person.from_hash(name: 'Peter Parker',
+                                address: { algebrick: "Person::RenamedAddress",
+                                           street: "One two three",
+                                           city:   "Springfield",
+                                           zip:     60200 })
       person[:name].must_equal 'Peter Parker'
       person[:address][:city].must_equal "Springfield"
     end
