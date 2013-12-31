@@ -641,4 +641,62 @@ Named[
     it { List.(any, List) === List[1, Empty] }
   end
 
+  describe 'from_hash' do
+    Person = Algebrick.type do |person|
+      person::Address = type do
+        fields street: String,
+            city:   String,
+            zip:    Integer
+      end
+      fields name:    String,
+          address: person::Address
+    end
+
+    # Having address as anonymous class
+    DensedPerson = Algebrick.type do
+      fields(name:    String,
+             address: type do
+               fields street: String,
+               city:   String,
+               zip:    Integer
+             end)
+    end
+
+    it 'accepts data produced by to_hash method' do
+      person = Person[name: 'Peter Parker', address: Person::Address["One two three", "Springfield", 60200]]
+      person = Person.from_hash(person.to_hash)
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+
+    it "doesn't need algebrick field for deserialization" do
+      person = Person[name: 'Peter Parker', address: Person::Address["One two three", "Springfield", 60200]]
+      person = Person.from_hash(name: 'Peter Parker',
+                                address: { street: "One two three",
+                                           city:   "Springfield",
+                                           zip:     60200 })
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+
+    it "doesn't care if the keys are symbols or strings" do
+      person = Person[name: 'Peter Parker', address: Person::Address["One two three", "Springfield", 60200]]
+      person = Person.from_hash(:name      => 'Peter Parker',
+                                'address'  => { :street => "One two three",
+                                                'city'  => "Springfield",
+                                                :zip    => 60200 })
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+
+    it "is able to load data from anonymous types" do
+      person = DensedPerson.from_hash(name: 'Peter Parker',
+                                      address: { street: "One two three",
+                                                 city:   "Springfield",
+                                                 zip:     60200 })
+      person = DensedPerson.from_hash(person.to_hash)
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+  end
 end
