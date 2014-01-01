@@ -626,21 +626,25 @@ module Algebrick
       end
     end
 
-    def field_from_hash(hash, default_type = self)
+    def field_from_hash(hash, expected_type = self)
       return hash unless Hash === hash
       if type_name = hash[TYPE_KEY] || hash[TYPE_KEY.to_s]
         begin
           type = constantize type_name
         rescue NameError
-          type = default_type
+          type = expected_type
         end
       else
-        type = default_type
+        type = expected_type
       end
       if type === hash
         return hash
       else
-        type.from_hash hash
+        object = type.from_hash hash
+        unless expected_type === object
+          object = expected_type.from_hash hash
+        end
+        return object
       end
     end
 

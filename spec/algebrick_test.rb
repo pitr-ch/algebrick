@@ -658,6 +658,12 @@ Named[
              end)
     end
 
+    Address = Algebrick.type do
+      fields street: String,
+          city:   String,
+          zip:    Integer
+    end
+
     it 'accepts data produced by to_hash method' do
       person = Person[name: 'Peter Parker', address: Person::Address["One two three", "Springfield", 60200]]
       person = Person.from_hash(person.to_hash)
@@ -711,5 +717,16 @@ Named[
       person[:name].must_equal 'Peter Parker'
       person[:address][:city].must_equal "Springfield"
     end
+
+    it "tries the type suggested in algebrick key, but falls back to the expected type when needed" do
+      person = Person.from_hash(name: 'Peter Parker',
+                                address: { algebrick: "Address",
+                                           street: "One two three",
+                                           city:   "Springfield",
+                                           zip:     60200 })
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+
   end
 end
