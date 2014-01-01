@@ -270,8 +270,8 @@ module Algebrick
     end
   end
 
-  TYPE_KEY   = :algebrick
-  FIELDS_KEY = :fields
+  TYPE_KEY   = :algebrick_type
+  FIELDS_KEY = :algebrick_fields
 
   # Representation of Atomic types
   class Atom < Type

@@ -177,9 +177,9 @@ describe 'AlgebrickTest' do
     it { Named.from_hash(Named[1, :a].to_hash).must_equal Named[1, :a] }
     it do
       Named[1, Node[Leaf[1], Empty]].to_hash.
-          must_equal algebrick: 'Named', a: 1, b: { algebrick: 'Node',
-                                                    fields:    [{ algebrick: 'Leaf', fields: [1] },
-                                                                { algebrick: 'Empty' }] }
+          must_equal algebrick_type: 'Named', a: 1, b: { algebrick_type: 'Node',
+                                                         algebrick_fields:    [{ algebrick_type: 'Leaf', algebrick_fields: [1] },
+                                                                               { algebrick_type: 'Empty' }] }
     end
     it do
       Named.from_hash(Named[1, Node[Leaf[1], Empty]].to_hash).
@@ -703,7 +703,7 @@ Named[
 
     it "doesn't give up when the algebrick key doesn't tell true" do
       person = Person.from_hash(name: 'Peter Parker',
-                                address: { algebrick: "Person::RenamedAddress",
+                                address: { algebrick_type: "Person::RenamedAddress",
                                            street: "One two three",
                                            city:   "Springfield",
                                            zip:     60200 })
@@ -720,7 +720,7 @@ Named[
 
     it "tries the type suggested in algebrick key, but falls back to the expected type when needed" do
       person = Person.from_hash(name: 'Peter Parker',
-                                address: { algebrick: "Address",
+                                address: { algebrick_type: "Address",
                                            street: "One two three",
                                            city:   "Springfield",
                                            zip:     60200 })
