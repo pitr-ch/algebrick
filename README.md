@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/pitr-ch/algebrick.png?branch=master)](https://travis-ci.org/pitr-ch/algebrick)
 
-It's a small gem providing **algebraic types** and **pattern matching** on them for Ruby.
+It's a gem providing **algebraic types** and **pattern matching** seamlessly integrates with standard features Ruby.
 
 -   Documentation: <http://blog.pitr.ch/algebrick>
 -   Source: <https://github.com/pitr-ch/algebrick>
@@ -27,24 +27,24 @@ end
 ```
 
 Now types `Tree(Empty | Leaf | Node)`, `Empty`, `Leaf(Integer)` and `Node(Tree, Tree)` are defined.
-Add some methods, don't miss the **pattern matching** example.
+Let's add a method, don't miss the **pattern matching** example.
 
 ```ruby
 module Tree
   # compute depth of a tree
   def depth
     match self,
-          Empty >> 0,
-          Leaf >> 1,
+          (on Empty, 0),
+          (on Leaf, 1),
           # ~ will store and pass matched parts to variables left and right
-          Node.(~any, ~any) >-> left, right do
+          (on Node.(~any, ~any) do |left, right|
             1 + [left.depth, right.depth].max
-          end
+          end)
   end
 end
 ```
 
-Methods are defined on **all** values of type Tree
+Method defined in module `Tree` are passed down to **all** values of type Tree
 
 ```ruby
 Empty.depth                                        # => 0

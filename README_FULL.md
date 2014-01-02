@@ -1,6 +1,6 @@
 # Algebrick
 
-Is a small gem providing **algebraic types** and **pattern matching** on them for Ruby.
+It's a gem providing **algebraic types** and **pattern matching** and seamlessly integrating with standard features of Ruby.
 
 -   Documentation: <http://blog.pitr.ch/algebrick>
 -   Source: <https://github.com/pitr-ch/algebrick>
@@ -10,30 +10,46 @@ Is a small gem providing **algebraic types** and **pattern matching** on them fo
 
 {include:file:doc/quick_example.out.rb}
 
-## Algebraic types: what is it?
+## Algebraic types
 
-If you ever read something about Haskell that you probably know:
+Algebraic type is a kind of composite type, i.e. a type formed by combining other types.
+In Haskell algebraic type looks like this:
 
     data Tree = Empty
               | Leaf Int
               | Node Tree Tree
+			  
+	depth :: Tree -> Int
+	      depth Empty = 0
+	      depth (Leaf n) = 1
+	      depth (Node l r) = 1 + max (depth l) (depth r)
+    
+	depth (Node Empty (Leaf 5)) -- => 2
 
-which is an algebraic type. This snippet defines type `Tree` which has 3 possible values:
-`Empty`, `Leaf` with and extra value of type `Int`, `Node` with two values of type `Tree`. 
-See {https://en.wikipedia.org/wiki/Algebraic_data_type}.
+This snippet defines type `Tree` which has 3 possible values:
 
-Same thing can be defined with this gem:
+-  `Empty`
+-  `Leaf` with and extra value of type `Int`
+-  `Node` with two values of type `Tree` 
 
-{include:file:doc/tree1.out.rb}
+and function `depth` to calculate depth of a tree which is called on the last line and evaluates to `2`.
 
-There are 4 kinds of algebraic types:
+Same `Tree` type and `depth` method can be also defined with this gem as it was shown in {file:README_FULL.md#quick-example Quick Example}.
 
-1.  **Atom** a type that has only one value e.g. `Empty`.
-2.  **Product** a type that has a set number of fields with given type e.g. `Leaf(Integer)`
-3.  **Variant** a type that does have set number of variants e.g. `Tree(Empty | Leaf(Integer) | Node(Tree, Tree)`. It means that values of `Empty`, `Leaf[1]`, `Node[Empty, Empry]` are all of type `Tree`.
-4.  **ProductVariant** will be created when a recursive type like `List(Empty | List(Integer, List))` is defined. `List` has two variants `Empty` and itself, and simultaneously it has fields as product type.
+### Algebrick implementation
 
-Atom type is implemented with {Algebrick::Atom} and the rest is implemented with {Algebrick::ProductVariant} which behaves differently based on what is set: fields, variants or both.
+Algebrick distinguishes 4 kinds of algebraic types:
+
+1.  **Atom** - type that has only one value, e.g. `Empty`.
+2.  **Product** - type that has a set number of fields with given type, e.g. `Leaf(Integer)`
+3.  **Variant** - type that is one of the set variants, e.g. `Tree(Empty | Leaf(Integer) | Node(Tree, Tree)`, meaning that values `Empty`, `Leaf[1]`, `Node[Empty, Empry]` have all type `Tree`.
+4.  **ProductVariant** - will be created when a recursive type like `List(Empty | List(Integer, List))` is defined. `List` has two variants: `Empty` and itself. Simultaneously it has fields as a product type.
+
+Atom type is implemented with {Algebrick::Atom} and the rest is implemented with {Algebrick::ProductVariant} which behaves differently based on what is set: fields, variants, or both.
+
+More information can be found at <https://en.wikipedia.org/wiki/Algebraic_data_type>.
+
+## Documentation
 
 ### Type definition
 
@@ -43,14 +59,14 @@ Atom type is implemented with {Algebrick::Atom} and the rest is implemented with
 
 {include:file:doc/values.out.rb}
 
-### Extending behavior
+### Behaviour extending
 
 {include:file:doc/extending_behavior.out.rb}
 
 ### Pattern matching
 
-Algebraic matchers are helper objects to match algebraic values and others with
-`#===` method based on theirs initialization values.
+Pattern matching is implemented with helper objects defined in `ALgebrick::Matchers`.
+They use standard `#===` method to match against values.
 
 {include:file:doc/pattern_matching.out.rb}
 
@@ -60,29 +76,24 @@ Algebraic matchers are helper objects to match algebraic values and others with
 
 ## What is it good for?
 
-### Defining data with a given structure
+### Defining data structures
 
-{include:file:doc/data.out.rb}
+<!-- {include:file:doc/data.out.rb} -->
+
+- Simple data structures like trees
+- Whenever you find yourself to pass around too many fragile Hash-Array structures
+
+_Examples are coming shortly._
 
 ### Serialization
 
-Algebraic types also play nice with JSON serialization and deserialization. It is ideal for defining
-messege-based cross-process comunication.
+Algebraic types also play nice with JSON serialization and de-serialization making it ideal for defining message-based cross-process communication.
 
 {include:file:doc/json.out.rb}
 
-### Null Object Pattern
-
-see {http://en.wikipedia.org/wiki/Null_Object_pattern#Ruby}.
-
-{include:file:doc/null.out.rb}
-
-This has advantage over a classical approach that the methods are defined
-on one place, no need to track methods in two separate classes `User` and `NullUser`.
-
 ### Message matching in Actor pattern
 
-Just small snippet from a gem I am still working on.
+Just a small snippet how it can be used in Actor model world.
 
     class Worker < AbstractActor
       def initialize(executor)
@@ -97,3 +108,14 @@ Just small snippet from a gem I am still working on.
               end
       end
     end
+
+<!--
+### Null Object Pattern
+
+see {http://en.wikipedia.org/wiki/Null_Object_pattern#Ruby}.
+
+{include:file:doc/null.out.rb}
+
+This has advantage over a classical approach that the methods are defined
+on one place, no need to track methods in two separate classes `User` and `NullUser`.
+-->

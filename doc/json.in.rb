@@ -1,6 +1,6 @@
 extend Algebrick::Matching
 
-# lets define message-protocol for a cross-process communication
+# Lets define message-protocol for a cross-process communication.
 Request = Algebrick.type do
   User = type { fields login: String, password: String }
 
@@ -17,18 +17,21 @@ Message = Algebrick.type { variants Request, Response }
 
 require 'multi_json'
 
-# prepare a message for sending
-create_user_request     = CreateUser[User['root', 'lajDh4']]
-raw_create_user_request = MultiJson.dump create_user_request.to_hash
+# Prepare a message for sending.
+request      = CreateUser[User['root', 'lajDh4']]
+raw_request  = MultiJson.dump request.to_hash
 
-# receive the message
-response                = match Message.from_hash(MultiJson.load(raw_create_user_request)),
-                                CreateUser.(~any) >-> user { Success[user] }
+# Receive the message.
+response     = match Message.from_hash(MultiJson.load(raw_request)),
+                     CreateUser.(~any) >-> user do
+                       # create the user and send success
+                       Success[user]
+                     end
 
-# send response
-response_raw            = MultiJson.dump response.to_hash
+# Send response.
+response_raw = MultiJson.dump response.to_hash
 
-# receive response
+# Receive response.
 Message.from_hash(MultiJson.load(response_raw))
 
 

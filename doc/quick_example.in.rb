@@ -1,25 +1,26 @@
-# define algebraic types
+# Let's define a Tree
 Tree = Algebrick.type do |tree|
   variants Empty = atom,
            Leaf  = type { fields Integer },
            Node  = type { fields tree, tree }
 end
 
-# add some methods
+# Now types `Tree(Empty | Leaf | Node)`, `Empty`, `Leaf(Integer)` and `Node(Tree, Tree)` are defined.
+# Let's add a method, don't miss the **pattern matching** example.
 module Tree
   # compute depth of a tree
   def depth
     match self,
-          Empty >> 0,
-          Leaf >> 1,
+          (on Empty, 0),
+          (on Leaf, 1),
           # ~ will store and pass matched parts to variables left and right
-          Node.(~any, ~any) >-> left, right do
+          (on Node.(~any, ~any) do |left, right|
             1 + [left.depth, right.depth].max
-          end
+          end)
   end
 end
 
-# methods are defined on all values of type Tree
+# Method defined in module `Tree` are passed down to **all** values of type Tree.
 Empty.depth
 Leaf[10].depth
 Node[Leaf[4], Empty].depth

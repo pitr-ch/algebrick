@@ -1,4 +1,4 @@
-#  Copyright 2013 Petr Chalupa <git@pitr.ch>
+#  Copyright 2013 Petr Chalupa <git+algebrick@pitr.ch>
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -59,6 +59,7 @@ module Algebrick
 
   module TypeCheck
     # FIND: type checking of collections?
+
     def Type?(value, *types)
       types.any? { |t| value.is_a? t }
     end
@@ -151,7 +152,7 @@ module Algebrick
       [matcher, value || block]
     end
 
-    # TODO #match! raise when match is not complete on a given type
+    # FIND: #match! raise when match is not complete on a given type
 
     private
 
@@ -1164,8 +1165,10 @@ module Algebrick
       end
 
       def to_s
-        assign_to_s + "#{@algebraic_type.name}.(#{@field_matchers.join(',')})"
+        assign_to_s + "#{@algebraic_type.name}.(#{@field_matchers.join(', ')})"
       end
+
+      # TODO prety_print for all matchers
 
       def ==(other)
         other.kind_of? self.class and

@@ -1,11 +1,11 @@
-# lets define a trees to demonstrate the pattern matching abilities
+# Let's define a tree and binary tree to demonstrate the pattern matching abilities.
 Tree = Algebrick.type do |tree|
   variants Empty = type,
            Leaf  = type { fields Integer },
            Node  = type { fields tree, tree }
 end                                                # => Tree(Empty | Leaf | Node)
 
-BTree = Algebrick.type do |btree|
+BinaryTree = BTree = Algebrick.type do |btree|
   fields! value: Comparable, left: btree, right: btree
   variants Empty, btree
 end
@@ -13,101 +13,73 @@ end
 
 extend Algebrick::Matching                         # => main
 
-# Basic Examples
-# Any object responding to #=== can be converted to matcher.
-Empty.to_m === Empty                               # => true
-Empty === Empty                                    # => true
-# product matchers are using #.() syntax
-Leaf === Leaf[1]                                   # => true
+# Product matchers are constructed with #.() syntax.
 Leaf.(any) === Leaf[1]                             # => true
 Leaf.(1) === Leaf[1]                               # => true
 Leaf.(2) === Leaf[1]                               # => false
+# There are also some shortcuts to use when product has more fields.
+BTree.()                                           # => BTree.(any, any, any)
+BTree.(value: any, left: Empty)                    # => BTree.(any, Empty, any)
+BTree.(value: any, left: Empty) === BTree[1, Empty, Empty]
+# => true
 
-# Tree matches all its values same as its matcher
+# Any object responding to #=== can be converted to matcher.
+(1..2).to_m                                        # => Wrapper.(1..2)
+(1..2).to_m === 2                                  # => true
+Empty.to_m                                         # => Empty.to_m
+# As matchers are using standard #=== method it does not have to be always converted.
+Empty === Empty                                    # => true
+Leaf === Leaf[1]                                   # => true
+
+# Tree matches all its values.
 [Empty, Leaf[1], Node[Empty, Empty]].all? { |v| Tree === v }
 # => true
-[Empty, Leaf[1], Node[Empty, Empty]].all? { |v| Tree.to_m === v }
-# => true
 
-# to collect assigns from matching use #~ operator to mark the matchers to collect the value
-(m = Leaf.(~any)) === Leaf[1]; m.assigns           # => [1]
-(m = Leaf.(~any)) === Leaf[2]; m.assigns           # => [2]
-(m = ~Leaf.(~any)) === Leaf[2]; m.assigns          # => [Leaf[2], 2]
-# assigns returns array with length of ~ count and values in same order as its ~
-# any is aliased as _
-(m = ~Node.(_, ~Leaf.(~any))) === Node[Leaf[2], Leaf[3]]
-# => true
-m.assigns                                          # => [Node[Leaf[2], Leaf[3]], Leaf[3], 3]
+# There is also a #match method in Matching module to make pattern matching easier.
+match Leaf[1], # supply the value for matching
+      # if Leaf.(0) matches :zero is returned
+      (on Leaf.(0), :zero),
+      # when computation of the result needs to be avoided use block
+      # if Leaf.(1) matches block is called and its result is returned
+      (on Leaf.(1) do
+        (1..10000).inject(:*) # expensive computation
+        :one # which is :one in this case
+      end)                                         # => :one
 
-# #assigns accepts block
-(m = Node.(~any, ~any)) === Node[Leaf[2], Empty]   # => true
-m.assigns { |l, r| Node[r, l] }                    # => Node[Empty, Leaf[2]]
-
-# matcher can be combined with any object responding to #===
-Leaf.(-> v { v > 1 }) === Leaf[2]                  # => true
-# it has to be converted to matcher to access matchers features
-(m = Leaf.(~-> v { v > 1 }.to_m)) === Leaf[2]; m.assigns
-# => [2]
-
-# case can be used as expected
+# Alternatively case can be used.
 case Leaf[1]
-when Leaf.(-> v { v < 0 })
-  :minus
-when Leaf.(-> v { v >= 0 })
-  :plus
-end                                                # => :plus
+when Leaf.(0)
+  :zero
+when Leaf.(1)
+  (1..10000).inject(:*) # expensive computation
+  :one
+end                                                # => :one
 
-# to access assigns
-case Leaf[-1]
-when m = Leaf.(~-> v { v < 0 }.to_m)
-  m.assigns.first
-when m = Leaf.(~-> v { v >= 0 }.to_m)
-  m.assigns.first
-end                                                # => -1
-
-# using local variable in case is not quite nice, there is a helper #match to get around that
+# But that won't work nicely with value deconstruction.
+# Each matcher can be marked with #~ method to store value against which is being matched,
+# each matched value is passed to the block,
 match Leaf[0],
-      Leaf.(~-> v { v < 0 }.to_m)  => -> v { v-10 },
-      Leaf.(~-> v { v >= 0 }.to_m) => -> v { v+10 }
-# => 10
+      (on ~Leaf.(~any) do |leaf, value|
+        [leaf, value]
+      end)
 
-# match will fail when nothing matches
-begin
-  match Leaf[1],
-        Node.to_m >> true
-rescue => e
-  e
-end
-# => #<RuntimeError: no match for (#<Class:0x007fbfdb0c77e8>) 'Leaf[1]' by any of Node.(any,any)>
+btree = BTree[1, BTree[0, Empty, Empty], Empty]
+# => BTree[value: 1, left: BTree[value: 0, left: Empty, right: Empty], right: Empty]
+match btree,
+      (on BTree.(any, ~any, ~any) do |left, right|
+        [left, right]
+      end)
+# => [BTree[value: 0, left: Empty, right: Empty], Empty]
 
-# alternative syntax are
-match Leaf[0],
-      Leaf.(~-> v { v < 0 }.to_m).case { |v| v-10 },
-      Leaf.(~-> v { v >= 0 }.to_m).case { |v| v+10 }
-# => 10
-# which evaluates to
-match Leaf[0],
-      [Leaf.(~-> v { v < 0 }.to_m), -> v { v-10 }],
-      [Leaf.(~-> v { v >= 0 }.to_m), -> v { v+10 }]
-# => 10
-# operators may also be used as sugar to construct arrays above
-match Leaf[6],
-      Leaf.(~-> v { v%2 == 0 }.to_m) >> 2,
-      Leaf.(~-> v { v%3 == 0 }.to_m) >-> v { 3 }   # => 2
-# the last example of using #>> for static values and #>-> for blocks in #match
-# is the preferred matching syntax
+# or alternatively you can use Ruby's multi-assignment feature.
+match btree,
+      (on ~BTree do |(_, left, right)|
+        [left, right]
+      end)
+# => [BTree[value: 0, left: Empty, right: Empty], Empty]
 
-# Matchers support logical operations
-# #& for and, #| for or, and #! for negation
-(m = Leaf.(-> v { v > 1 }.to_m & ~-> v { v < 3 }.to_m)) === Leaf[2]; m.assigns
-# => [2]
-(m = Leaf.(~-> v { v > 1 }.to_m | ~-> v { v < 3 }.to_m)) === Leaf[2]; m.assigns
-# => [2, nil]
-(m = Leaf.(~-> v { v > 1 }.to_m ^ ~-> v { v < 3 }.to_m)) === Leaf[2]; m.assigns
-# => [2]
-(m = Leaf.(~!-> v { v > 1 }.to_m)) === Leaf[0]; m.assigns
-# => [0]
 
+# Matchers also support logical operations #& for and, #| for or, and #! for negation.
 Color = Algebrick.type do
   variants Black = atom,
            White = atom,
@@ -115,28 +87,34 @@ Color = Algebrick.type do
            Grey  = type { fields scale: Float }
 end                                                # => Color(Black | White | Pink | Grey)
 
-def what_color?(color)
+def color?(color)
   match color,
-        Black | Grey.(-> v { v < 0.2 }) >-> { 'black-ish' },
-        White | Grey.(-> v { v > 0.8 }) >-> { 'white-ish' },
-        Grey.(-> v { v >= 0.2 }.to_m & -> v { v <= 0.8 }.to_m) >-> { 'grey-ish' },
-        Pink >> "that's not a color"
+        on(Black | Grey.(-> v { v < 0.2 }), 'black-ish'),
+        on(White | Grey.(-> v { v > 0.8 }), 'white-ish'),
+        on(Grey.(-> v { v >= 0.2 }) & Grey.(-> v { v <= 0.8 }), 'grey-ish'),
+        on(Pink, "that's not a color ;)")
 end                                                # => nil
 
-what_color? Black                                  # => "black-ish"
-what_color? Grey[0.1]                              # => "black-ish"
-what_color? Grey[0.3]                              # => "grey-ish"
-what_color? Grey[0.9]                              # => "white-ish"
-what_color? White                                  # => "white-ish"
-what_color? Pink                                   # => "that's not a color"
+color? Black                                       # => "black-ish"
+color? Grey[0.1]                                   # => "black-ish"
+color? Grey[0.3]                                   # => "grey-ish"
+color? Grey[0.9]                                   # => "white-ish"
+color? White                                       # => "white-ish"
+color? Pink                                        # => "that's not a color ;)"
 
-# There are also shortcuts to match on named fields
-match BTree[1.5, Empty, Empty],
-      BTree.(:value) >-> v { v }                   # => 1.5
+# A more complicated example of extracting node's value and values of its left and right side
+# using also logical operators to allow Empty sides.
+match BTree[0, Empty, BTree[1, Empty, Empty]],
+      (on BTree.(value: ~any,
+                 left: Empty | BTree.(value: ~any),
+                 right: Empty | BTree.(value: ~any)) do |value, left, right|
+        { left: left, value: value, right: right }
+      end)                                         # => {:left=>nil, :value=>0, :right=>1}
 
-match BTree[1.5, Empty, BTree[4.5, Empty, Empty]],
-      BTree.(value: ~any, right: BTree.(:value)) >-> value, right_value do
-        [value, right_value]
-      end                                          # => [1.5, 4.5]
-
-
+# There is also a more funky syntax for matching
+# using #>, #>> and Ruby 1.9 syntax for lambdas `-> {}`.
+match Leaf[1],
+      Leaf.(0) >> :zero,
+      Leaf.(~any) >-> value do
+        (1..value).inject(:*) # an expensive computation
+      end                                          # => 1
