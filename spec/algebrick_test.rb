@@ -549,13 +549,11 @@ Named[
       Tree.to_m                            => Node[Leaf[1], Empty],
       Node                                 => Node[Leaf[1], Empty],
 
-      Tree & Leaf.(_)                      => Leaf[1],
-      Empty | Leaf.(_)                     => Leaf[1],
-      Empty | Leaf.(_)                     => Empty,
-      Empty ^ Leaf.(_)                     => Leaf[1],
-      Empty ^ Leaf.(_)                     => Empty,
-      !Empty & Leaf.(_)                    => Leaf[1],
-      Empty & !Leaf.(_)                    => Empty,
+      Tree & Leaf.(any)                    => Leaf[1],
+      Empty | Leaf.(any)                   => Leaf[1],
+      Empty | Leaf.(any)                   => Empty,
+      !Empty & Leaf.(any)                  => Leaf[1],
+      Empty & !Leaf.(any)                  => Empty,
 
       Array.()                             => [],
       Array.(1)                            => [1],
@@ -579,8 +577,8 @@ Named[
     assert List === Empty
     assert List.to_m === List[1, Empty]
     assert List === List[1, Empty]
-    assert List.(1, _) === List[1, Empty]
-    refute List.(_, _) === Empty
+    assert List.(1, any) === List[1, Empty]
+    refute List.(any, any) === Empty
   }
 
   describe 'and-or-xor matching' do

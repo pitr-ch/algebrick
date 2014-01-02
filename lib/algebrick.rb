@@ -128,8 +128,6 @@ module Algebrick
       Matchers::Any.new
     end
 
-    alias_method :_, :any
-
     def match(value, *cases)
       cases = if cases.size == 1 && cases.first.is_a?(Hash)
                 cases.first
