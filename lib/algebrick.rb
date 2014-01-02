@@ -391,6 +391,14 @@ module Algebrick
       self.class.type
     end
 
+    def self.name
+      @type.to_s
+    end
+
+    def self.to_s
+      name
+    end
+
     def self.type=(type)
       raise if @type
       @type = type
