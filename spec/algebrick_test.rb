@@ -22,10 +22,6 @@ require 'algebrick'
 require 'pry'
 
 class Module
-  def const_missing const
-    raise "no constant #{const.inspect} in #{self}"
-  end
-
   # Return any modules we +extend+
   def extended_modules
     class << self
@@ -181,9 +177,9 @@ describe 'AlgebrickTest' do
     it { Named.from_hash(Named[1, :a].to_hash).must_equal Named[1, :a] }
     it do
       Named[1, Node[Leaf[1], Empty]].to_hash.
-          must_equal algebrick: 'Named', a: 1, b: { algebrick: 'Node',
-                                                    fields:    [{ algebrick: 'Leaf', fields: [1] },
-                                                                { algebrick: 'Empty' }] }
+          must_equal algebrick_type: 'Named', a: 1, b: { algebrick_type: 'Node',
+                                                         algebrick_fields:    [{ algebrick_type: 'Leaf', algebrick_fields: [1] },
+                                                                               { algebrick_type: 'Empty' }] }
     end
     it do
       Named.from_hash(Named[1, Node[Leaf[1], Empty]].to_hash).
@@ -631,4 +627,96 @@ Named[
     it { List.(any, List) === List[1, Empty] }
   end
 
+  describe 'from_hash' do
+    Person = Algebrick.type do |person|
+      person::Address = type do
+        fields street: String,
+            city:   String,
+            zip:    Integer
+      end
+      fields name:    String,
+          address: person::Address
+    end
+
+    # Having address as anonymous class
+    DensedPerson = Algebrick.type do
+      fields(name:    String,
+             address: type do
+               fields street: String,
+               city:   String,
+               zip:    Integer
+             end)
+    end
+
+    Address = Algebrick.type do
+      fields street: String,
+          city:   String,
+          zip:    Integer
+    end
+
+    it 'accepts data produced by to_hash method' do
+      person = Person[name: 'Peter Parker', address: Person::Address["One two three", "Springfield", 60200]]
+      person = Person.from_hash(person.to_hash)
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+
+    it "doesn't need algebrick field for deserialization" do
+      person = Person[name: 'Peter Parker', address: Person::Address["One two three", "Springfield", 60200]]
+      person = Person.from_hash(name: 'Peter Parker',
+                                address: { street: "One two three",
+                                           city:   "Springfield",
+                                           zip:     60200 })
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+
+    it "doesn't care if the keys are symbols or strings" do
+      person = Person[name: 'Peter Parker', address: Person::Address["One two three", "Springfield", 60200]]
+      person = Person.from_hash(:name      => 'Peter Parker',
+                                'address'  => { :street => "One two three",
+                                                'city'  => "Springfield",
+                                                :zip    => 60200 })
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+
+    it "is able to load data from anonymous types" do
+      person = DensedPerson.from_hash(name: 'Peter Parker',
+                                      address: { street: "One two three",
+                                                 city:   "Springfield",
+                                                 zip:     60200 })
+      person = DensedPerson.from_hash(person.to_hash)
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+
+    it "doesn't give up when the algebrick key doesn't tell true" do
+      person = Person.from_hash(name: 'Peter Parker',
+                                address: { algebrick_type: "Person::RenamedAddress",
+                                           street: "One two three",
+                                           city:   "Springfield",
+                                           zip:     60200 })
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+
+    it "accepts the types in the hash" do
+      person = Person.from_hash(name: 'Peter Parker',
+                                address: Person::Address["One two three", "Springfield", 60200])
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+
+    it "tries the type suggested in algebrick key, but falls back to the expected type when needed" do
+      person = Person.from_hash(name: 'Peter Parker',
+                                address: { algebrick_type: "Address",
+                                           street: "One two three",
+                                           city:   "Springfield",
+                                           zip:     60200 })
+      person[:name].must_equal 'Peter Parker'
+      person[:address][:city].must_equal "Springfield"
+    end
+
+  end
 end

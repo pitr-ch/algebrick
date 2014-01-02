@@ -241,8 +241,8 @@ module Algebrick
     end
   end
 
-  TYPE_KEY   = :algebrick
-  FIELDS_KEY = :fields
+  TYPE_KEY   = :algebrick_type
+  FIELDS_KEY = :algebrick_fields
 
   # Representation of Atomic types
   class Atom < Type
@@ -584,30 +584,47 @@ module Algebrick
     end
 
     def product_from_hash(hash)
-      (type_name = hash[TYPE_KEY] || hash[TYPE_KEY.to_s]) or
-          raise ArgumentError, "hash does not have #{TYPE_KEY}"
-      raise ArgumentError, "#{type_name} is not #{name}" unless type_name == name
-
-      fields = hash[FIELDS_KEY] || hash[FIELDS_KEY.to_s] ||
+      fields_data = hash[FIELDS_KEY] || hash[FIELDS_KEY.to_s] ||
           hash.reject { |k, _| k.to_s == TYPE_KEY.to_s }
-      Type! fields, Hash, Array
+      Type! fields_data, Hash, Array
 
-      case fields
+      case fields_data
       when Array
-        self[*fields.map { |value| field_from_hash value }]
+        fields = self.fields.zip(fields_data).map do |type, value|
+          field_from_hash value, type
+        end
+        self[*fields]
       when Hash
-        self[fields.inject({}) do |h, (name, value)|
+        fields = fields_data.inject({}) do |h, (name, value)|
           raise ArgumentError unless field_names.map(&:to_s).include? name.to_s
-          h.update name.to_sym => field_from_hash(value)
-        end]
+          name = name.to_sym
+          type = self.fields[self.field_indexes[name]]
+          h.update name => field_from_hash(value, type)
+        end
+        self[fields]
       end
     end
 
-    def field_from_hash(hash)
+    def field_from_hash(hash, expected_type = self)
       return hash unless Hash === hash
-      (type_name = hash[TYPE_KEY] || hash[TYPE_KEY.to_s]) or return hash
-      type = constantize type_name
-      type.from_hash hash
+      if type_name = hash[TYPE_KEY] || hash[TYPE_KEY.to_s]
+        begin
+          type = constantize type_name
+        rescue NameError
+          type = expected_type
+        end
+      else
+        type = expected_type
+      end
+      if type === hash
+        return hash
+      else
+        object = type.from_hash hash
+        unless expected_type === object
+          object = expected_type.from_hash hash
+        end
+        return object
+      end
     end
 
     def constantize(camel_cased_word)
