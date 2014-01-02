@@ -1142,15 +1142,6 @@ module Algebrick
                               field_matchers.key?(field) ? field_matchers[field] : Algebrick.any
                             end
 
-                            # AProduct.(:field_name)
-                          when field_matchers.all? { |v| v.is_a? Symbol }
-                            unless (dif = field_matchers - algebraic_type.field_names).empty?
-                              raise ArgumentError, "no #{dif} fields in #{algebraic_type}"
-                            end
-                            algebraic_type.field_names.map do |field|
-                              field_matchers.include?(field) ? ~Algebrick.any : Algebrick.any
-                            end
-
                             # normal
                           else
                             field_matchers

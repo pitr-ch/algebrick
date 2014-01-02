@@ -389,7 +389,7 @@ Named[
       def glue
         match self,
               PEmpty >> '',
-              PLeaf.(:value) >-> v { v },
+              PLeaf.(value: ~any) >-> v { v },
               PNode.(~any, ~any) >-> l, r { l.glue + r.glue }
       end
     end
@@ -448,10 +448,6 @@ Named[
       m.assigns.must_equal [Leaf[5], 5]
       m === Leaf[3]
       m.assigns.must_equal [Leaf[3], 3]
-
-      m = BTree.(:value)
-      m === BTree[1, Empty, Empty]
-      m.assigns.must_equal [1]
 
       m = BTree.(value: ~any)
       m === BTree[1, Empty, Empty]
@@ -559,7 +555,7 @@ Named[
       Array.(Empty, Leaf.(-> v { v > 0 })) => [Empty, Leaf[1]],
       Array.(TrueClass)                    => [true],
 
-      BTree.(:value)                       => BTree[1, Empty, Empty],
+      BTree.(value: any)                   => BTree[1, Empty, Empty],
       BTree.(value: 1)                     => BTree[1, Empty, Empty],
       Named.(b: false)                     => Named[a: 1, b: false],
       !Named.(b: false)                    => Named[a: 1, b: true],
