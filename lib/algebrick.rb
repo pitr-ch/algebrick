@@ -614,10 +614,17 @@ module Algebrick
       names = camel_cased_word.split('::')
       names.shift if names.empty? || names.first.empty?
 
+      parameter = nil
+      names.last.tap do |last|
+        name, parameter = last.split /\[|\]/
+        last.replace name
+      end
+
       constant = Object
       names.each do |name|
         constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
       end
+      constant = constant[constantize(parameter)] if parameter
       constant
     end
   end

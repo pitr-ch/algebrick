@@ -424,6 +424,10 @@ Named[
                                   PEmpty]].glue.must_equal 'ab'
       refute PTree[Object].respond_to? :glue
     end
+    it 'serializes' do
+      v = PNode[Integer][PLeaf[Integer][1], PEmpty]
+      assert PTree[Integer].from_hash(v.to_hash) == v
+    end
   end
 
   extend Algebrick::Matching
