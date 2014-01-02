@@ -1207,4 +1207,21 @@ module Algebrick
     end
   end
 
+  module Types
+    Maybe = Algebrick.type(:v) do
+      variants None = atom,
+               Some = type(:v) { fields :v }
+    end
+
+    module Maybe
+      def maybe
+        match self,
+              None >> nil,
+              Some >-> { yield value }
+      end
+    end
+  end
+
+  include Types
+
 end
