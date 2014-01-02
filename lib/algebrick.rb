@@ -97,30 +97,6 @@ module Algebrick
       raise TypeError,
             "Value (#{value.class}) '#{value}' #{message} any of: #{types.join('; ')}."
     end
-
-    public
-
-    raise 'remove deprecations' if Algebrick.version >= Gem::Version.new('0.4')
-
-    def is_kind_of?(value, *types)
-      warn "is_kind_of? is deprecated use Type?\n#{caller[0]}"
-      Type? value, *types
-    end
-
-    def is_kind_of!(value, *types)
-      warn "Type! is deprecated use Type!\n#{caller[0]}"
-      Type! value, *types
-    end
-
-    def is_matching?(value, *types)
-      warn "is_matching? is deprecated use Match?\n#{caller[0]}"
-      Match? value, *types
-    end
-
-    def is_matching!(value, *types)
-      warn "is_matching! is deprecated use Match!\n#{caller[0]}"
-      Match! value, *types
-    end
   end
 
   # include this module anywhere yoy need to use pattern matching
