@@ -619,6 +619,13 @@ Named[
     end
   end
 
+  it 'multi assigns all fields' do
+    match Node[Empty, Empty],
+          (on ~Node do |(left, right)|
+            [left, right].must_equal [Empty, Empty]
+          end)
+  end
+
   describe 'list' do
     it { List.(any, any) === List[1, Empty] }
     it { List.(any, List) === List[1, Empty] }
