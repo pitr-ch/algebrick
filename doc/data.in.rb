@@ -1,6 +1,6 @@
 extend Algebrick::Matching
 
-# Definition of data structures
+# Simple data structures like trees
 Tree = Algebrick.type do |tree|
   variants Tip  = type,
            Node = type { fields value: Object, left: tree, right: tree }
@@ -10,7 +10,7 @@ module Tree
   def depth
     match self,
           Tip.to_m >> 0,
-          Node.(_, ~any, ~any) >-> left, right do
+          Node.(any, ~any, ~any) >-> left, right do
             1 + [left.depth, right.depth].max
           end
   end
@@ -23,59 +23,43 @@ tree = Node[2,
                  Node[6, Tip, Tip]]]
 tree.depth
 
-# Domain model specification
-Arch = Algebrick.type do
-  variants I386 = atom, Amd64 = atom, Armel = atom
-end
-
-Package = Algebrick.type do
-  Deb = type do
-    fields! id:       String, version: String,
-            revision: Integer, arch: Arch
+# Whenever you find yourself to pass around too many fragile Hash-Array structures
+# e.g. for menus.
+Menu = Algebrick.type do |menu|
+  Item = Algebrick.type do
+    variants Delimiter = atom,
+             Link      = type { fields! label: String, url: String },
+             Group     = type { fields! label: String, submenu: menu }
   end
-  Rpm = type do
-    fields! id:      String, version: String,
-            release: Integer, arch: Arch
-  end
-  variants Deb, Rpm
-end
 
-module Package
-  def pkg_name
-    match self,
-          Deb >-> { '%s_%s-%s_%s.deb' % self },
-          Rpm >-> { '%s-%s-%s-%s.rpm' % self }
-  end
+  fields! item: Item, next: menu
+  variants None = atom, menu
 end
+None
+Item
 
-module Arch
-  def to_s
-    name.downcase
-    #match self,
-    #      I386  => 'i386',
-    #      Amd64 => 'amd64',
-    #      Armel => 'armel'
+module Link
+  def self.new(*fields)
+    super(*fields).tap { |menu| valid! menu.url }
+  end
+
+  def self.valid!(url)
+    # stub
   end
 end
 
-dep = Deb['apt', '1.2.3', 4, I386]
-rom = Rpm['yum', '1.2.3', 4, Amd64]
-dep.pkg_name
-rom.pkg_name
+module Menu
+  def +(item)
+    Menu[item, self]
+  end
+end
 
-# Avoiding nil errors with Maybe
-Maybe = Algebrick.type do
-  variants None = type,
-           Some = type { fields Integer }
-end
-# wrap values which can be nil into maybe and then match to avoid nil errors
-def add(value)
-  @sum ||= 0
-  match value,
-        None >> @sum,
-        Some.(~any) >-> int { @sum += int }
-end
-add None
-add Some[2]
-add Some[-1]
-add 2 rescue $!
+submenu = None + Link['Red Hat', '#red-hat']
+submenu = None + Link['Red Hat', '#red-hat'] + Link['Ubuntu', '#ubuntu']
+menu    = None + Link['Home', '#home'] + Delimiter + Group['Linux', submenu] + Link['About', '#about']
+
+
+#     Group['Products',
+#           Menu[]],
+#     Link['About', '#about']
+#]]

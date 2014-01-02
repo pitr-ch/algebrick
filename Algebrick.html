@@ -80,7 +80,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span></dd>
+      <dd class="r2"><span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span>, <span class='object_link'><a href="Algebrick/Types.html" title="Algebrick::Types (module)">Types</a></span></dd>
       
     
   
@@ -97,28 +97,29 @@
     <p>Provides Algebraic types and pattern matching</p>
 
 <p><strong>Quick example</strong>
-<pre class="code ruby"><span class='comment'># define algebraic types
+<pre class="code ruby"><span class='comment'># Let&#39;s define a Tree
 </span><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
   <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span>
            <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span><span class='comma'>,</span>
            <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree(Empty | Leaf | Node)
 </span>
-<span class='comment'># add some methods
+<span class='comment'># Now types `Tree(Empty | Leaf | Node)`, `Empty`, `Leaf(Integer)` and `Node(Tree, Tree)` are defined.
+</span><span class='comment'># Let&#39;s add a method, don&#39;t miss the **pattern matching** example.
 </span><span class='kw'>module</span> <span class='const'>Tree</span>
   <span class='comment'># compute depth of a tree
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_depth'>depth</span>
     <span class='id identifier rubyid_match'>match</span> <span class='kw'>self</span><span class='comma'>,</span>
-          <span class='const'>Empty</span> <span class='op'>&gt;&gt;</span> <span class='int'>0</span><span class='comma'>,</span>
-          <span class='const'>Leaf</span> <span class='op'>&gt;&gt;</span> <span class='int'>1</span><span class='comma'>,</span>
+          <span class='lparen'>(</span><span class='id identifier rubyid_on'>on</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span><span class='comma'>,</span>
+          <span class='lparen'>(</span><span class='id identifier rubyid_on'>on</span> <span class='const'>Leaf</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span><span class='comma'>,</span>
           <span class='comment'># ~ will store and pass matched parts to variables left and right
-</span>          <span class='const'>Node</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='comma'>,</span> <span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='rparen'>)</span> <span class='op'>&gt;</span><span class='tlambda'>-&gt;</span> <span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span> <span class='kw'>do</span>
+</span>          <span class='lparen'>(</span><span class='id identifier rubyid_on'>on</span> <span class='const'>Node</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='comma'>,</span> <span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span><span class='op'>|</span>
             <span class='int'>1</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='id identifier rubyid_left'>left</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
-          <span class='kw'>end</span>
+          <span class='kw'>end</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
 </span>
-<span class='comment'># methods are defined on all values of type Tree
+<span class='comment'># Method defined in module `Tree` are passed down to **all** values of type Tree.
 </span><span class='const'>Empty</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>                                        <span class='comment'># =&gt; 0
 </span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>10</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>                                     <span class='comment'># =&gt; 1
 </span><span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>4</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>                         <span class='comment'># =&gt; 2
@@ -134,7 +135,7 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Algebrick/DSL.html" title="Algebrick::DSL (module)">DSL</a></span>, <span class='object_link'><a href="Algebrick/MatcherDelegations.html" title="Algebrick::MatcherDelegations (module)">MatcherDelegations</a></span>, <span class='object_link'><a href="Algebrick/Matchers.html" title="Algebrick::Matchers (module)">Matchers</a></span>, <span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span>, <span class='object_link'><a href="Algebrick/Reclude.html" title="Algebrick::Reclude (module)">Reclude</a></span>, <span class='object_link'><a href="Algebrick/TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span>, <span class='object_link'><a href="Algebrick/Value.html" title="Algebrick::Value (module)">Value</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Algebrick/DSL.html" title="Algebrick::DSL (module)">DSL</a></span>, <span class='object_link'><a href="Algebrick/MatcherDelegations.html" title="Algebrick::MatcherDelegations (module)">MatcherDelegations</a></span>, <span class='object_link'><a href="Algebrick/Matchers.html" title="Algebrick::Matchers (module)">Matchers</a></span>, <span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span>, <span class='object_link'><a href="Algebrick/Reclude.html" title="Algebrick::Reclude (module)">Reclude</a></span>, <span class='object_link'><a href="Algebrick/TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span>, <span class='object_link'><a href="Algebrick/Types.html" title="Algebrick::Types (module)">Types</a></span>, <span class='object_link'><a href="Algebrick/Value.html" title="Algebrick::Value (module)">Value</a></span>
     
   
     
@@ -161,6 +162,12 @@
   
 
 
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="Algebrick/Types.html" title="Algebrick::Types (module)">Types</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Algebrick/Types.html#Maybe-constant" title="Algebrick::Types::Maybe (constant)">Types::Maybe</a></span></p>
 
 
 
@@ -279,8 +286,14 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Algebrick/Matching.html#any-instance_method" title="Algebrick::Matching#any (method)">any</a></span>, <span class='object_link'><a href="Algebrick/Matching.html#match-instance_method" title="Algebrick::Matching#match (method)">match</a></span>, <span class='object_link'><a href="Algebrick/Matching.html#match_value-class_method" title="Algebrick::Matching.match_value (method)">match_value</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Algebrick/Matching.html#any-instance_method" title="Algebrick::Matching#any (method)">any</a></span>, <span class='object_link'><a href="Algebrick/Matching.html#match-instance_method" title="Algebrick::Matching#match (method)">match</a></span>, <span class='object_link'><a href="Algebrick/Matching.html#match_value-class_method" title="Algebrick::Matching.match_value (method)">match_value</a></span>, <span class='object_link'><a href="Algebrick/Matching.html#on-instance_method" title="Algebrick::Matching#on (method)">on</a></span></p>
 
+  
+  
+  
+  
+  
+  
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
@@ -301,12 +314,12 @@
       <pre class="lines">
 
 
-809
-810
-811</pre>
+798
+799
+800</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 809</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 798</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_atom'>atom</span>
   <span class='const'>Atom</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>nil</span>
@@ -331,21 +344,21 @@
       <pre class="lines">
 
 
-796
-797
-798
-799
-800
-801
-802
-803
-804
-805
-806
-807</pre>
+785
+786
+787
+788
+789
+790
+791
+792
+793
+794
+795
+796</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 796</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 785</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_variables'>variables</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -379,12 +392,12 @@
       <pre class="lines">
 
 
-813
-814
-815</pre>
+802
+803
+804</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 813</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 802</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_types'>types</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'>DSL</span><span class='op'>::</span><span class='const'>OuterShell</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
@@ -429,7 +442,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Nov 29 12:14:43 2013 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Jan  2 11:24:31 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-2.0.0).
 </div>
