@@ -95,19 +95,7 @@ Algebraic types also play nice with JSON serialization and de-serialization maki
 
 Just a small snippet how it can be used in Actor model world.
 
-    class Worker < AbstractActor
-      def initialize(executor)
-        super()
-        @executor = executor
-      end
-
-      def on_message(message)
-        match message,
-              Work.(~any, ~any) >-> actor, work do
-                @executor.tell Finished[actor, work.call, self.reference]
-              end
-      end
-    end
+{include:file:doc/actor.rb}
 
 <!--
 ### Null Object Pattern
