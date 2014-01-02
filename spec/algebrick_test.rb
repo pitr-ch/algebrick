@@ -519,7 +519,6 @@ Named[
        Node.(Leaf.(any), any),
        ~Node.(Leaf.(any), any),
        ~Leaf.(1) | Leaf.(~any),
-       ~Leaf.(1) ^ Leaf.(~any),
        ~Leaf.(1) & Leaf.(~any)
       ].each do |matcher|
         it matcher.to_s do
@@ -581,39 +580,29 @@ Named[
     refute List.(any, any) === Empty
   }
 
-  describe 'and-or-xor matching' do
+  describe 'and-or matching' do
     def assert_assigns(matcher, values)
       matcher.assigns.must_equal values
       matcher.assigns { |*assigns| assigns.must_equal values }
     end
 
     it do
-      m = ~Leaf.(1) | ~Leaf.(~any)
-      assert m === Leaf[1]
-      assert_assigns m, [Leaf[1], nil, nil]
-    end
-    it do
-      m = ~Leaf.(1) | ~Leaf.(~any)
-      assert m === Leaf[2]
-      assert_assigns m, [nil, Leaf[2], 2]
-    end
-    it do
       m = ~Leaf.(->(v) { v > 1 }) & Leaf.(~any)
       assert m === Leaf[2]
       assert_assigns m, [Leaf[2], 2]
     end
     it do
-      m = ~Leaf.(1) ^ ~Leaf.(~any)
+      m = ~Leaf.(1) | ~Leaf.(~any)
       assert m === Leaf[1]
       assert_assigns m, [Leaf[1], nil]
     end
     it do
-      m = ~Leaf.(~->(v) { v > 1 }.to_m) ^ ~Leaf.(1)
+      m = ~Leaf.(~->(v) { v > 1 }.to_m) | ~Leaf.(1)
       assert m === Leaf[1]
       assert_assigns m, [Leaf[1], nil]
     end
     it do
-      m = ~Leaf.(1) ^ ~Leaf.(~any)
+      m = ~Leaf.(1) | ~Leaf.(~any)
       assert m === Leaf[2]
       assert_assigns m, [Leaf[2], 2]
     end

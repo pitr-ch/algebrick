@@ -184,10 +184,6 @@ module Algebrick
       to_m | other
     end
 
-    def ^(other)
-      to_m ^ other
-    end
-
     def !
       !to_m
     end
@@ -861,10 +857,6 @@ module Algebrick
         Not.new self
       end
 
-      def ^(matcher)
-        Xor.new self, matcher
-      end
-
       def assign?
         @assign
       end
@@ -978,12 +970,6 @@ module Algebrick
 
       def matching?(other)
         matchers.any? { |m| m === other }
-      end
-    end
-
-    class Xor < Or
-      def to_s
-        matchers.join ' ^ '
       end
 
       alias_method :super_children, :children
