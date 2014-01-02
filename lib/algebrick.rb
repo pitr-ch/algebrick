@@ -94,7 +94,7 @@ module Algebrick
 
     def self.error(value, message, types)
       raise TypeError,
-            "value (#{value.class}) '#{value}' #{message} any of #{types.join(', ')}"
+            "Value (#{value.class}) '#{value}' #{message} any of: #{types.join('; ')}."
     end
 
     public
