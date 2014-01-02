@@ -433,6 +433,10 @@ module Algebrick
       @field_indexes or raise TypeError, "field names not defined on #{self}"
     end
 
+    def field(name)
+      fields[field_indexes[name]]
+    end
+
     def add_field_method_reader(field)
       raise TypeError, 'no field names' unless field_names?
       raise ArgumentError, "no field name #{field}" unless field_names.include? field
