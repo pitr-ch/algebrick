@@ -513,7 +513,7 @@ module Algebrick
     end
 
     def call(*field_matchers)
-      raise TypeError unless @fields
+      raise TypeError, "#{self} does not have any fields" unless @fields
       Matchers::Product.new self, *field_matchers
     end
 
