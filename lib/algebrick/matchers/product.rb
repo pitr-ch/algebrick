@@ -51,7 +51,7 @@ module Algebrick
       protected
 
       def matching?(other)
-        other.kind_of?(@algebraic_type) and other.kind_of?(ProductConstructor) and
+        other.kind_of?(@algebraic_type) and other.kind_of?(ProductConstructors::Abstract) and
             @field_matchers.zip(other.fields).all? do |matcher, field|
               matcher === field
             end

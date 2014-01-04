@@ -28,16 +28,8 @@ module Algebrick
       name
     end
 
-    def to_hash
-      { TYPE_KEY => name }
-    end
-
-    def from_hash(hash)
-      if hash == to_hash
-        self
-      else
-        raise ArgumentError
-      end
+    def pretty_print(q)
+      q.text to_s
     end
   end
 end

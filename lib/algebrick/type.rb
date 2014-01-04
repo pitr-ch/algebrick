@@ -34,5 +34,9 @@ module Algebrick
     def inspect
       to_s
     end
+
+    def pretty_print(q)
+      raise NotImplementedError
+    end
   end
 end

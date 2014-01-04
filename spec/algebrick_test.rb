@@ -117,8 +117,6 @@ describe 'AlgebrickTest' do
     it { assert Empty === Empty }
     it { eval(Empty.to_s).must_equal Empty }
     it { eval(Empty.inspect).must_equal Empty }
-
-    it { Empty.from_hash(Empty.to_hash).must_equal Empty }
   end
 
   describe 'product' do
@@ -173,19 +171,8 @@ describe 'AlgebrickTest' do
       it { Named[a: 1, b: 2].b.must_equal 2 }
     end
 
-    it { Leaf.from_hash(Leaf[1].to_hash).must_equal Leaf[1] }
-    it { Named.from_hash(Named[1, :a].to_hash).must_equal Named[1, :a] }
-    it do
-      Named[1, Node[Leaf[1], Empty]].to_hash.
-          must_equal algebrick: 'Named', a: 1, b: { algebrick: 'Node',
-                                                    fields:    [{ algebrick: 'Leaf', fields: [1] },
-                                                                { algebrick: 'Empty' }] }
-    end
-    it do
-      Named.from_hash(Named[1, Node[Leaf[1], Empty]].to_hash).
-          must_equal Named[1, Node[Leaf[1], Empty]]
-    end
-
+    it { Named[1, :a].to_hash.must_equal a: 1, b: :a }
+    it { Named[1, Node[Empty, Empty]].to_hash.must_equal a: 1, b: Node[Empty, Empty] }
   end
 
   describe 'variant' do
@@ -420,10 +407,6 @@ Named[
                                   PEmpty]].glue.must_equal 'ab'
       refute PTree[Object].respond_to? :glue
     end
-    it 'serializes' do
-      v = PNode[Integer][PLeaf[Integer][1], PEmpty]
-      assert PTree[Integer].from_hash(v.to_hash) == v
-    end
   end
 
   extend Algebrick::Matching
@@ -505,7 +488,6 @@ Named[
 
     describe '#to_s' do
       [Empty.to_m,
-       # leaf(Object)
        ~Leaf.(Integer),
        ~Empty.to_m,
        any,
@@ -629,6 +611,24 @@ Named[
   describe 'list' do
     it { List.(any, any) === List[1, Empty] }
     it { List.(any, List) === List[1, Empty] }
+  end
+
+  describe 'serializers' do
+    describe 'strict' do
+      let(:serializer) { Algebrick::Serializers::StrictToHash.new }
+
+      it { serializer.generate(Empty).must_equal :algebrick_type => 'Empty' }
+      it { serializer.generate(Leaf[1]).must_equal :algebrick_type => 'Leaf', :algebrick_fields => [1] }
+      it { serializer.generate(PLeaf[Integer][1]).must_equal :algebrick_type => 'PLeaf[Integer]', :value => 1 }
+      it { serializer.generate(Named[1, :a]).must_equal algebrick_type: 'Named', a: 1, b: :a }
+
+      [Empty, Leaf[1], PLeaf[Integer][1], Named[1, :a]].each do |v|
+        it "serializes and de-serializes #{v}" do
+          serializer.parse(serializer.generate(v)).must_equal v
+        end
+      end
+
+    end
   end
 
 end

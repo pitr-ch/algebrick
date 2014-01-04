@@ -32,9 +32,6 @@ module Algebrick
     @version ||= Gem::Version.new File.read(File.join(File.dirname(__FILE__), '..', 'VERSION'))
   end
 
-  TYPE_KEY   = :algebrick
-  FIELDS_KEY = :fields
-
   require 'algebrick/reclude'
   require 'algebrick/type_check'
   require 'algebrick/matching'
@@ -42,11 +39,12 @@ module Algebrick
   require 'algebrick/type'
   require 'algebrick/value'
   require 'algebrick/atom'
-  require 'algebrick/product_constructor'
+  require 'algebrick/product_constructors'
   require 'algebrick/product_variant'
   require 'algebrick/parametrized_type'
   require 'algebrick/dsl'
   require 'algebrick/matchers'
+  require 'algebrick/serializers'
   require 'algebrick/types'
 
 end

@@ -3,6 +3,8 @@ module Algebrick
   # based on #kind.
   #noinspection RubyTooManyMethodsInspection
   class ProductVariant < Type
+    # TODO split up into classes or modules
+
     attr_reader :fields, :variants
 
     def initialize(name, &definition)
@@ -27,7 +29,9 @@ module Algebrick
       raise TypeError, 'there is no product with zero fields' unless fields.size > 0
       define_method(:value) { @fields.first } if fields.size == 1
       @fields      = fields
-      @constructor = Class.new(ProductConstructor).tap { |c| c.type = self }
+      @constructor = Class.new(
+          field_names? ? ProductConstructors::Named : ProductConstructors::Basic).
+          tap { |c| c.type = self }
       apply_be_kind_of
       self
     end
@@ -143,19 +147,6 @@ module Algebrick
       end
     end
 
-    def from_hash(hash)
-      case kind
-      when :product
-        product_from_hash hash
-      when :product_variant
-        product_from_hash hash
-      when :variant
-        field_from_hash hash
-      else
-        raise
-      end
-    end
-
     def kind
       #noinspection RubyCaseWithoutElseBlockInspection
       case
@@ -197,51 +188,6 @@ module Algebrick
           Hash.new { |_, k| raise ArgumentError, "unknown field #{k.inspect} in #{self}" }.
               update names.each_with_index.inject({}) { |h, (k, i)| h.update k => i }
       define_method(:[]) { |key| @fields[dict[key]] }
-    end
-
-    def product_from_hash(hash)
-      (type_name = hash[TYPE_KEY] || hash[TYPE_KEY.to_s]) or
-          raise ArgumentError, "hash does not have #{TYPE_KEY}"
-      raise ArgumentError, "#{type_name} is not #{name}" unless type_name == name
-
-      fields = hash[FIELDS_KEY] || hash[FIELDS_KEY.to_s] ||
-          hash.reject { |k, _| k.to_s == TYPE_KEY.to_s }
-      Type! fields, Hash, Array
-
-      case fields
-      when Array
-        self[*fields.map { |value| field_from_hash value }]
-      when Hash
-        self[fields.inject({}) do |h, (name, value)|
-          raise ArgumentError unless field_names.map(&:to_s).include? name.to_s
-          h.update name.to_sym => field_from_hash(value)
-        end]
-      end
-    end
-
-    def field_from_hash(hash, expected_type = nil)
-      return hash unless Hash === hash
-      (type_name = hash[TYPE_KEY] || hash[TYPE_KEY.to_s]) or return hash
-      type = constantize type_name
-      type.from_hash hash
-    end
-
-    def constantize(camel_cased_word)
-      names = camel_cased_word.split('::')
-      names.shift if names.empty? || names.first.empty?
-
-      parameter = nil
-      names.last.tap do |last|
-        name, parameter = last.split /\[|\]/
-        last.replace name
-      end
-
-      constant = Object
-      names.each do |name|
-        constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
-      end
-      constant = constant[constantize(parameter)] if parameter
-      constant
     end
   end
 end

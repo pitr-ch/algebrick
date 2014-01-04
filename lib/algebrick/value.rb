@@ -12,11 +12,11 @@ module Algebrick
       raise NotImplementedError
     end
 
-    def to_hash
+    def to_s
       raise NotImplementedError
     end
 
-    def to_s
+    def pretty_print(q)
       raise NotImplementedError
     end
 
