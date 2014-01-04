@@ -22,10 +22,6 @@ require 'algebrick'
 require 'pry'
 
 class Module
-  def const_missing const
-    raise "no constant #{const.inspect} in #{self}"
-  end
-
   # Return any modules we +extend+
   def extended_modules
     class << self
