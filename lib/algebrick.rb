@@ -35,10 +35,11 @@ module Algebrick
   end
 
   # fix module to re-include itself to where it was already included when a module is included into it
+  #noinspection RubySuperCallWithoutSuperclassInspection
   module Reclude
     def included(base)
       included_into << base
-      super base
+      super(base)
     end
 
     def include(*modules)
@@ -57,6 +58,7 @@ module Algebrick
     end
   end
 
+  #noinspection RubyInstanceMethodNamingConvention
   module TypeCheck
     # FIND: type checking of collections?
 
@@ -391,6 +393,7 @@ module Algebrick
 
   # Representation of Product and Variant types. The class behaves differently
   # based on #kind.
+  #noinspection RubyTooManyMethodsInspection
   class ProductVariant < Type
     attr_reader :fields, :variants
 
@@ -546,6 +549,7 @@ module Algebrick
     end
 
     def kind
+      #noinspection RubyCaseWithoutElseBlockInspection
       case
       when @fields && !@variants
         :product
@@ -582,7 +586,7 @@ module Algebrick
       @field_names = names
       names.all? { |k| Type! k, Symbol }
       dict = @field_indexes =
-          Hash.new { |h, k| raise ArgumentError, "unknown field #{k.inspect} in #{self}" }.
+          Hash.new { |_, k| raise ArgumentError, "unknown field #{k.inspect} in #{self}" }.
               update names.each_with_index.inject({}) { |h, (k, i)| h.update k => i }
       define_method(:[]) { |key| @fields[dict[key]] }
     end
@@ -604,6 +608,8 @@ module Algebrick
           raise ArgumentError unless field_names.map(&:to_s).include? name.to_s
           h.update name.to_sym => field_from_hash(value)
         end]
+      else
+        raise
       end
     end
 
@@ -795,7 +801,7 @@ module Algebrick
 
   def self.type(*variables, &block)
     if block.nil?
-      raise 'Atom canot be parametrized' unless variables.empty?
+      raise 'Atom cannot be parametrized' unless variables.empty?
       atom
     else
       if variables.empty?
@@ -957,6 +963,7 @@ module Algebrick
       end
     end
 
+    #noinspection RubyClassModuleNamingConvention
     class Or < AbstractLogic
       def to_s
         matchers.join ' | '
@@ -1155,7 +1162,7 @@ module Algebrick
         assign_to_s + "#{@algebraic_type.name}.(#{@field_matchers.join(', ')})"
       end
 
-      # TODO prety_print for all matchers
+      # TODO pretty_print for all matchers
 
       def ==(other)
         other.kind_of? self.class and
@@ -1197,6 +1204,7 @@ module Algebrick
     end
   end
 
+  #noinspection RubyConstantNamingConvention
   module Types
     Maybe = Algebrick.type(:v) do
       variants None = atom,
@@ -1213,5 +1221,4 @@ module Algebrick
   end
 
   include Types
-
 end
