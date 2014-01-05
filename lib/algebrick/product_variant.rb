@@ -14,6 +14,7 @@ module Algebrick
 
     def set_fields(fields_or_hash)
       raise TypeError, 'can be set only once' if @fields
+      @kind = nil
       fields, keys = case fields_or_hash
                      when Hash
                        [fields_or_hash.values, fields_or_hash.keys]
@@ -71,6 +72,7 @@ module Algebrick
 
     def set_variants(variants)
       raise TypeError, 'can be set only once' if @variants
+      @kind = nil
       variants.all? { |v| Type! v, Type, Class }
       @variants = variants
       apply_be_kind_of
@@ -147,18 +149,18 @@ module Algebrick
       end
     end
 
+    #noinspection RubyCaseWithoutElseBlockInspection
     def kind
-      #noinspection RubyCaseWithoutElseBlockInspection
-      case
-      when @fields && !@variants
-        :product
-      when @fields && @variants
-        :product_variant
-      when !@fields && @variants
-        :variant
-      when !@fields && !@variants
-        raise TypeError, 'fields or variants have to be set'
-      end
+      @kind ||= case
+                when @fields && !@variants
+                  :product
+                when @fields && @variants
+                  :product_variant
+                when !@fields && @variants
+                  :variant
+                when !@fields && !@variants
+                  raise TypeError, 'fields or variants have to be set'
+                end
     end
 
     def assigned_types
