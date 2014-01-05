@@ -1,6 +1,10 @@
 module Algebrick
   module Serializers
     class Chain < Abstract
+      def self.build(*serializers)
+        serializers.reverse_each.reduce { |ch, s| new(s, ch) }
+      end
+
       attr_reader :serializer, :chain_to
 
       def initialize(serializer, chain_to)

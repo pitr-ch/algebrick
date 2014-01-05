@@ -650,19 +650,22 @@ Named[
          { algebrick_type: "Person",
            name:           { algebrick_type: "Person::Name::Normal", algebrick_fields: %w(a b) },
            address:        { algebrick_type: "Person::Address::Homeless" } },
-         Person[Person::Name::Normal['a', 'b'], Person::Address::Homeless]
+         Person[Person::Name::Normal['a', 'b'], Person::Address::Homeless],
+         "{\"name\":[\"a\",\"b\"],\"address\":\"homeless\"}"
         ],
         [{ name: %w(a b c), address: 'homeless', metadata: :ignored },
          { algebrick_type: "Person",
            name:           { algebrick_type: "Person::Name::AbNormal", algebrick_fields: %w(a b c) },
            address:        { algebrick_type: "Person::Address::Homeless" } },
-         Person[Person::Name::AbNormal['a', 'b', 'c'], Person::Address::Homeless]
+         Person[Person::Name::AbNormal['a', 'b', 'c'], Person::Address::Homeless],
+         "{\"name\":[\"a\",\"b\",\"c\"],\"address\":\"homeless\",\"metadata\":\"ignored\"}"
         ],
         [{ name: %w(a b c), address: { street: 'asd', zip: 15 } },
          { algebrick_type: "Person",
            name:           { algebrick_type: "Person::Name::AbNormal", algebrick_fields: %w(a b c) },
            address:        { algebrick_type: "Person::Address", street: "asd", zip: 15 } },
-         Person[Person::Name::AbNormal['a', 'b', 'c'], Person::Address['asd', 15]]
+         Person[Person::Name::AbNormal['a', 'b', 'c'], Person::Address['asd', 15]],
+         "{\"name\":[\"a\",\"b\",\"c\"],\"address\":{\"street\":\"asd\",\"zip\":15}}"
         ]
     ]
 
@@ -702,6 +705,22 @@ Named[
 
       transformations.each do |_, to, from|
         it { serializer.generate(from).must_equal to }
+      end
+    end
+
+    require 'algebrick/serializers/to_json'
+
+    describe 'json' do
+      let(:serializer) do
+        Algebrick::Serializers::Chain.build Algebrick::Serializers::StrictToHash.new,
+                                            Algebrick::Serializers::BenevolentToHash.new,
+                                            Algebrick::Serializers::ToJson.new
+      end
+
+      transformations.each do |_, _, to, from|
+        it do
+          serializer.parse(from, expected_type: Person).must_equal to
+        end
       end
     end
   end

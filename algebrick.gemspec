@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   #  s.add_runtime_dependency(gem, [version || '>= 0'])
   #end
 
-  %w(minitest minitest-reporters turn pry yard kramdown github-markup multi_json).each do |gem|
+  %w(minitest minitest-reporters turn pry yard kramdown github-markup multi_json json).each do |gem|
     s.add_development_dependency gem, '>= 0'
   end
 end
