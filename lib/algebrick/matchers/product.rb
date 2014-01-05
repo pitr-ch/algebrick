@@ -40,8 +40,6 @@ module Algebrick
         assign_to_s + "#{@algebraic_type.name}.(#{@field_matchers.join(', ')})"
       end
 
-      # TODO pretty_print for all matchers
-
       def ==(other)
         other.kind_of? self.class and
             self.algebraic_type == other.algebraic_type and

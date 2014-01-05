@@ -35,8 +35,8 @@ module Algebrick
       to_s
     end
 
-    def pretty_print(q)
-      raise NotImplementedError
-    end
+    #def pretty_print(q) TODO
+    #  raise NotImplementedError
+    #end
   end
 end

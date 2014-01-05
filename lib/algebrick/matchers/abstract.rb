@@ -83,6 +83,8 @@ module Algebrick
         raise NotImplementedError
       end
 
+      # TODO pretty_print for all matchers
+
       protected
 
       def matching?(other)
