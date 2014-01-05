@@ -3,11 +3,11 @@ module Algebrick
     class Abstract
       include TypeCheck
 
-      def parse(data)
+      def parse(data, options = {})
         raise NotImplementedError
       end
 
-      def generate(object)
+      def generate(object, options = {})
         raise NotImplementedError
       end
     end

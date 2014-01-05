@@ -627,7 +627,82 @@ Named[
           serializer.parse(serializer.generate(v)).must_equal v
         end
       end
+    end
 
+    Person = Algebrick.type do |person|
+      person::Name = type do |name|
+        variants name::Normal   = type { fields String, String },
+                 name::AbNormal = type { fields String, String, String }
+      end
+
+      person::Address = type do |address|
+        variants address::Homeless = atom, address
+        fields street: String,
+               zip:    Integer
+      end
+
+      fields name:    person::Name,
+             address: person::Address
+    end
+
+    transformations = [
+        [{ name: %w(a b), address: 'homeless' },
+         { algebrick_type: "Person",
+           name:           { algebrick_type: "Person::Name::Normal", algebrick_fields: %w(a b) },
+           address:        { algebrick_type: "Person::Address::Homeless" } },
+         Person[Person::Name::Normal['a', 'b'], Person::Address::Homeless]
+        ],
+        [{ name: %w(a b c), address: 'homeless', metadata: :ignored },
+         { algebrick_type: "Person",
+           name:           { algebrick_type: "Person::Name::AbNormal", algebrick_fields: %w(a b c) },
+           address:        { algebrick_type: "Person::Address::Homeless" } },
+         Person[Person::Name::AbNormal['a', 'b', 'c'], Person::Address::Homeless]
+        ],
+        [{ name: %w(a b c), address: { street: 'asd', zip: 15 } },
+         { algebrick_type: "Person",
+           name:           { algebrick_type: "Person::Name::AbNormal", algebrick_fields: %w(a b c) },
+           address:        { algebrick_type: "Person::Address", street: "asd", zip: 15 } },
+         Person[Person::Name::AbNormal['a', 'b', 'c'], Person::Address['asd', 15]]
+        ]
+    ]
+
+    describe 'benevolent' do
+      let(:serializer) { Algebrick::Serializers::BenevolentToHash.new }
+
+      it { serializer.generate(Empty).must_equal Empty }
+      it { serializer.generate(Leaf[1]).must_equal Leaf[1] }
+
+      it { serializer.parse(1, expected_type: Integer).must_equal 1 }
+      it do
+        [:empty, :Empty, 'empty', 'Empty'].each do |v|
+          serializer.parse(v, expected_type: Empty).must_equal :algebrick_type => 'Empty'
+        end
+        [:p_empty, :PEmpty, 'p_empty', 'PEmpty'].each do |v|
+          serializer.parse(v, expected_type: PEmpty).must_equal :algebrick_type => 'PEmpty'
+        end
+      end
+
+      it { serializer.parse([1], expected_type: Leaf).must_equal :algebrick_type => 'Leaf', :algebrick_fields => [1] }
+      it { serializer.parse({ a: 1, b: 's' }, expected_type: Named).must_equal :algebrick_type => 'Named', a: 1, b: 's' }
+
+      transformations.each do |from, to, _|
+        it { serializer.parse(from, expected_type: Person).must_equal to }
+      end
+    end
+
+    describe 'chain' do
+      let(:serializer) do
+        Algebrick::Serializers::Chain.new(Algebrick::Serializers::StrictToHash.new,
+                                          Algebrick::Serializers::BenevolentToHash.new)
+      end
+
+      transformations.each do |from, _, to|
+        it { serializer.parse(from, expected_type: Person).must_equal to }
+      end
+
+      transformations.each do |_, to, from|
+        it { serializer.generate(from).must_equal to }
+      end
     end
   end
 

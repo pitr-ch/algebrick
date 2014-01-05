@@ -8,12 +8,12 @@ module Algebrick
         @chain_to   = Type! chain_to, Abstract
       end
 
-      def parse(data)
-        serializer.parse chain_to.parse(data)
+      def parse(data, options = {})
+        serializer.parse chain_to.parse(data, options), options
       end
 
-      def generate(object)
-        chain_to.generate serializer.generate(object)
+      def generate(object, options = {})
+        chain_to.generate serializer.generate(object, options), options
       end
     end
   end
