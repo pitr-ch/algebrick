@@ -57,13 +57,15 @@ end                                                # => :one
 
 # But that won't work nicely with value deconstruction.
 # Each matcher can be marked with #~ method to store value against which is being matched,
-# each matched value is passed to the block,
+# each matched value is passed to the block, ...
 match Leaf[0],
       (on ~Leaf.(~any) do |leaf, value|
         [leaf, value]
-      end)
+      end)                                         # => [Leaf[0], 0]
 
-btree = BTree[1, BTree[0, Empty, Empty], Empty]
+btree = BTree[1,
+              BTree[0, Empty, Empty],
+              Empty]
 # => BTree[value: 1, left: BTree[value: 0, left: Empty, right: Empty], right: Empty]
 match btree,
       (on BTree.(any, ~any, ~any) do |left, right|
@@ -106,8 +108,8 @@ color? Pink                                        # => "that's not a color ;)"
 # using also logical operators to allow Empty sides.
 match BTree[0, Empty, BTree[1, Empty, Empty]],
       (on BTree.(value: ~any,
-                 left: Empty | BTree.(value: ~any),
-                 right: Empty | BTree.(value: ~any)) do |value, left, right|
+          left: Empty | BTree.(value: ~any),
+          right: Empty | BTree.(value: ~any)) do |value, left, right|
         { left: left, value: value, right: right }
       end)                                         # => {:left=>nil, :value=>0, :right=>1}
 

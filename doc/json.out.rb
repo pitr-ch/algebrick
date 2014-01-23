@@ -16,26 +16,29 @@ end                                                # => Response(Success | Failu
 Message = Algebrick.type { variants Request, Response }
 # => Message(Request | Response)
 
-require 'multi_json'                               # => true
+require 'algebrick/serializers/to_json'            # => true
 
 # Prepare a message for sending.
+serializer   = Algebrick::Serializers::Chain.build(Algebrick::Serializers::StrictToHash.new,
+                                                   Algebrick::Serializers::ToJson.new); nil
+# => nil
 request      = CreateUser[User['root', 'lajDh4']]
 # => CreateUser[User[login: root, password: lajDh4]]
-raw_request  = MultiJson.dump request.to_hash
-# => "{\"algebrick\":\"CreateUser\",\"fields\":[{\"algebrick\":\"User\",\"login\":\"root\",\"password\":\"lajDh4\"}]}"
+raw_request  = serializer.generate request
+# => "{\"algebrick_type\":\"CreateUser\",\"algebrick_fields\":[{\"algebrick_type\":\"User\",\"login\":\"root\",\"password\":\"lajDh4\"}]}"
 
 # Receive the message.
-response     = match Message.from_hash(MultiJson.load(raw_request)),
+response     = match serializer.parse(raw_request),
                      CreateUser.(~any) >-> user do
                        # create the user and send success
                        Success[user]
                      end                           # => Success[User[login: root, password: lajDh4]]
 
 # Send response.
-response_raw = MultiJson.dump response.to_hash
-# => "{\"algebrick\":\"Success\",\"fields\":[{\"algebrick\":\"User\",\"login\":\"root\",\"password\":\"lajDh4\"}]}"
+response_raw = serializer.generate response
+# => "{\"algebrick_type\":\"Success\",\"algebrick_fields\":[{\"algebrick_type\":\"User\",\"login\":\"root\",\"password\":\"lajDh4\"}]}"
 
 # Receive response.
-Message.from_hash(MultiJson.load(response_raw))    # => Success[User[login: root, password: lajDh4]]
+serializer.parse response_raw                      # => Success[User[login: root, password: lajDh4]]
 
 

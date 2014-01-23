@@ -48,15 +48,49 @@ module Link
   end
 end
 
-module Menu
-  def +(item)
-    Menu[item, self]
+module Item
+  def draw_menu(indent = 0)
+    match self,
+          Delimiter >-> { [' '*indent + '-'*10] },
+          Link.(label: ~any) >-> label { [' '*indent + label] },
+          (on ~Group do |(label, sub_menu)|
+            [' '*indent + label] + sub_menu.draw_menu(indent + 2)
+          end)
   end
 end
 
-submenu = None + Link['Red Hat', '#red-hat']
-submenu = None + Link['Red Hat', '#red-hat'] + Link['Ubuntu', '#ubuntu']
-menu    = None + Link['Home', '#home'] + Delimiter + Group['Linux', submenu] + Link['About', '#about']
+module Menu
+  def self.build(*items)
+    items.reverse_each.reduce(None) { |menu, item| Menu[item, menu] }
+  end
+
+  include Enumerable
+
+  def each(&block)
+    it = self
+    loop do
+      break if None === it
+      block.call it.item
+      it = it.next
+    end
+  end
+
+  def draw_menu(indent = 0)
+    map { |item| item.draw_menu indent }.reduce(&:+)
+  end
+end
+
+sub_menu = Menu.build Link['Red Hat', '#red-hat'],
+                      Delimiter,
+                      Link['Ubuntu', '#ubuntu'],
+                      Link['Mint', '#mint']
+
+menu = Menu.build Link['Home', '#home'],
+                  Delimiter,
+                  Group['Linux', sub_menu],
+                  Link['About', '#about']
+
+menu.draw_menu.join("\n")
 
 
 #     Group['Products',

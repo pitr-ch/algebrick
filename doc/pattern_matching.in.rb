@@ -54,13 +54,15 @@ end
 
 # But that won't work nicely with value deconstruction.
 # Each matcher can be marked with #~ method to store value against which is being matched,
-# each matched value is passed to the block,
+# each matched value is passed to the block, ...
 match Leaf[0],
       (on ~Leaf.(~any) do |leaf, value|
         [leaf, value]
       end)
 
-btree = BTree[1, BTree[0, Empty, Empty], Empty]
+btree = BTree[1,
+              BTree[0, Empty, Empty],
+              Empty]
 match btree,
       (on BTree.(any, ~any, ~any) do |left, right|
         [left, right]
@@ -99,9 +101,9 @@ color? Pink
 # A more complicated example of extracting node's value and values of its left and right side
 # using also logical operators to allow Empty sides.
 match BTree[0, Empty, BTree[1, Empty, Empty]],
-      (on BTree.(value: ~any,
-                 left: Empty | BTree.(value: ~any),
-                 right: Empty | BTree.(value: ~any)) do |value, left, right|
+      (on BTree.({ value: ~any,
+                   left:  Empty | BTree.(value: ~any),
+                   right: Empty | BTree.(value: ~any) }) do |value, left, right|
         { left: left, value: value, right: right }
       end)
 

@@ -15,23 +15,25 @@ end
 
 Message = Algebrick.type { variants Request, Response }
 
-require 'multi_json'
+require 'algebrick/serializers/to_json'
 
 # Prepare a message for sending.
+serializer   = Algebrick::Serializers::Chain.build(Algebrick::Serializers::StrictToHash.new,
+                                                   Algebrick::Serializers::ToJson.new); nil
 request      = CreateUser[User['root', 'lajDh4']]
-raw_request  = MultiJson.dump request.to_hash
+raw_request  = serializer.generate request
 
 # Receive the message.
-response     = match Message.from_hash(MultiJson.load(raw_request)),
+response     = match serializer.parse(raw_request),
                      CreateUser.(~any) >-> user do
                        # create the user and send success
                        Success[user]
                      end
 
 # Send response.
-response_raw = MultiJson.dump response.to_hash
+response_raw = serializer.generate response
 
 # Receive response.
-Message.from_hash(MultiJson.load(response_raw))
+serializer.parse response_raw
 
 
