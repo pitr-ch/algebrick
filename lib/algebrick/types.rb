@@ -28,6 +28,10 @@ module Algebrick
       end
     end
 
+    Boolean = Algebrick.type do
+      variants TrueClass, FalseClass
+    end
+
     #List = Algebrick.type(:value_type) do |list|
     #  fields! value: :value_type, next: list
     #  variants EmptyList = atom, list
