@@ -49,6 +49,10 @@ module Algebrick
         super(type)
         raise unless type.field_names?
       end
+
+      def update(fields)
+        type[to_hash.merge fields]
+      end
     end
   end
 end

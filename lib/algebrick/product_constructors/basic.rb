@@ -38,6 +38,10 @@ module Algebrick
         super(type)
         raise if type.field_names?
       end
+
+      def update(fields)
+        type[*fields]
+      end
     end
   end
 end

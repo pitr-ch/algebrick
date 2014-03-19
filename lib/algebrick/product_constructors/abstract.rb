@@ -61,6 +61,10 @@ module Algebrick
         @type = type
         include type
       end
+
+      def update(*fields)
+        raise NotImplementedError
+      end
     end
   end
 end
