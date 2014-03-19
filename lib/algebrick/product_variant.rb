@@ -47,6 +47,7 @@ module Algebrick
       @constructor = Class.new(
           field_names? ? ProductConstructors::Named : ProductConstructors::Basic).
           tap { |c| c.type = self }
+      const_set :Constructor, @constructor
       apply_be_kind_of
       self
     end

@@ -145,6 +145,11 @@ describe 'AlgebrickTest' do
       lambda { Node[Empty, Empty].value }.must_raise NoMethodError
     end
 
+    it 'can be marshaled' do
+      dump = Marshal.dump(leaf = Leaf[1])
+      assert_equal Marshal.load(dump), leaf
+    end
+
     it { lambda { Leaf['a'] }.must_raise TypeError }
     it { lambda { Leaf[nil] }.must_raise TypeError }
     it { lambda { Node['a'] }.must_raise TypeError }
