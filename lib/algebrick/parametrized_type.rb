@@ -15,7 +15,7 @@
 module Algebrick
   require 'monitor'
 
-  class ParametrizedType < Module
+  class ParametrizedType < Type
     include TypeCheck
     include MatcherDelegations
 
@@ -82,6 +82,12 @@ module Algebrick
     def call(*field_matchers)
       raise TypeError unless @fields
       Matchers::Product.new self, *field_matchers
+    end
+
+    def ==(other)
+      other.kind_of? ParametrizedType and
+          self[*Array(variables.size) { Object }] ==
+              other[*Array(other.variables.size) { Object }]
     end
 
     private
