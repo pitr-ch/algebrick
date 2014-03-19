@@ -49,6 +49,11 @@ module Algebrick
       to_s
     end
 
+    def match(value, *cases)
+      Type! value, self
+      super value, *cases
+    end
+
     #def pretty_print(q) TODO
     #  raise NotImplementedError
     #end
