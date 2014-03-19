@@ -15,11 +15,11 @@
 module Algebrick
   module Serializers
     class BenevolentToHash < AbstractToHash
-      def generate(object, options = {})
+      def dump(object, options = {})
         object
       end
 
-      def parse(object, options = {})
+      def load(object, options = {})
         expected_type = Type! options[:expected_type], Module
         could? { can_be? expected_type, object }.tap do |v|
           raise "type mismatch #{object} is not #{expected_type} " unless can? v

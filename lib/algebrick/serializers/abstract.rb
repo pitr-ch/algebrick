@@ -17,11 +17,11 @@ module Algebrick
     class Abstract
       include TypeCheck
 
-      def parse(data, options = {})
+      def load(data, options = {})
         raise NotImplementedError
       end
 
-      def generate(object, options = {})
+      def dump(object, options = {})
         raise NotImplementedError
       end
     end

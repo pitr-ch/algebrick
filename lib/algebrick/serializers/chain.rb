@@ -26,12 +26,12 @@ module Algebrick
         @chain_to   = Type! chain_to, Abstract
       end
 
-      def parse(data, options = {})
-        serializer.parse chain_to.parse(data, options), options
+      def load(data, options = {})
+        serializer.load chain_to.load(data, options), options
       end
 
-      def generate(object, options = {})
-        chain_to.generate serializer.generate(object, options), options
+      def dump(object, options = {})
+        chain_to.dump serializer.dump(object, options), options
       end
     end
   end

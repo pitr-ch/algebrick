@@ -15,7 +15,7 @@
 module Algebrick
   module Serializers
     class StrictToHash < AbstractToHash
-      def parse(data, options = {})
+      def load(data, options = {})
         case data
         when ::Hash
           parse_value(data, options)
@@ -26,7 +26,7 @@ module Algebrick
         end
       end
 
-      def generate(object, options = {})
+      def dump(object, options = {})
         case object
         when Value
           generate_value object, options
@@ -75,11 +75,11 @@ module Algebrick
           else
             case fields
             when Array
-              type[*fields.map { |value| parse value, options }]
+              type[*fields.map { |value| load value, options }]
             when Hash
               type[fields.inject({}) do |h, (name, value)|
                 raise ArgumentError unless type.field_names.map(&:to_s).include? name.to_s
-                h.update name.to_sym => parse(value, options)
+                h.update name.to_sym => load(value, options)
               end]
             end
           end
@@ -94,10 +94,10 @@ module Algebrick
                    when Atom
                      {}
                    when ProductConstructors::Basic
-                     { fields_key => value.fields.map { |v| generate v, options } }
+                     { fields_key => value.fields.map { |v| dump v, options } }
                    when ProductConstructors::Named
                      value.type.field_names.inject({}) do |h, name|
-                       h.update name => generate(value[name], options)
+                       h.update name => dump(value[name], options)
                      end
                    else
                      raise

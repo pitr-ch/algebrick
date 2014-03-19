@@ -622,14 +622,14 @@ Named[
     describe 'strict' do
       let(:serializer) { Algebrick::Serializers::StrictToHash.new }
 
-      it { serializer.generate(Empty).must_equal :algebrick_type => 'Empty' }
-      it { serializer.generate(Leaf[1]).must_equal :algebrick_type => 'Leaf', :algebrick_fields => [1] }
-      it { serializer.generate(PLeaf[Integer][1]).must_equal :algebrick_type => 'PLeaf[Integer]', :value => 1 }
-      it { serializer.generate(Named[1, :a]).must_equal algebrick_type: 'Named', a: 1, b: :a }
+      it { serializer.dump(Empty).must_equal :algebrick_type => 'Empty' }
+      it { serializer.dump(Leaf[1]).must_equal :algebrick_type => 'Leaf', :algebrick_fields => [1] }
+      it { serializer.dump(PLeaf[Integer][1]).must_equal :algebrick_type => 'PLeaf[Integer]', :value => 1 }
+      it { serializer.dump(Named[1, :a]).must_equal algebrick_type: 'Named', a: 1, b: :a }
 
       [Empty, Leaf[1], PLeaf[Integer][1], Named[1, :a]].each do |v|
         it "serializes and de-serializes #{v}" do
-          serializer.parse(serializer.generate(v)).must_equal v
+          serializer.load(serializer.dump(v)).must_equal v
         end
       end
     end
@@ -677,24 +677,24 @@ Named[
     describe 'benevolent' do
       let(:serializer) { Algebrick::Serializers::BenevolentToHash.new }
 
-      it { serializer.generate(Empty).must_equal Empty }
-      it { serializer.generate(Leaf[1]).must_equal Leaf[1] }
+      it { serializer.dump(Empty).must_equal Empty }
+      it { serializer.dump(Leaf[1]).must_equal Leaf[1] }
 
-      it { serializer.parse(1, expected_type: Integer).must_equal 1 }
+      it { serializer.load(1, expected_type: Integer).must_equal 1 }
       it do
         [:empty, :Empty, 'empty', 'Empty'].each do |v|
-          serializer.parse(v, expected_type: Empty).must_equal :algebrick_type => 'Empty'
+          serializer.load(v, expected_type: Empty).must_equal :algebrick_type => 'Empty'
         end
         [:p_empty, :PEmpty, 'p_empty', 'PEmpty'].each do |v|
-          serializer.parse(v, expected_type: PEmpty).must_equal :algebrick_type => 'PEmpty'
+          serializer.load(v, expected_type: PEmpty).must_equal :algebrick_type => 'PEmpty'
         end
       end
 
-      it { serializer.parse([1], expected_type: Leaf).must_equal :algebrick_type => 'Leaf', :algebrick_fields => [1] }
-      it { serializer.parse({ a: 1, b: 's' }, expected_type: Named).must_equal :algebrick_type => 'Named', a: 1, b: 's' }
+      it { serializer.load([1], expected_type: Leaf).must_equal :algebrick_type => 'Leaf', :algebrick_fields => [1] }
+      it { serializer.load({ a: 1, b: 's' }, expected_type: Named).must_equal :algebrick_type => 'Named', a: 1, b: 's' }
 
       transformations.each do |from, to, _|
-        it { serializer.parse(from, expected_type: Person).must_equal to }
+        it { serializer.load(from, expected_type: Person).must_equal to }
       end
     end
 
@@ -705,11 +705,11 @@ Named[
       end
 
       transformations.each do |from, _, to|
-        it { serializer.parse(from, expected_type: Person).must_equal to }
+        it { serializer.load(from, expected_type: Person).must_equal to }
       end
 
       transformations.each do |_, to, from|
-        it { serializer.generate(from).must_equal to }
+        it { serializer.dump(from).must_equal to }
       end
     end
 
@@ -724,7 +724,7 @@ Named[
 
       transformations.each do |_, _, to, from|
         it do
-          serializer.parse(from, expected_type: Person).must_equal to
+          serializer.load(from, expected_type: Person).must_equal to
         end
       end
     end

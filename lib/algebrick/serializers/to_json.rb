@@ -17,11 +17,11 @@ module Algebrick
     require 'multi_json'
 
     class ToJson < Abstract
-      def parse(data, options = {})
+      def load(data, options = {})
         MultiJson.load data
       end
 
-      def generate(object, options = {})
+      def dump(object, options = {})
         MultiJson.dump object
       end
     end
