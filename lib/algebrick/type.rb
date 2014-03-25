@@ -26,7 +26,7 @@ module Algebrick
     end
 
     def name
-      super || @name || raise('missing name')
+      super || @name || 'NoName'
     end
 
     def to_m(*args)
