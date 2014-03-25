@@ -61,6 +61,10 @@ module Algebrick
       end
     end
 
+    def generic
+      @generic ||= self[*Array(variables.size) { Object }]
+    end
+
     def to_s
       "#{name}[#{variables.join(', ')}]"
     end
@@ -84,8 +88,7 @@ module Algebrick
 
     def ==(other)
       other.kind_of? ParametrizedType and
-          self[*Array(variables.size) { Object }] ==
-              other[*Array(other.variables.size) { Object }]
+          self.generic == other.generic
     end
 
     private
