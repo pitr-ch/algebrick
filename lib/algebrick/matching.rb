@@ -42,8 +42,6 @@ module Algebrick
       [matcher, value || block]
     end
 
-    # FIND: #match! raise when match is not complete on a given type
-
     private
 
     def self.match_value(matcher, block)

@@ -18,6 +18,7 @@ module Algebrick
   #noinspection RubyTooManyMethodsInspection
   class ProductVariant < Type
     # TODO split up into classes or modules
+    # TODO aliases for fields, (update matchers)
 
     include FieldMethodReaders
     attr_reader :fields, :variants
