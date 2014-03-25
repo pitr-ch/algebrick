@@ -18,6 +18,7 @@ module Algebrick
   class ParametrizedType < Type
     include TypeCheck
     include MatcherDelegations
+    include FieldMethodReaders
 
     attr_reader :variables, :fields, :variants
 
@@ -30,18 +31,15 @@ module Algebrick
     end
 
     def set_fields(fields)
-      @fields = Type! fields, Hash, Array
-    end
-
-    def field_names
-      case @fields
-      when Hash
-        @fields.keys
-      when Array, nil
-        raise TypeError, "field names not defined on #{self}"
-      else
-        raise
-      end
+      @fields      = Type! fields, Hash, Array
+      @field_names = case @fields
+                     when Hash
+                       @fields.keys
+                     when Array, nil
+                       nil
+                     else
+                       raise
+                     end
     end
 
     def set_variants(variants)

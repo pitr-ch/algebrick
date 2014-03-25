@@ -40,6 +40,7 @@ module Algebrick
   require 'algebrick/value'
   require 'algebrick/atom'
   require 'algebrick/product_constructors'
+  require 'algebrick/field_method_readers'
   require 'algebrick/product_variant'
   require 'algebrick/parametrized_type'
   require 'algebrick/dsl'

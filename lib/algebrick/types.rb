@@ -23,8 +23,8 @@ module Algebrick
     module Maybe
       def maybe
         match self,
-              None >> nil,
-              Some >-> { yield value }
+              on(None, nil),
+              on(Some) { yield value }
       end
     end
 
@@ -32,21 +32,27 @@ module Algebrick
       variants TrueClass, FalseClass
     end
 
-    #List = Algebrick.type(:value_type) do |list|
-    #  fields! value: :value_type, next: list
-    #  variants EmptyList = atom, list
-    #end
-    #
-    #module List
-    #  def each(&block)
-    #    it = self
-    #    loop do
-    #      break if EmptyList === it
-    #      block.call it.value
-    #      it = it.next
-    #    end
-    #  end
-    #end
+    LinkedList = Algebrick.type(:value_type) do |list|
+      fields! value: :value_type, next: list
+      variants EmptyLinkedList = atom, list
+    end
+
+    module LinkedList
+      include Enumerable
+
+      def each(&block)
+        it = self
+        loop do
+          break if LinkedListEmpty === it
+          block.call it.value
+          it = it.next
+        end
+      end
+
+      def self.empty
+        LinkedListEmpty
+      end
+    end
   end
 
   include Types

@@ -19,6 +19,7 @@ module Algebrick
   class ProductVariant < Type
     # TODO split up into classes or modules
 
+    include FieldMethodReaders
     attr_reader :fields, :variants
 
     def initialize(name, &definition)
@@ -52,13 +53,6 @@ module Algebrick
       self
     end
 
-    def field_names
-      @field_names or raise TypeError, "field names not defined on #{self}"
-    end
-
-    def field_names?
-      !!@field_names
-    end
 
     def field_indexes
       @field_indexes or raise TypeError, "field names not defined on #{self}"
@@ -66,23 +60,6 @@ module Algebrick
 
     def field(name)
       fields[field_indexes[name]]
-    end
-
-    def add_field_method_reader(field)
-      raise TypeError, 'no field names' unless field_names?
-      raise ArgumentError, "no field name #{field}" unless field_names.include? field
-      raise ArgumentError, "method #{field} already defined" if instance_methods.include? field
-      define_method(field) { self[field] }
-      self
-    end
-
-    def add_field_method_readers(*fields)
-      fields.each { |f| add_field_method_reader f }
-      self
-    end
-
-    def add_all_field_method_readers
-      add_field_method_readers *@field_names
     end
 
     def set_variants(variants)
