@@ -288,11 +288,14 @@ Named[
       TXT
     end
 
+    #it do
+    #  PTree[Integer].pretty_inspect.must_equal ''
+    #end
 
   end
 
   describe 'module including' do
-    type = Algebrick.type { fields! Numeric }
+    type = Algebrick.type { fields Numeric }
     type.module_eval do
       include Comparable
       def <=>(other)
@@ -489,6 +492,14 @@ Named[
       it 'does not pass any values when no matcher' do
         Algebrick.match(Empty, on(Empty) { |*a| a }).must_equal []
       end
+
+      specify do
+        assert PTree.match(PEmpty, on(PEmpty, true))
+        -> { PLeaf.match(PEmpty, on(PEmpty, true)) }.must_raise TypeError
+
+        assert Tree.match(Leaf[1], on(~Leaf) { true })
+        -> { assert Empty.match(Leaf[1], on(~Leaf) { true }) }.must_raise TypeError
+      end
     end
 
     describe '#to_s' do
@@ -610,6 +621,16 @@ Named[
     match Node[Empty, Empty],
           (on ~Node do |(left, right)|
             [left, right].must_equal [Empty, Empty]
+          end)
+
+    match Leaf[1],
+          (on ~Leaf do |(v)|
+            v.must_equal 1
+          end)
+
+    match Leaf[1],
+          (on ~Leaf do |v|
+            v.must_equal Leaf[1]
           end)
   end
 
