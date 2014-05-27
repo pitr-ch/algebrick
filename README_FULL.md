@@ -1,6 +1,6 @@
 # Algebrick
 
-It's a gem providing **algebraic types** and **pattern matching** and seamlessly integrating with standard features of Ruby.
+Typed structs on steroids based on algebraic types and pattern matching seamlessly integrating with standard Ruby features.
 
 -   Documentation: <http://blog.pitr.ch/algebrick>
 -   Source: <https://github.com/pitr-ch/algebrick>

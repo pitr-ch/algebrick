@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/pitr-ch/algebrick.png?branch=master)](https://travis-ci.org/pitr-ch/algebrick)
 
-It's a gem providing **algebraic types** and **pattern matching** seamlessly integrates with standard features Ruby.
+Typed structs on steroids based on algebraic types and pattern matching seamlessly integrating with standard Ruby features.
 
 -   Documentation: <http://blog.pitr.ch/algebrick>
 -   Source: <https://github.com/pitr-ch/algebrick>
@@ -10,8 +10,11 @@ It's a gem providing **algebraic types** and **pattern matching** seamlessly int
 
 ## What is it good for?
 
--   Defining data structures.
--   Algebraic types play nice with JSON serialization and deserialization. It is ideal for defining message-based cross-process communication.
+-   Well defined data structures.
+-   Actor messages see [new Actor implementation](http://rubydoc.info/gems/concurrent-ruby/Concurrent/Actress) 
+    in [concurrent-ruby](concurrent-ruby.com).
+-   Describing message protocols in message-based cross-process communication. 
+    Algebraic types play nice with JSON de/serialization.
 -   and more...
 
 ## Quick example
