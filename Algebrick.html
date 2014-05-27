@@ -74,7 +74,7 @@
   
     
       <dt class="r1">Extended by:</dt>
-      <dd class="r1"><span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span></dd>
+      <dd class="r1"><span class='object_link'><a href="Algebrick/Helper.html" title="Algebrick::Helper (module)">Helper</a></span>, <span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span></dd>
       
     
   
@@ -87,43 +87,28 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/algebrick.rb</dd>
+    <dd class="r1 last">lib/algebrick.rb<span class="defines">,<br />
+  lib/algebrick/protocol.rb,<br /> lib/algebrick/serializers2/chain.rb,<br /> lib/algebrick/serializers2/to_json.rb,<br /> lib/algebrick/serializers2/abstract.rb,<br /> lib/algebrick/serializers2/strict_to_hash.rb,<br /> lib/algebrick/serializers2/abstract_to_hash.rb,<br /> lib/algebrick/serializers2/benevolent_to_hash.rb</span>
+</dd>
   
 </dl>
 <div class="clear"></div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Provides Algebraic types and pattern matching</p>
+    <p>Copyright 2013 Petr Chalupa &lt;git+algebrick@pitr.ch&gt;</p>
 
-<p><strong>Quick example</strong>
-<pre class="code ruby"><span class='comment'># Let&#39;s define a Tree
-</span><span class='const'>Tree</span> <span class='op'>=</span> <span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tree'>tree</span><span class='op'>|</span>
-  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>Empty</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span>
-           <span class='const'>Leaf</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='const'>Integer</span> <span class='rbrace'>}</span><span class='comma'>,</span>
-           <span class='const'>Node</span>  <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='id identifier rubyid_tree'>tree</span><span class='comma'>,</span> <span class='id identifier rubyid_tree'>tree</span> <span class='rbrace'>}</span>
-<span class='kw'>end</span>                                                <span class='comment'># =&gt; Tree(Empty | Leaf | Node)
-</span>
-<span class='comment'># Now types `Tree(Empty | Leaf | Node)`, `Empty`, `Leaf(Integer)` and `Node(Tree, Tree)` are defined.
-</span><span class='comment'># Let&#39;s add a method, don&#39;t miss the **pattern matching** example.
-</span><span class='kw'>module</span> <span class='const'>Tree</span>
-  <span class='comment'># compute depth of a tree
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_depth'>depth</span>
-    <span class='id identifier rubyid_match'>match</span> <span class='kw'>self</span><span class='comma'>,</span>
-          <span class='lparen'>(</span><span class='id identifier rubyid_on'>on</span> <span class='const'>Empty</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span><span class='comma'>,</span>
-          <span class='lparen'>(</span><span class='id identifier rubyid_on'>on</span> <span class='const'>Leaf</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span><span class='comma'>,</span>
-          <span class='comment'># ~ will store and pass matched parts to variables left and right
-</span>          <span class='lparen'>(</span><span class='id identifier rubyid_on'>on</span> <span class='const'>Node</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='comma'>,</span> <span class='op'>~</span><span class='id identifier rubyid_any'>any</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span><span class='op'>|</span>
-            <span class='int'>1</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='id identifier rubyid_left'>left</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
-          <span class='kw'>end</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>                                                <span class='comment'># =&gt; nil
-</span>
-<span class='comment'># Method defined in module `Tree` are passed down to **all** values of type Tree.
-</span><span class='const'>Empty</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>                                        <span class='comment'># =&gt; 0
-</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>10</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>                                     <span class='comment'># =&gt; 1
-</span><span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>4</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>                         <span class='comment'># =&gt; 2
-</span><span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Empty</span><span class='comma'>,</span> <span class='const'>Node</span><span class='lbracket'>[</span><span class='const'>Leaf</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'>Empty</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_depth'>depth</span>            <span class='comment'># =&gt; 3</span></pre></p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at</p>
+
+<p>http://www.apache.org/licenses/LICENSE-2.0</p>
+
+<p>Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an “AS IS” BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.</p>
 
 
   </div>
@@ -135,11 +120,11 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Algebrick/DSL.html" title="Algebrick::DSL (module)">DSL</a></span>, <span class='object_link'><a href="Algebrick/MatcherDelegations.html" title="Algebrick::MatcherDelegations (module)">MatcherDelegations</a></span>, <span class='object_link'><a href="Algebrick/Matchers.html" title="Algebrick::Matchers (module)">Matchers</a></span>, <span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span>, <span class='object_link'><a href="Algebrick/Reclude.html" title="Algebrick::Reclude (module)">Reclude</a></span>, <span class='object_link'><a href="Algebrick/TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span>, <span class='object_link'><a href="Algebrick/Types.html" title="Algebrick::Types (module)">Types</a></span>, <span class='object_link'><a href="Algebrick/Value.html" title="Algebrick::Value (module)">Value</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Algebrick/DSL.html" title="Algebrick::DSL (module)">DSL</a></span>, <span class='object_link'><a href="Algebrick/Helper.html" title="Algebrick::Helper (module)">Helper</a></span>, <span class='object_link'><a href="Algebrick/MatcherDelegations.html" title="Algebrick::MatcherDelegations (module)">MatcherDelegations</a></span>, <span class='object_link'><a href="Algebrick/Matchers.html" title="Algebrick::Matchers (module)">Matchers</a></span>, <span class='object_link'><a href="Algebrick/Matching.html" title="Algebrick::Matching (module)">Matching</a></span>, <span class='object_link'><a href="Algebrick/Reclude.html" title="Algebrick::Reclude (module)">Reclude</a></span>, <span class='object_link'><a href="Algebrick/Serializers.html" title="Algebrick::Serializers (module)">Serializers</a></span>, <span class='object_link'><a href="Algebrick/Serializers2.html" title="Algebrick::Serializers2 (module)">Serializers2</a></span>, <span class='object_link'><a href="Algebrick/TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span>, <span class='object_link'><a href="Algebrick/Types.html" title="Algebrick::Types (module)">Types</a></span>, <span class='object_link'><a href="Algebrick/Value.html" title="Algebrick::Value (module)">Value</a></span>
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Algebrick/Atom.html" title="Algebrick::Atom (class)">Atom</a></span>, <span class='object_link'><a href="Algebrick/ParametrizedType.html" title="Algebrick::ParametrizedType (class)">ParametrizedType</a></span>, <span class='object_link'><a href="Algebrick/ProductConstructor.html" title="Algebrick::ProductConstructor (class)">ProductConstructor</a></span>, <span class='object_link'><a href="Algebrick/ProductVariant.html" title="Algebrick::ProductVariant (class)">ProductVariant</a></span>, <span class='object_link'><a href="Algebrick/Type.html" title="Algebrick::Type (class)">Type</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Algebrick/Atom.html" title="Algebrick::Atom (class)">Atom</a></span>, <span class='object_link'><a href="Algebrick/ParametrizedType.html" title="Algebrick::ParametrizedType (class)">ParametrizedType</a></span>, <span class='object_link'><a href="Algebrick/ProductConstructor.html" title="Algebrick::ProductConstructor (class)">ProductConstructor</a></span>, <span class='object_link'><a href="Algebrick/ProductVariant.html" title="Algebrick::ProductVariant (class)">ProductVariant</a></span>, <span class='object_link'><a href="Algebrick/Protocol.html" title="Algebrick::Protocol (class)">Protocol</a></span>, <span class='object_link'><a href="Algebrick/Type.html" title="Algebrick::Type (class)">Type</a></span>
     
   
 </p>
@@ -157,6 +142,11 @@
           
         </dt>
         <dd><pre class="code"><span class='symbol'>:fields</span></pre></dd>
+      
+        <dt id="AsJson-constant" class="">AsJson =
+          
+        </dt>
+        <dd><pre class="code"><span class='id identifier rubyid_protocol'>protocol</span> <span class='symbol'>:asjson</span></pre></dd>
       
     </dl>
   
@@ -276,6 +266,17 @@
     </ul>
   
 
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Algebrick/Helper.html" title="Algebrick::Helper (module)">Helper</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Algebrick/Helper.html#protocol-instance_method" title="Algebrick::Helper#protocol (method)">protocol</a></span></p>
 
   
   
@@ -442,7 +443,7 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Jan  2 12:07:29 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Tue May 27 09:14:19 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-2.0.0).
 </div>
