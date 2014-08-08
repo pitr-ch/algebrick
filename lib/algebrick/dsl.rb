@@ -46,6 +46,11 @@ module Algebrick
         all_readers
       end
 
+      def open_variant_definition!
+        @new_type.open_variant_definition!
+        self
+      end
+
       def variants(*variants)
         @new_type.set_variants variants
         self

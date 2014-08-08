@@ -26,11 +26,12 @@ module Algebrick
     def initialize(name, &definition)
       super(name, &definition)
       @to_be_kind_of = []
+      @open_variant  = false
     end
 
     def set_fields(fields_or_hash)
       raise TypeError, 'can be set only once' if @fields
-      @kind = nil
+      @kind        = nil
       fields, keys = case fields_or_hash
                      when Hash
                        [fields_or_hash.values, fields_or_hash.keys]
@@ -54,7 +55,6 @@ module Algebrick
       self
     end
 
-
     def field_indexes
       @field_indexes or raise TypeError, "field names not defined on #{self}"
     end
@@ -63,11 +63,17 @@ module Algebrick
       fields[field_indexes[name]]
     end
 
+    def open_variant_definition!
+      @open_variant = true
+      self
+    end
+
     def set_variants(variants)
-      raise TypeError, 'can be set only once' if @variants
+      raise TypeError, 'can be set only once' if @variants && !@open_variant
       @kind = nil
       variants.all? { |v| Type! v, Type, Class }
-      @variants = variants
+      @variants ||= []
+      @variants += variants
       apply_be_kind_of
       variants.each do |v|
         if v.respond_to? :be_kind_of
@@ -183,6 +189,7 @@ module Algebrick
           Hash.new { |_, k| raise ArgumentError, "unknown field #{k.inspect} in #{self}" }.
               update names.each_with_index.inject({}) { |h, (k, i)| h.update k => i }
       define_method(:[]) { |key| @fields[dict[key]] }
+      # TODO use attr_readers to speed things up
     end
   end
 end
