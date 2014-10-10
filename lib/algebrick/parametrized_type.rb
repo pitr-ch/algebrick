@@ -42,7 +42,7 @@ module Algebrick
                      end
     end
 
-    def set_variants(variants)
+    def set_variants(*variants)
       @variants = Type! variants, Array
     end
 
@@ -54,7 +54,7 @@ module Algebrick
             type.be_kind_of self
             @cache[assigned_types] = type
             type.assigned_types    = assigned_types
-            type.set_variants insert_types(variants, assigned_types) if variants
+            type.set_variants *insert_types(variants, assigned_types) if variants
             type.set_fields insert_types(fields, assigned_types) if fields
           end
         end

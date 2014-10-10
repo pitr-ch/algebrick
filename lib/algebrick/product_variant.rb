@@ -26,7 +26,7 @@ module Algebrick
     def initialize(name, &definition)
       super(name, &definition)
       @to_be_kind_of = []
-      @open_variant  = false
+      @final_variants  = false
     end
 
     def set_fields(fields_or_hash)
@@ -63,13 +63,13 @@ module Algebrick
       fields[field_indexes[name]]
     end
 
-    def open_variant_definition!
-      @open_variant = true
+    def final!
+      @final_variants = true
       self
     end
 
-    def set_variants(variants)
-      raise TypeError, 'can be set only once' if @variants && !@open_variant
+    def set_variants(*variants)
+      raise TypeError, 'can be set only once' if @variants && @final_variants
       @kind = nil
       variants.all? { |v| Type! v, Type, Class }
       @variants ||= []

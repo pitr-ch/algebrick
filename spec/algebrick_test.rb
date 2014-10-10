@@ -39,10 +39,10 @@ describe 'AlgebrickTest' do
       Leaf  = type { fields Integer }
       Node  = type { fields tree, tree }
 
-      open_variant_definition!
       variants Empty, Leaf
-      variants Node
     end
+
+    Tree.set_variants Node
 
     BTree = type do |btree|
       fields! value: Comparable, left: btree, right: btree
