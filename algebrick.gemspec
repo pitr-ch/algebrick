@@ -14,11 +14,7 @@ Gem::Specification.new do |s|
   s.license          = 'Apache License 2.0'
   s.test_files       = Dir['spec/algebrick.rb']
 
-  #{}.each do |gem, version|
-  #  s.add_runtime_dependency(gem, [version || '>= 0'])
-  #end
-
-  %w(minitest minitest-reporters turn pry yard kramdown github-markup multi_json json).each do |gem|
+  %w(minitest minitest-reporters turn pry yard kramdown multi_json json).each do |gem|
     s.add_development_dependency gem, '>= 0'
   end
 end
