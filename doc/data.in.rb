@@ -14,7 +14,7 @@ module Tree
             1 + [left.depth, right.depth].max
           end
   end
-end
+end #
 
 tree = Node[2,
             Tip,
@@ -46,7 +46,7 @@ module Link
   def self.valid!(url)
     # stub
   end
-end
+end #
 
 module Item
   def draw_menu(indent = 0)
@@ -57,7 +57,7 @@ module Item
             [' '*indent + label] + sub_menu.draw_menu(indent + 2)
           end)
   end
-end
+end #
 
 module Menu
   def self.build(*items)
@@ -78,7 +78,7 @@ module Menu
   def draw_menu(indent = 0)
     map { |item| item.draw_menu indent }.reduce(&:+)
   end
-end
+end #
 
 sub_menu = Menu.build Link['Red Hat', '#red-hat'],
                       Delimiter,

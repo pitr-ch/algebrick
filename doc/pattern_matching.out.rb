@@ -9,7 +9,7 @@ BinaryTree = BTree = Algebrick.type do |btree|
   fields! value: Comparable, left: btree, right: btree
   variants Empty, btree
 end
-# => BTree(Empty | BTree(value: Comparable, left: BTree, right: BTree))
+    # => BTree(Empty | BTree(value: Comparable, left: BTree, right: BTree))
 
 extend Algebrick::Matching                         # => main
 
@@ -21,7 +21,7 @@ Leaf.(2) === Leaf[1]                               # => false
 BTree.()                                           # => BTree.(any, any, any)
 BTree.(value: any, left: Empty)                    # => BTree.(any, Empty, any)
 BTree.(value: any, left: Empty) === BTree[1, Empty, Empty]
-# => true
+    # => true
 
 # Any object responding to #=== can be converted to matcher.
 (1..2).to_m                                        # => Wrapper.(1..2)
@@ -33,7 +33,7 @@ Leaf === Leaf[1]                                   # => true
 
 # Tree matches all its values.
 [Empty, Leaf[1], Node[Empty, Empty]].all? { |v| Tree === v }
-# => true
+    # => true
 
 # There is also a #match method in Matching module to make pattern matching easier.
 match Leaf[1], # supply the value for matching
@@ -66,19 +66,19 @@ match Leaf[0],
 btree = BTree[1,
               BTree[0, Empty, Empty],
               Empty]
-# => BTree[value: 1, left: BTree[value: 0, left: Empty, right: Empty], right: Empty]
+    # => BTree[value: 1, left: BTree[value: 0, left: Empty, right: Empty], right: Empty]
 match btree,
       (on BTree.(any, ~any, ~any) do |left, right|
         [left, right]
       end)
-# => [BTree[value: 0, left: Empty, right: Empty], Empty]
+    # => [BTree[value: 0, left: Empty, right: Empty], Empty]
 
 # or alternatively you can use Ruby's multi-assignment feature.
 match btree,
       (on ~BTree do |(_, left, right)|
         [left, right]
       end)
-# => [BTree[value: 0, left: Empty, right: Empty], Empty]
+    # => [BTree[value: 0, left: Empty, right: Empty], Empty]
 
 
 # Matchers also support logical operations #& for and, #| for or, and #! for negation.
@@ -95,7 +95,7 @@ def color?(color)
         on(White | Grey.(-> v { v > 0.8 }), 'white-ish'),
         on(Grey.(-> v { v >= 0.2 }) & Grey.(-> v { v <= 0.8 }), 'grey-ish'),
         on(Pink, "that's not a color ;)")
-end                                                # => nil
+end                                                # => :color?
 
 color? Black                                       # => "black-ish"
 color? Grey[0.1]                                   # => "black-ish"
@@ -107,9 +107,9 @@ color? Pink                                        # => "that's not a color ;)"
 # A more complicated example of extracting node's value and values of its left and right side
 # using also logical operators to allow Empty sides.
 match BTree[0, Empty, BTree[1, Empty, Empty]],
-      (on BTree.(value: ~any,
-          left: Empty | BTree.(value: ~any),
-          right: Empty | BTree.(value: ~any)) do |value, left, right|
+      (on BTree.({ value: ~any,
+                   left:  Empty | BTree.(value: ~any),
+                   right: Empty | BTree.(value: ~any) }) do |value, left, right|
         { left: left, value: value, right: right }
       end)                                         # => {:left=>nil, :value=>0, :right=>1}
 

@@ -45,7 +45,6 @@ module Algebrick
   require 'algebrick/parametrized_type'
   require 'algebrick/dsl'
   require 'algebrick/matchers'
-  require 'algebrick/serializers'
   require 'algebrick/types'
 
 end
