@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../../';
-  framesUrl = "../../frames.html#!" + escape(window.location.href);
+  framesUrl = "../../frames.html#!Algebrick/Matchers/Array.html";
 </script>
 
 
@@ -96,7 +96,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/algebrick.rb</dd>
+    <dd class="r2 last">lib/algebrick/matchers/array.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -356,13 +356,13 @@
       <pre class="lines">
 
 
-1074
-1075
-1076
-1077</pre>
+24
+25
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1074</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/array.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_matchers'>matchers</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='rparen'>)</span>
@@ -405,12 +405,12 @@
       <pre class="lines">
 
 
-1072
-1073
-1074</pre>
+22
+23
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1072</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/array.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matchers'>matchers</span>
   <span class='ivar'>@matchers</span>
@@ -442,12 +442,12 @@
       <pre class="lines">
 
 
-1068
-1069
-1070</pre>
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1068</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/array.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_matchers'>matchers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_new'>new</span> <span class='op'>*</span><span class='id identifier rubyid_matchers'>matchers</span>
@@ -478,13 +478,13 @@
       <pre class="lines">
 
 
-1087
-1088
-1089
-1090</pre>
+37
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1087</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/array.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='kw'>and</span>
@@ -510,12 +510,12 @@
       <pre class="lines">
 
 
-1079
-1080
-1081</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1079</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/array.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_children'>children</span>
   <span class='id identifier rubyid_find_children'>find_children</span> <span class='ivar'>@matchers</span>
@@ -528,7 +528,7 @@
       <div class="method_details ">
   <h3 class="signature " id="matching?-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>matching?</strong>(other)  <span class="extras">(protected)</span>
+    - (<tt><span class='object_link'><a href="../Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>) <strong>matching?</strong>(other)  <span class="extras">(protected)</span>
   
 
   
@@ -549,7 +549,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Boolean</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>)</span>
       
       
       
@@ -563,14 +563,14 @@
       <pre class="lines">
 
 
-1094
-1095
-1096
-1097
-1098</pre>
+44
+45
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1094</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/array.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matching?'>matching?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='op'>::</span><span class='const'>Array</span> <span class='kw'>and</span>
@@ -597,12 +597,12 @@
       <pre class="lines">
 
 
-1083
-1084
-1085</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1083</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/array.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_assign_to_s'>assign_to_s</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Array.(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_matchers'>matchers</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>,</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_matchers'>matchers</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -617,9 +617,9 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jun  4 22:11:45 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Dec 18 10:34:18 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-2.0.0).
+  0.8.7.6 (ruby-2.1.2).
 </div>
 
 <script>

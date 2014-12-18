@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../';
-  framesUrl = "../frames.html#!" + escape(window.location.href);
+  framesUrl = "../frames.html#!Algebrick/Matching.html";
 </script>
 
 
@@ -83,7 +83,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/algebrick.rb</dd>
+    <dd class="r2 last">lib/algebrick/matching.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -238,20 +238,20 @@
       <pre class="lines">
 
 
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145</pre>
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matching.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_match_value'>match_value</span><span class='lparen'>(</span><span class='id identifier rubyid_matcher'>matcher</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='const'>Proc</span>
@@ -290,12 +290,12 @@
       <pre class="lines">
 
 
-104
-105
-106</pre>
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matching.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_any'>any</span>
   <span class='const'>Matchers</span><span class='op'>::</span><span class='const'>Any</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -320,21 +320,21 @@
       <pre class="lines">
 
 
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119</pre>
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matching.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_cases'>cases</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cases'>cases</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_cases'>cases</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cases'>cases</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
@@ -391,18 +391,18 @@
       <pre class="lines">
 
 
-121
-122
-123
-124
-125
-126
-127
-128
-129</pre>
+35
+36
+37
+38
+39
+40
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 121</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matching.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_on'>on</span><span class='lparen'>(</span><span class='id identifier rubyid_matcher'>matcher</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_matcher'>matcher</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_matcher'>matcher</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Matchers</span><span class='op'>::</span><span class='const'>Abstract</span>
@@ -423,9 +423,9 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jun  4 22:11:42 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Dec 18 10:34:17 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-2.0.0).
+  0.8.7.6 (ruby-2.1.2).
 </div>
 
 <script>

@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../';
-  framesUrl = "../frames.html#!" + escape(window.location.href);
+  framesUrl = "../frames.html#!Algebrick/TypeCheck.html";
 </script>
 
 
@@ -78,17 +78,27 @@
   
   
     <dt class="r1">Included in:</dt>
-    <dd class="r1"><span class='object_link'><a href="DSL/TypeDefinitionScope.html" title="Algebrick::DSL::TypeDefinitionScope (class)">DSL::TypeDefinitionScope</a></span>, <span class='object_link'><a href="Matchers/Abstract.html" title="Algebrick::Matchers::Abstract (class)">Matchers::Abstract</a></span>, <span class='object_link'><a href="ParametrizedType.html" title="Algebrick::ParametrizedType (class)">ParametrizedType</a></span>, <span class='object_link'><a href="Protocol.html" title="Algebrick::Protocol (class)">Protocol</a></span>, <span class='object_link'><a href="Serializers2/AbstractConverter.html" title="Algebrick::Serializers2::AbstractConverter (module)">Serializers2::AbstractConverter</a></span>, <span class='object_link'><a href="Type.html" title="Algebrick::Type (class)">Type</a></span>, <span class='object_link'><a href="Value.html" title="Algebrick::Value (module)">Value</a></span></dd>
+    <dd class="r1"><span class='object_link'><a href="DSL/TypeDefinitionScope.html" title="Algebrick::DSL::TypeDefinitionScope (class)">DSL::TypeDefinitionScope</a></span>, <span class='object_link'><a href="Matchers/Abstract.html" title="Algebrick::Matchers::Abstract (class)">Matchers::Abstract</a></span>, <span class='object_link'><a href="ParametrizedType.html" title="Algebrick::ParametrizedType (class)">ParametrizedType</a></span>, <span class='object_link'><a href="ProductConstructors/Abstract.html" title="Algebrick::ProductConstructors::Abstract (class)">ProductConstructors::Abstract</a></span>, <span class='object_link'><a href="Protocol.html" title="Algebrick::Protocol (class)">Protocol</a></span>, <span class='object_link'><a href="Serializer.html" title="Algebrick::Serializer (class)">Serializer</a></span>, <span class='object_link'><a href="Serializers2/AbstractConverter.html" title="Algebrick::Serializers2::AbstractConverter (class)">Serializers2::AbstractConverter</a></span>, <span class='object_link'><a href="Serializers/Abstract.html" title="Algebrick::Serializers::Abstract (class)">Serializers::Abstract</a></span>, <span class='object_link'><a href="Type.html" title="Algebrick::Type (class)">Type</a></span>, <span class='object_link'><a href="Value.html" title="Algebrick::Value (module)">Value</a></span></dd>
     
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/algebrick.rb</dd>
+    <dd class="r2 last">lib/algebrick/type_check.rb</dd>
   
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>noinspection RubyInstanceMethodNamingConvention</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -320,13 +330,13 @@
       <pre class="lines">
 
 
-96
-97
-98
-99</pre>
+53
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/type_check.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span>
@@ -358,14 +368,14 @@
       <pre class="lines">
 
 
-88
-89
-90
-91
-92</pre>
+45
+46
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/type_check.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_Child!'>Child!</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_Child?'>Child?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span> <span class='kw'>or</span>
@@ -380,7 +390,7 @@
       <div class="method_details ">
   <h3 class="signature " id="Child?-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>Child?</strong>(value, *types) 
+    - (<tt><span class='object_link'><a href="Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>) <strong>Child?</strong>(value, *types) 
   
 
   
@@ -401,7 +411,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Boolean</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>)</span>
       
       
       
@@ -415,13 +425,13 @@
       <pre class="lines">
 
 
-83
-84
-85
-86</pre>
+40
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/type_check.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_Child?'>Child?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_Type?'>Type?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='const'>Class</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
@@ -447,14 +457,14 @@
       <pre class="lines">
 
 
-77
-78
-79
-80
-81</pre>
+34
+35
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/type_check.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_Match!'>Match!</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_Match?'>Match?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span> <span class='kw'>or</span>
@@ -469,7 +479,7 @@
       <div class="method_details ">
   <h3 class="signature " id="Match?-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>Match?</strong>(value, *types) 
+    - (<tt><span class='object_link'><a href="Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>) <strong>Match?</strong>(value, *types) 
   
 
   
@@ -490,7 +500,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Boolean</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>)</span>
       
       
       
@@ -504,12 +514,12 @@
       <pre class="lines">
 
 
-73
-74
-75</pre>
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/type_check.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_Match?'>Match?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_types'>types</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_t'>t</span> <span class='op'>===</span> <span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>
@@ -534,14 +544,14 @@
       <pre class="lines">
 
 
-67
-68
-69
-70
-71</pre>
+24
+25
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 67</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/type_check.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_Type!'>Type!</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_Type?'>Type?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span> <span class='kw'>or</span>
@@ -556,7 +566,7 @@
       <div class="method_details ">
   <h3 class="signature " id="Type?-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>Type?</strong>(value, *types) 
+    - (<tt><span class='object_link'><a href="Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>) <strong>Type?</strong>(value, *types) 
   
 
   
@@ -577,7 +587,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Boolean</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>)</span>
       
       
       
@@ -591,12 +601,12 @@
       <pre class="lines">
 
 
-63
-64
-65</pre>
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/type_check.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_Type?'>Type?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_types'>types</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='id identifier rubyid_t'>t</span> <span class='rbrace'>}</span>
@@ -611,9 +621,9 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jun  4 22:11:42 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Dec 18 10:34:17 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-2.0.0).
+  0.8.7.6 (ruby-2.1.2).
 </div>
 
 <script>

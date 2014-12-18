@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../';
-  framesUrl = "../frames.html#!" + escape(window.location.href);
+  framesUrl = "../frames.html#!Algebrick/Types.html";
 </script>
 
 
@@ -83,12 +83,22 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/algebrick.rb</dd>
+    <dd class="r2 last">lib/algebrick/types.rb</dd>
   
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>noinspection RubyConstantNamingConvention</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
   <h2>Constant Summary</h2>
   
     <dl class="constants">
@@ -99,6 +109,21 @@
         <dd><pre class="code"><span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='symbol'>:v</span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_variants'>variants</span> <span class='const'>None</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span>
            <span class='const'>Some</span> <span class='op'>=</span> <span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='symbol'>:v</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span> <span class='symbol'>:v</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre></dd>
+      
+        <dt id="Boolean-constant" class="">Boolean =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>TrueClass</span><span class='comma'>,</span> <span class='const'>FalseClass</span>
+<span class='kw'>end</span></pre></dd>
+      
+        <dt id="LinkedList-constant" class="">LinkedList =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>Algebrick</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='lparen'>(</span><span class='symbol'>:value_type</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_list'>list</span><span class='op'>|</span>
+  <span class='id identifier rubyid_fields!'>fields!</span> <span class='label'>value:</span> <span class='symbol'>:value_type</span><span class='comma'>,</span> <span class='label'>next:</span> <span class='id identifier rubyid_list'>list</span>
+  <span class='id identifier rubyid_variants'>variants</span> <span class='const'>EmptyLinkedList</span> <span class='op'>=</span> <span class='id identifier rubyid_atom'>atom</span><span class='comma'>,</span> <span class='id identifier rubyid_list'>list</span>
 <span class='kw'>end</span></pre></dd>
       
     </dl>
@@ -115,9 +140,9 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jun  4 22:11:42 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Dec 18 10:34:17 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-2.0.0).
+  0.8.7.6 (ruby-2.1.2).
 </div>
 
 <script>

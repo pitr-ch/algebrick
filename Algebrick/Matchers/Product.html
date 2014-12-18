@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../../';
-  framesUrl = "../../frames.html#!" + escape(window.location.href);
+  framesUrl = "../../frames.html#!Algebrick/Matchers/Product.html";
 </script>
 
 
@@ -96,7 +96,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/algebrick.rb</dd>
+    <dd class="r2 last">lib/algebrick/matchers/product.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -199,7 +199,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>TODO prety_print for all matchers.</p>
+    <span class="summary_desc"><div class='inline'>
 </div></span>
   
 </li>
@@ -365,37 +365,37 @@
       <pre class="lines">
 
 
-1110
-1111
-1112
-1113
-1114
-1115
-1116
-1117
-1118
-1119
-1120
-1121
-1122
-1123
-1124
-1125
-1126
-1127
-1128
-1129
-1130
-1131
-1132
-1133
-1134
-1135
-1136
-1137</pre>
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1110</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/product.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_algebraic_type'>algebraic_type</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_field_matchers'>field_matchers</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='rparen'>)</span>
@@ -462,12 +462,12 @@
       <pre class="lines">
 
 
-1108
-1109
-1110</pre>
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1108</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/product.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_algebraic_type'>algebraic_type</span>
   <span class='ivar'>@algebraic_type</span>
@@ -504,12 +504,12 @@
       <pre class="lines">
 
 
-1108
-1109
-1110</pre>
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1108</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/product.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_field_matchers'>field_matchers</span>
   <span class='ivar'>@field_matchers</span>
@@ -535,30 +535,20 @@
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>TODO prety_print for all matchers</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-1149
-1150
-1151
-1152
-1153</pre>
+57
+58
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1149</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/product.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='kw'>and</span>
@@ -585,12 +575,12 @@
       <pre class="lines">
 
 
-1139
-1140
-1141</pre>
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1139</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/product.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_children'>children</span>
   <span class='id identifier rubyid_find_children'>find_children</span> <span class='ivar'>@field_matchers</span>
@@ -603,7 +593,7 @@
       <div class="method_details ">
   <h3 class="signature " id="matching?-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>matching?</strong>(other)  <span class="extras">(protected)</span>
+    - (<tt><span class='object_link'><a href="../Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>) <strong>matching?</strong>(other)  <span class="extras">(protected)</span>
   
 
   
@@ -624,7 +614,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Boolean</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>)</span>
       
       
       
@@ -638,18 +628,18 @@
       <pre class="lines">
 
 
-1157
-1158
-1159
-1160
-1161
-1162</pre>
+65
+66
+67
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1157</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/product.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matching?'>matching?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='ivar'>@algebraic_type</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>ProductConstructor</span><span class='rparen'>)</span> <span class='kw'>and</span>
+  <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='ivar'>@algebraic_type</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>ProductConstructors</span><span class='op'>::</span><span class='const'>Abstract</span><span class='rparen'>)</span> <span class='kw'>and</span>
       <span class='ivar'>@field_matchers</span><span class='period'>.</span><span class='id identifier rubyid_zip'>zip</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_fields'>fields</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_matcher'>matcher</span><span class='comma'>,</span> <span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
         <span class='id identifier rubyid_matcher'>matcher</span> <span class='op'>===</span> <span class='id identifier rubyid_field'>field</span>
       <span class='kw'>end</span>
@@ -674,12 +664,12 @@
       <pre class="lines">
 
 
-1143
-1144
-1145</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1143</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/product.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_assign_to_s'>assign_to_s</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@algebraic_type</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.(</span><span class='embexpr_beg'>#{</span><span class='ivar'>@field_matchers</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
@@ -694,9 +684,9 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jun  4 22:11:45 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Dec 18 10:34:18 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-2.0.0).
+  0.8.7.6 (ruby-2.1.2).
 </div>
 
 <script>

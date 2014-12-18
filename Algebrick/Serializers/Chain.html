@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../../';
-  framesUrl = "../../frames.html#!" + escape(window.location.href);
+  framesUrl = "../../frames.html#!Algebrick/Serializers/Chain.html";
 </script>
 
 
@@ -73,12 +73,12 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName">Abstract</span>
+      <span class="inheritName"><span class='object_link'><a href="Abstract.html" title="Algebrick::Serializers::Abstract (class)">Abstract</a></span></span>
       
         <ul class="fullTree">
           <li><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></li>
           
-            <li class="next">Abstract</li>
+            <li class="next"><span class='object_link'><a href="Abstract.html" title="Algebrick::Serializers::Abstract (class)">Abstract</a></span></li>
           
             <li class="next">Algebrick::Serializers::Chain</li>
           
@@ -96,7 +96,9 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/algebrick/serializers2/chain.rb</dd>
+    <dd class="r2 last">lib/algebrick/serializers/chain.rb<span class="defines">,<br />
+  lib/algebrick/serializers2/chain.rb</span>
+</dd>
   
 </dl>
 <div class="clear"></div>
@@ -284,7 +286,23 @@
   
 
 
-  <div id="constructor_details" class="method_details_list">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../TypeCheck.html#Child%21-instance_method" title="Algebrick::TypeCheck#Child! (method)">#Child!</a></span>, <span class='object_link'><a href="../TypeCheck.html#Child%3F-instance_method" title="Algebrick::TypeCheck#Child? (method)">#Child?</a></span>, <span class='object_link'><a href="../TypeCheck.html#Match%21-instance_method" title="Algebrick::TypeCheck#Match! (method)">#Match!</a></span>, <span class='object_link'><a href="../TypeCheck.html#Match%3F-instance_method" title="Algebrick::TypeCheck#Match? (method)">#Match?</a></span>, <span class='object_link'><a href="../TypeCheck.html#Type%21-instance_method" title="Algebrick::TypeCheck#Type! (method)">#Type!</a></span>, <span class='object_link'><a href="../TypeCheck.html#Type%3F-instance_method" title="Algebrick::TypeCheck#Type? (method)">#Type?</a></span>, <span class='object_link'><a href="../TypeCheck.html#error-class_method" title="Algebrick::TypeCheck.error (method)">error</a></span></p>
+<div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
@@ -318,7 +336,7 @@
 27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers2/chain.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers/chain.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_serializer'>serializer</span><span class='comma'>,</span> <span class='id identifier rubyid_chain_to'>chain_to</span><span class='rparen'>)</span>
   <span class='ivar'>@serializer</span> <span class='op'>=</span> <span class='id identifier rubyid_Type!'>Type!</span> <span class='id identifier rubyid_serializer'>serializer</span><span class='comma'>,</span> <span class='const'>Abstract</span>
@@ -366,7 +384,7 @@
 24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers2/chain.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers/chain.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_chain_to'>chain_to</span>
   <span class='ivar'>@chain_to</span>
@@ -408,7 +426,7 @@
 24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers2/chain.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers/chain.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_serializer'>serializer</span>
   <span class='ivar'>@serializer</span>
@@ -445,7 +463,7 @@
 20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers2/chain.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers/chain.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_serializers'>serializers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_serializers'>serializers</span><span class='period'>.</span><span class='id identifier rubyid_reverse_each'>reverse_each</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_ch'>ch</span><span class='comma'>,</span> <span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='comma'>,</span> <span class='id identifier rubyid_ch'>ch</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -481,7 +499,7 @@
 35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers2/chain.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers/chain.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_chain_to'>chain_to</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span> <span class='id identifier rubyid_serializer'>serializer</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
@@ -511,7 +529,7 @@
 31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers2/chain.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers/chain.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_serializer'>serializer</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span> <span class='id identifier rubyid_chain_to'>chain_to</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
@@ -526,9 +544,9 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jun  4 22:11:45 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Dec 18 10:34:18 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-2.0.0).
+  0.8.7.6 (ruby-2.1.2).
 </div>
 
 <script>

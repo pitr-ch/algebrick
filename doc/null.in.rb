@@ -2,7 +2,7 @@ extend Algebrick::Matching
 
 def deliver_email(email)
   true
-end
+end #
 
 Contact = Algebrick.type do |contact|
   variants Null = atom,
@@ -26,7 +26,7 @@ module Contact
           Null >> true,
           Contact >-> { deliver_email(self.email) }
   end
-end
+end #
 
 peter  = Contact['peter', 'example@dot.com']
 john   = Contact[username: 'peter', email: 'example@dot.com']

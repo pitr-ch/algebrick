@@ -12,7 +12,7 @@ module Maybe
       block.call value
     end
   end
-end                                                # => nil
+end 
 
 # #maybe method is defined on both values (None, Some) of Maybe.
 None.maybe { |_| raise 'never ever happens' }      # => nil
@@ -35,7 +35,7 @@ module Season
     Type! other, Season
     ORDER[self] <=> ORDER[other]
   end
-end                                                # => nil
+end 
 
 Quarter = Algebrick.type do
   fields! year: Integer, season: Season
@@ -48,7 +48,7 @@ module Quarter
     Type! other, Quarter
     [year, season] <=> [other.year, other.season]
   end
-end                                                # => nil
+end 
 
 # Now Quarters and Seasons can be compared as expected.
 [Winter, Summer, Spring, Autumn].sort              # => [Spring, Summer, Autumn, Winter]
@@ -56,7 +56,7 @@ Quarter[2013, Spring] < Quarter[2013, Summer]      # => true
 Quarter[2014, Spring] > Quarter[2013, Summer]      # => true
 Quarter[2014, Spring] == Quarter[2014, Spring]     # => true
 [Quarter[2013, Spring], Quarter[2013, Summer], Quarter[2014, Spring]].sort
-# => [Quarter[year: 2013, season: Spring], Quarter[year: 2013, season: Summer], Quarter[year: 2014, season: Spring]]
+    # => [Quarter[year: 2013, season: Spring], Quarter[year: 2013, season: Summer], Quarter[year: 2014, season: Spring]]
 
 
 

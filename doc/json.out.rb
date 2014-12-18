@@ -14,28 +14,30 @@ Response = Algebrick.type do
 end                                                # => Response(Success | Failure)
 
 Message = Algebrick.type { variants Request, Response }
-# => Message(Request | Response)
+    # => Message(Request | Response)
 
+require 'algebrick/serializer'                     # => true
 require 'multi_json'                               # => true
 
 # Prepare a message for sending.
+serializer   = Algebrick::Serializer.new           # => #<Algebrick::Serializer:0x007fab42bdf6d8>
 request      = CreateUser[User['root', 'lajDh4']]
-# => CreateUser[User[login: root, password: lajDh4]]
-raw_request  = MultiJson.dump request.to_hash
-# => "{\"algebrick\":\"CreateUser\",\"fields\":[{\"algebrick\":\"User\",\"login\":\"root\",\"password\":\"lajDh4\"}]}"
+    # => CreateUser[User[login: root, password: lajDh4]]
+raw_request  = MultiJson.dump serializer.dump(request)
+    # => "{\"algebrick_type\":\"CreateUser\",\"algebrick_fields\":[{\"algebrick_type\":\"User\",\"login\":\"root\",\"password\":\"lajDh4\"}]}"
 
 # Receive the message.
-response     = match Message.from_hash(MultiJson.load(raw_request)),
-                     CreateUser.(~any) >-> user do
+response     = match serializer.load(MultiJson.load(raw_request)),
+                     (on CreateUser.(~any) do |user|
                        # create the user and send success
                        Success[user]
-                     end                           # => Success[User[login: root, password: lajDh4]]
+                     end)                          # => Success[User[login: root, password: lajDh4]]
 
 # Send response.
-response_raw = MultiJson.dump response.to_hash
-# => "{\"algebrick\":\"Success\",\"fields\":[{\"algebrick\":\"User\",\"login\":\"root\",\"password\":\"lajDh4\"}]}"
+response_raw = MultiJson.dump serializer.dump(response)
+    # => "{\"algebrick_type\":\"Success\",\"algebrick_fields\":[{\"algebrick_type\":\"User\",\"login\":\"root\",\"password\":\"lajDh4\"}]}"
 
 # Receive response.
-Message.from_hash(MultiJson.load(response_raw))    # => Success[User[login: root, password: lajDh4]]
+serializer.load(MultiJson.load(response_raw))      # => Success[User[login: root, password: lajDh4]]
 
 

@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../';
-  framesUrl = "../frames.html#!" + escape(window.location.href);
+  framesUrl = "../frames.html#!Algebrick/Serializers2.html";
 </script>
 
 
@@ -92,9 +92,9 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Serializers2/AbstractConverter.html" title="Algebrick::Serializers2::AbstractConverter (module)">AbstractConverter</a></span>
-    
   
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Serializers2/AbstractConverter.html" title="Algebrick::Serializers2::AbstractConverter (class)">AbstractConverter</a></span>, <span class='object_link'><a href="Serializers2/FromJson.html" title="Algebrick::Serializers2::FromJson (class)">FromJson</a></span>, <span class='object_link'><a href="Serializers2/ToJson.html" title="Algebrick::Serializers2::ToJson (class)">ToJson</a></span>
     
   
 </p>
@@ -108,44 +108,6 @@
         </dt>
         <dd><pre class="code"><span class='const'>LinkedList</span><span class='lbracket'>[</span><span class='const'>AbstractConverter</span><span class='rbracket'>]</span></pre></dd>
       
-        <dt id="FromJson-constant" class="">FromJson =
-          
-        </dt>
-        <dd><pre class="code"><span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span>
-  <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span> <span class='const'>AbstractConverter</span>
-
-  <span class='kw'>def</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='kw'>in</span>
-    <span class='symbol'>:json</span>
-  <span class='kw'>end</span>
-
-  <span class='kw'>def</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_out'>out</span>
-    <span class='symbol'>:hash_array</span>
-  <span class='kw'>end</span>
-
-  <span class='kw'>def</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_convert'>convert</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-    <span class='const'>MultiJson</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span> <span class='id identifier rubyid_data'>data</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre></dd>
-      
-        <dt id="ToJson-constant" class="">ToJson =
-          
-        </dt>
-        <dd><pre class="code"><span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span>
-  <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span> <span class='const'>AbstractConverter</span>
-
-  <span class='kw'>def</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='kw'>in</span>
-    <span class='symbol'>:hash_array</span>
-  <span class='kw'>end</span>
-
-  <span class='kw'>def</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_out'>out</span>
-    <span class='symbol'>:json</span>
-  <span class='kw'>end</span>
-
-  <span class='kw'>def</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_convert'>convert</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-    <span class='const'>MultiJson</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span> <span class='id identifier rubyid_data'>data</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre></dd>
-      
     </dl>
   
 
@@ -155,7 +117,7 @@
   
   <h3 class="inherited">Constants included
      from <span class='object_link'><a href="Types.html" title="Algebrick::Types (module)">Types</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Types.html#Maybe-constant" title="Algebrick::Types::Maybe (constant)">Types::Maybe</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Types::Boolean</a></span>, <span class='object_link'><a href="Types.html#LinkedList-constant" title="Algebrick::Types::LinkedList (constant)">Types::LinkedList</a></span>, <span class='object_link'><a href="Types.html#Maybe-constant" title="Algebrick::Types::Maybe (constant)">Types::Maybe</a></span></p>
 
 
 
@@ -172,9 +134,9 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jun  4 22:11:42 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Dec 18 10:34:17 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-2.0.0).
+  0.8.7.6 (ruby-2.1.2).
 </div>
 
 <script>

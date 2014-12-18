@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../../';
-  framesUrl = "../../frames.html#!" + escape(window.location.href);
+  framesUrl = "../../frames.html#!Algebrick/Serializers/ToJson.html";
 </script>
 
 
@@ -73,12 +73,12 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName">Abstract</span>
+      <span class="inheritName"><span class='object_link'><a href="Abstract.html" title="Algebrick::Serializers::Abstract (class)">Abstract</a></span></span>
       
         <ul class="fullTree">
           <li><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></li>
           
-            <li class="next">Abstract</li>
+            <li class="next"><span class='object_link'><a href="Abstract.html" title="Algebrick::Serializers::Abstract (class)">Abstract</a></span></li>
           
             <li class="next">Algebrick::Serializers::ToJson</li>
           
@@ -96,7 +96,9 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/algebrick/serializers2/to_json.rb</dd>
+    <dd class="r2 last">lib/algebrick/serializers/to_json.rb<span class="defines">,<br />
+  lib/algebrick/serializers2/to_json.rb</span>
+</dd>
   
 </dl>
 <div class="clear"></div>
@@ -167,6 +169,22 @@
 
 
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../TypeCheck.html" title="Algebrick::TypeCheck (module)">TypeCheck</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../TypeCheck.html#Child%21-instance_method" title="Algebrick::TypeCheck#Child! (method)">#Child!</a></span>, <span class='object_link'><a href="../TypeCheck.html#Child%3F-instance_method" title="Algebrick::TypeCheck#Child? (method)">#Child?</a></span>, <span class='object_link'><a href="../TypeCheck.html#Match%21-instance_method" title="Algebrick::TypeCheck#Match! (method)">#Match!</a></span>, <span class='object_link'><a href="../TypeCheck.html#Match%3F-instance_method" title="Algebrick::TypeCheck#Match? (method)">#Match?</a></span>, <span class='object_link'><a href="../TypeCheck.html#Type%21-instance_method" title="Algebrick::TypeCheck#Type! (method)">#Type!</a></span>, <span class='object_link'><a href="../TypeCheck.html#Type%3F-instance_method" title="Algebrick::TypeCheck#Type? (method)">#Type?</a></span>, <span class='object_link'><a href="../TypeCheck.html#error-class_method" title="Algebrick::TypeCheck.error (method)">error</a></span></p>
+
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -192,7 +210,7 @@
 26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers2/to_json.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers/to_json.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='const'>MultiJson</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span> <span class='id identifier rubyid_object'>object</span>
@@ -222,7 +240,7 @@
 22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers2/to_json.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/serializers/to_json.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='const'>MultiJson</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span> <span class='id identifier rubyid_data'>data</span>
@@ -237,9 +255,9 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jun  4 22:11:45 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Dec 18 10:34:19 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-2.0.0).
+  0.8.7.6 (ruby-2.1.2).
 </div>
 
 <script>

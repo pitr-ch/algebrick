@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../../';
-  framesUrl = "../../frames.html#!" + escape(window.location.href);
+  framesUrl = "../../frames.html#!Algebrick/Matchers/Any.html";
 </script>
 
 
@@ -96,7 +96,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/algebrick.rb</dd>
+    <dd class="r2 last">lib/algebrick/matchers/any.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -265,12 +265,12 @@
       <pre class="lines">
 
 
-1018
-1019
-1020</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1018</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/any.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span>
@@ -295,12 +295,12 @@
       <pre class="lines">
 
 
-1010
-1011
-1012</pre>
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1010</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/any.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_children'>children</span>
   <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -313,7 +313,7 @@
       <div class="method_details ">
   <h3 class="signature " id="matching?-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>matching?</strong>(other)  <span class="extras">(protected)</span>
+    - (<tt><span class='object_link'><a href="../Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>) <strong>matching?</strong>(other)  <span class="extras">(protected)</span>
   
 
   
@@ -334,7 +334,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Boolean</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>)</span>
       
       
       
@@ -348,12 +348,12 @@
       <pre class="lines">
 
 
-1024
-1025
-1026</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1024</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/any.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matching?'>matching?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>true</span>
@@ -378,12 +378,12 @@
       <pre class="lines">
 
 
-1014
-1015
-1016</pre>
+22
+23
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1014</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/any.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_assign_to_s'>assign_to_s</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>any</span><span class='tstring_end'>&#39;</span></span>
@@ -398,9 +398,9 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jun  4 22:11:45 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Dec 18 10:34:18 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-2.0.0).
+  0.8.7.6 (ruby-2.1.2).
 </div>
 
 <script>

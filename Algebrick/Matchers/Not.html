@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '../../';
-  framesUrl = "../../frames.html#!" + escape(window.location.href);
+  framesUrl = "../../frames.html#!Algebrick/Matchers/Not.html";
 </script>
 
 
@@ -96,7 +96,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/algebrick.rb</dd>
+    <dd class="r2 last">lib/algebrick/matchers/not.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -324,12 +324,12 @@
       <pre class="lines">
 
 
-985
-986
-987</pre>
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 985</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/not.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_matcher'>matcher</span><span class='rparen'>)</span>
   <span class='ivar'>@matcher</span> <span class='op'>=</span> <span class='id identifier rubyid_matcher'>matcher</span>
@@ -371,12 +371,12 @@
       <pre class="lines">
 
 
-983
-984
-985</pre>
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 983</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/not.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matcher'>matcher</span>
   <span class='ivar'>@matcher</span>
@@ -408,13 +408,13 @@
       <pre class="lines">
 
 
-997
-998
-999
-1000</pre>
+32
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 997</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/not.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='kw'>and</span>
@@ -440,12 +440,12 @@
       <pre class="lines">
 
 
-989
-990
-991</pre>
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 989</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/not.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_children'>children</span>
   <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -458,7 +458,7 @@
       <div class="method_details ">
   <h3 class="signature " id="matching?-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>matching?</strong>(other)  <span class="extras">(protected)</span>
+    - (<tt><span class='object_link'><a href="../Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>) <strong>matching?</strong>(other)  <span class="extras">(protected)</span>
   
 
   
@@ -479,7 +479,7 @@
     <li>
       
       
-        <span class='type'>(<tt>Boolean</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>)</span>
       
       
       
@@ -493,12 +493,12 @@
       <pre class="lines">
 
 
-1004
-1005
-1006</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 1004</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/not.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matching?'>matching?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>not</span> <span class='id identifier rubyid_matcher'>matcher</span> <span class='op'>===</span> <span class='id identifier rubyid_other'>other</span>
@@ -523,12 +523,12 @@
       <pre class="lines">
 
 
-993
-994
-995</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick.rb', line 993</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/not.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>!</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_matcher'>matcher</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -543,9 +543,9 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Jun  4 22:11:44 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Thu Dec 18 10:34:18 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.3 (ruby-2.0.0).
+  0.8.7.6 (ruby-2.1.2).
 </div>
 
 <script>
