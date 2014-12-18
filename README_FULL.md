@@ -12,19 +12,23 @@ Typed structs on steroids based on algebraic types and pattern matching seamless
 
 ## Algebraic types
 
-Algebraic type is a kind of composite type, i.e. a type formed by combining other types.
+Algebraic types are:
+
+-   products with a given number of fields,
+-   or a kind of composite type, i.e. a type formed by combining other types.
+
 In Haskell algebraic type looks like this:
 
     data Tree = Empty
               | Leaf Int
               | Node Tree Tree
-			  
-	depth :: Tree -> Int
-	      depth Empty = 0
-	      depth (Leaf n) = 1
-	      depth (Node l r) = 1 + max (depth l) (depth r)
+              
+    depth :: Tree -> Int
+    depth Empty = 0
+    depth (Leaf n) = 1
+    depth (Node l r) = 1 + max (depth l) (depth r)
     
-	depth (Node Empty (Leaf 5)) -- => 2
+    depth (Node Empty (Leaf 5)) -- => 2
 
 This snippet defines type `Tree` which has 3 possible values:
 
@@ -95,19 +99,7 @@ Algebraic types also play nice with JSON serialization and de-serialization maki
 
 Just a small snippet how it can be used in Actor model world.
 
-    class Worker < AbstractActor
-      def initialize(executor)
-        super()
-        @executor = executor
-      end
-
-      def on_message(message)
-        match message,
-              Work.(~any, ~any) >-> actor, work do
-                @executor.tell Finished[actor, work.call, self.reference]
-              end
-      end
-    end
+{include:file:doc/actor.rb}
 
 <!--
 ### Null Object Pattern

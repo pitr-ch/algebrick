@@ -18,7 +18,7 @@ module Tree
             1 + [left.depth, right.depth].max
           end)
   end
-end                                                # => nil
+end 
 
 # Method defined in module `Tree` are passed down to **all** values of type Tree.
 Empty.depth                                        # => 0

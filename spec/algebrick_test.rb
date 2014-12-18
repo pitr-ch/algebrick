@@ -22,10 +22,6 @@ require 'algebrick'
 require 'pry'
 
 class Module
-  def const_missing const
-    raise "no constant #{const.inspect} in #{self}"
-  end
-
   # Return any modules we +extend+
   def extended_modules
     class << self
@@ -43,8 +39,10 @@ describe 'AlgebrickTest' do
       Leaf  = type { fields Integer }
       Node  = type { fields tree, tree }
 
-      variants Empty, Leaf, Node
+      variants Empty, Leaf
     end
+
+    Tree.set_variants Node
 
     BTree = type do |btree|
       fields! value: Comparable, left: btree, right: btree
@@ -121,8 +119,6 @@ describe 'AlgebrickTest' do
     it { assert Empty === Empty }
     it { eval(Empty.to_s).must_equal Empty }
     it { eval(Empty.inspect).must_equal Empty }
-
-    it { Empty.from_hash(Empty.to_hash).must_equal Empty }
   end
 
   describe 'product' do
@@ -151,6 +147,11 @@ describe 'AlgebrickTest' do
       lambda { Node[Empty, Empty].value }.must_raise NoMethodError
     end
 
+    it 'can be marshaled' do
+      dump = Marshal.dump(leaf = Leaf[1])
+      assert_equal Marshal.load(dump), leaf
+    end
+
     it { lambda { Leaf['a'] }.must_raise TypeError }
     it { lambda { Leaf[nil] }.must_raise TypeError }
     it { lambda { Node['a'] }.must_raise TypeError }
@@ -177,19 +178,8 @@ describe 'AlgebrickTest' do
       it { Named[a: 1, b: 2].b.must_equal 2 }
     end
 
-    it { Leaf.from_hash(Leaf[1].to_hash).must_equal Leaf[1] }
-    it { Named.from_hash(Named[1, :a].to_hash).must_equal Named[1, :a] }
-    it do
-      Named[1, Node[Leaf[1], Empty]].to_hash.
-          must_equal algebrick: 'Named', a: 1, b: { algebrick: 'Node',
-                                                    fields:    [{ algebrick: 'Leaf', fields: [1] },
-                                                                { algebrick: 'Empty' }] }
-    end
-    it do
-      Named.from_hash(Named[1, Node[Leaf[1], Empty]].to_hash).
-          must_equal Named[1, Node[Leaf[1], Empty]]
-    end
-
+    it { Named[1, :a].to_hash.must_equal a: 1, b: :a }
+    it { Named[1, Node[Empty, Empty]].to_hash.must_equal a: 1, b: Node[Empty, Empty] }
   end
 
   describe 'variant' do
@@ -300,13 +290,17 @@ Named[
       TXT
     end
 
+    #it do
+    #  PTree[Integer].pretty_inspect.must_equal ''
+    #end
 
   end
 
   describe 'module including' do
-    type = Algebrick.type { fields! Numeric }
+    type = Algebrick.type { fields Numeric }
     type.module_eval do
       include Comparable
+
       def <=>(other)
         value <=> other.value
       end
@@ -501,11 +495,18 @@ Named[
       it 'does not pass any values when no matcher' do
         Algebrick.match(Empty, on(Empty) { |*a| a }).must_equal []
       end
+
+      specify do
+        assert PTree.match(PEmpty, on(PEmpty, true))
+        -> { PLeaf.match(PEmpty, on(PEmpty, true)) }.must_raise TypeError
+
+        assert Tree.match(Leaf[1], on(~Leaf) { true })
+        -> { assert Empty.match(Leaf[1], on(~Leaf) { true }) }.must_raise TypeError
+      end
     end
 
     describe '#to_s' do
       [Empty.to_m,
-       # leaf(Object)
        ~Leaf.(Integer),
        ~Empty.to_m,
        any,
@@ -624,11 +625,84 @@ Named[
           (on ~Node do |(left, right)|
             [left, right].must_equal [Empty, Empty]
           end)
+
+    match Leaf[1],
+          (on ~Leaf do |(v)|
+            v.must_equal 1
+          end)
+
+    match Leaf[1],
+          (on ~Leaf do |v|
+            v.must_equal Leaf[1]
+          end)
   end
 
   describe 'list' do
     it { List.(any, any) === List[1, Empty] }
     it { List.(any, List) === List[1, Empty] }
+  end
+
+  require 'algebrick/serializer'
+
+  describe 'serializer' do
+    let(:serializer) { Algebrick::Serializer.new }
+
+    it { serializer.dump(Empty).must_equal :algebrick_type => 'Empty' }
+    it { serializer.dump(Leaf[1]).must_equal :algebrick_type => 'Leaf', :algebrick_fields => [1] }
+    it { serializer.dump(PLeaf[Integer][1]).must_equal :algebrick_type => 'PLeaf[Integer]', :value => 1 }
+    it { serializer.dump(Named[1, :a]).must_equal algebrick_type: 'Named', a: 1, b: :a }
+
+    [Empty, Leaf[1], PLeaf[Integer][1], Named[1, :a]].each do |v|
+      it "serializes and de-serializes #{v}" do
+        serializer.load(serializer.dump(v)).must_equal v
+      end
+    end
+
+    Person = Algebrick.type do |person|
+      person::Name = type do |name|
+        variants name::Normal   = type { fields String, String },
+                 name::AbNormal = type { fields String, String, String }
+      end
+
+      person::Address = type do |address|
+        variants address::Homeless = atom, address
+        fields street: String,
+               zip:    Integer
+      end
+
+      fields name:    person::Name,
+             address: person::Address
+    end
+
+    transformations = [
+        [{ name: %w(a b), address: 'homeless' },
+         { algebrick_type: "Person",
+           name:           { algebrick_type: "Person::Name::Normal", algebrick_fields: %w(a b) },
+           address:        { algebrick_type: "Person::Address::Homeless" } },
+         Person[Person::Name::Normal['a', 'b'], Person::Address::Homeless],
+         "{\"name\":[\"a\",\"b\"],\"address\":\"homeless\"}"
+        ],
+        [{ name: %w(a b c), address: 'homeless', metadata: :ignored },
+         { algebrick_type: "Person",
+           name:           { algebrick_type: "Person::Name::AbNormal", algebrick_fields: %w(a b c) },
+           address:        { algebrick_type: "Person::Address::Homeless" } },
+         Person[Person::Name::AbNormal['a', 'b', 'c'], Person::Address::Homeless],
+         "{\"name\":[\"a\",\"b\",\"c\"],\"address\":\"homeless\",\"metadata\":\"ignored\"}"
+        ],
+        [{ name: %w(a b c), address: { street: 'asd', zip: 15 } },
+         { algebrick_type: "Person",
+           name:           { algebrick_type: "Person::Name::AbNormal", algebrick_fields: %w(a b c) },
+           address:        { algebrick_type: "Person::Address", street: "asd", zip: 15 } },
+         Person[Person::Name::AbNormal['a', 'b', 'c'], Person::Address['asd', 15]],
+         "{\"name\":[\"a\",\"b\",\"c\"],\"address\":{\"street\":\"asd\",\"zip\":15}}"
+        ]
+    ]
+
+    transformations.each do |_, from, to, _|
+      it do
+        serializer.load(from).must_equal to
+      end
+    end
   end
 
 end

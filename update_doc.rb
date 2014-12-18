@@ -4,6 +4,12 @@ root = File.expand_path File.dirname(__FILE__)
 
 push_to_github = (ARGV == %w(push))
 
+if push_to_github
+  puts 'Pushing to github ...'
+else
+  puts 'Just generating the doc, call "update_doc.rb push"'
+end
+
 def cmd(cmd)
   puts ">> #{cmd}"
   system cmd or raise "#{cmd} failed"

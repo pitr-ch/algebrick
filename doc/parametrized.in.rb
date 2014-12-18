@@ -15,7 +15,7 @@ module Tree
             1 + [left.depth, right.depth].max
           end
   end
-end
+end #
 
 # Then Tree, Leaf, Node are
 Tree.class
