@@ -27,6 +27,15 @@ module Algebrick
         other.kind_of? self.class
       end
 
+      # transforms *any to many
+      def to_a
+        if assigned?
+          super
+        else
+          [Matchers::Many.new.tap { |m| m.assign! if assign? }]
+        end
+      end
+
       protected
 
       def matching?(other)

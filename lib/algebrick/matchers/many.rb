@@ -14,19 +14,24 @@
 
 module Algebrick
   module Matchers
+    class Many < Abstract
+      def children
+        []
+      end
 
-    require 'algebrick/matchers/abstract'
-    require 'algebrick/matchers/abstract_logic'
-    require 'algebrick/matchers/and'
-    require 'algebrick/matchers/or'
-    require 'algebrick/matchers/not'
-    require 'algebrick/matchers/any'
-    require 'algebrick/matchers/many'
-    require 'algebrick/matchers/wrapper'
-    require 'algebrick/matchers/array'
-    require 'algebrick/matchers/product'
-    require 'algebrick/matchers/variant'
-    require 'algebrick/matchers/atom'
+      def to_s
+        "*#{assign_to_s}any"
+      end
 
+      def ==(other)
+        other.kind_of? self.class
+      end
+
+      protected
+
+      def matching?(other)
+        true
+      end
+    end
   end
 end

@@ -113,6 +113,34 @@ match BTree[0, Empty, BTree[1, Empty, Empty]],
         { left: left, value: value, right: right }
       end)                                         # => {:left=>nil, :value=>0, :right=>1}
 
+# It also supports matching against Ruby Arrays
+Array.() === []                                    # => true
+Array.() === [1]                                   # => false
+Array.(*any) === []                                # => true
+Array.(*any) === [1]                               # => true
+Array.(*any) === [1, 2]                            # => true
+Array.(1, *any) === []                             # => false
+Array.(1, *any) === [1]                            # => true
+Array.(1, *any) === [1, 2]                         # => true
+
+match [],
+      on(~Array.to_m) { |v| v }                    # => []
+match [],
+      on(~Array.()) { |v| v }                      # => []
+match [1, 2],
+      on(~Array.(*any)) { |v| v }                  # => [1, 2]
+match [1, 2],
+      on(~Array.(*any)) { |(v, _)| v }             # => 1
+match [1, 2, 3],
+      on(Array.(any, *~any)) { |v| v }             # => [2, 3]
+match [:first, 1, 2, 3],
+      on(Array.(:first, ~any, *any)) { |v| v }     # => 1
+match [:+, 1, 2, :foo, :bar],
+      (on Array.(:+, ~Integer.to_m, ~Integer.to_m, *~any) do |int1, int2, rest|
+        { sum: int1 + int2, rest: rest }
+      end)                                         # => {:sum=>3, :rest=>[:foo, :bar]}
+
+
 # There is also a more funky syntax for matching
 # using #>, #>> and Ruby 1.9 syntax for lambdas `-> {}`.
 match Leaf[1],

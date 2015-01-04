@@ -511,6 +511,8 @@ Named[
        ~Empty.to_m,
        any,
        ~any,
+       Array.(*any),
+       Array.(*~any),
        Leaf.(any),
        ~Leaf.(any),
        Node.(Leaf.(any), any),
@@ -555,6 +557,11 @@ Named[
       Array.(1)                            => [1],
       Array.(Empty, Leaf.(-> v { v > 0 })) => [Empty, Leaf[1]],
       Array.(TrueClass)                    => [true],
+      Array.(1, *any)                      => [1],
+      Array.(1, *any)                      => [1, 2],
+      Array.(1, *any)                      => [1, 2, 3],
+      Array.(*any)                         => [1],
+      Array.(*any)                         => [1, 2],
 
       BTree.(value: any)                   => BTree[1, Empty, Empty],
       BTree.(value: 1)                     => BTree[1, Empty, Empty],
@@ -634,6 +641,26 @@ Named[
     match Leaf[1],
           (on ~Leaf do |v|
             v.must_equal Leaf[1]
+          end)
+
+    match [1, 2],
+          (on ~Array.(*any) do |(left, right)|
+            [left, right].must_equal [1, 2]
+          end)
+
+    match [1, 2],
+          (on ~Array.to_m do |(left, right)|
+            [left, right].must_equal [1, 2]
+          end)
+
+    match [1, 2],
+          (on ~Array.(*any) do |(left, right)|
+            [left, right].must_equal [1, 2]
+          end)
+
+    match [1, 2],
+          (on (Array.(*~any)) do |(left, right)|
+            [left, right].must_equal [1, 2]
           end)
   end
 
