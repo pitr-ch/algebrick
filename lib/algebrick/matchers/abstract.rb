@@ -34,10 +34,12 @@ module Algebrick
 
       alias_method :>>, :>
 
-      def ~
+      def assign!
         @assign = true
         self
       end
+
+      alias_method :~, :assign!
 
       def &(matcher)
         And.new self, matcher
@@ -53,6 +55,10 @@ module Algebrick
 
       def assign?
         @assign
+      end
+
+      def assigned?
+        !!@value
       end
 
       def matched?

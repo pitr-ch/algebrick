@@ -24,6 +24,7 @@ module Algebrick
       def initialize(*matchers)
         super()
         @matchers = matchers
+        raise ArgumentError, 'many can be only last' if @matchers[0..-2].any? { |v| v.is_a?(Many) }
       end
 
       def children
@@ -39,12 +40,21 @@ module Algebrick
             self.matchers == other.matchers
       end
 
+      def rest?
+        matchers.last.is_a?(Many)
+      end
+
       protected
 
       def matching?(other)
-        other.kind_of? ::Array and
-            matchers.size == other.size and
-            matchers.each_with_index.all? { |m, i| m === other[i] }
+        return false unless other.kind_of? ::Array
+        if rest?
+          matchers[0..-2].zip(other).all? { |m, v| m === v } and
+              matchers.last === other[(matchers.size-1)..-1]
+        else
+          matchers.size == other.size and
+              matchers.zip(other).all? { |m, v| m === v }
+        end
       end
     end
 
