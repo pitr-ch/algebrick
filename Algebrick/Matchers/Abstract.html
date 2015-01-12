@@ -105,7 +105,7 @@
 
 <div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="AbstractLogic.html" title="Algebrick::Matchers::AbstractLogic (class)">AbstractLogic</a></span>, <span class='object_link'><a href="Any.html" title="Algebrick::Matchers::Any (class)">Any</a></span>, <span class='object_link'><a href="Array.html" title="Algebrick::Matchers::Array (class)">Array</a></span>, <span class='object_link'><a href="Not.html" title="Algebrick::Matchers::Not (class)">Not</a></span>, <span class='object_link'><a href="Product.html" title="Algebrick::Matchers::Product (class)">Product</a></span>, <span class='object_link'><a href="Wrapper.html" title="Algebrick::Matchers::Wrapper (class)">Wrapper</a></span></p>
+  <p class="children"><span class='object_link'><a href="AbstractLogic.html" title="Algebrick::Matchers::AbstractLogic (class)">AbstractLogic</a></span>, <span class='object_link'><a href="Any.html" title="Algebrick::Matchers::Any (class)">Any</a></span>, <span class='object_link'><a href="Array.html" title="Algebrick::Matchers::Array (class)">Array</a></span>, <span class='object_link'><a href="Many.html" title="Algebrick::Matchers::Many (class)">Many</a></span>, <span class='object_link'><a href="Not.html" title="Algebrick::Matchers::Not (class)">Not</a></span>, <span class='object_link'><a href="Product.html" title="Algebrick::Matchers::Product (class)">Product</a></span>, <span class='object_link'><a href="Wrapper.html" title="Algebrick::Matchers::Wrapper (class)">Wrapper</a></span></p>
 </div>
 
 
@@ -275,6 +275,31 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#assign%21-instance_method" title="#assign! (instance method)">- (Object) <strong>assign!</strong> </a>
+    
+
+    
+      (also: #~)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#assign%3F-instance_method" title="#assign? (instance method)">- (Boolean) <strong>assign?</strong> </a>
     
 
@@ -299,6 +324,29 @@
   <span class="summary_signature">
     
       <a href="#assign_to_s-instance_method" title="#assign_to_s (instance method)">- (Object) <strong>assign_to_s</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#assigned%3F-instance_method" title="#assigned? (instance method)">- (Boolean) <strong>assigned?</strong> </a>
     
 
     
@@ -644,29 +692,6 @@
 </li>
 
       
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#%7E-instance_method" title="#~ (instance method)">- (Object) <strong>~</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
     </ul>
   
 
@@ -793,12 +818,12 @@
       <pre class="lines">
 
 
-50
-51
-52</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='op'>!</span>
   <span class='const'>Not</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>self</span>
@@ -823,12 +848,12 @@
       <pre class="lines">
 
 
-42
-43
-44</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='op'>&amp;</span><span class='lparen'>(</span><span class='id identifier rubyid_matcher'>matcher</span><span class='rparen'>)</span>
   <span class='const'>And</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_matcher'>matcher</span>
@@ -876,12 +901,12 @@
       <pre class="lines">
 
 
-96
-97
-98</pre>
+102
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span>
@@ -906,12 +931,12 @@
       <pre class="lines">
 
 
-76
-77
-78</pre>
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='op'>===</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_matching?'>matching?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_matched'>matched</span><span class='op'>|</span> <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_other'>other</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='ivar'>@matched</span> <span class='op'>=</span> <span class='id identifier rubyid_matched'>matched</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -956,6 +981,42 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="assign!-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>assign!</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='~-instance_method'>~</span></span>
+    </span>
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_assign!'>assign!</span>
+  <span class='ivar'>@assign</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="assign?-instance_method">
   
     - (<tt><span class='object_link'><a href="../Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>) <strong>assign?</strong> 
@@ -993,12 +1054,12 @@
       <pre class="lines">
 
 
-54
-55
-56</pre>
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assign?'>assign?</span>
   <span class='ivar'>@assign</span>
@@ -1023,15 +1084,68 @@
       <pre class="lines">
 
 
-80
-81
-82</pre>
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assign_to_s'>assign_to_s</span>
   <span class='id identifier rubyid_assign?'>assign?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>~</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="assigned?-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>) <strong>assigned?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Types.html#Boolean-constant" title="Algebrick::Types::Boolean (constant)">Boolean</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_assigned?'>assigned?</span>
+  <span class='op'>!</span><span class='op'>!</span><span class='ivar'>@value</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1053,14 +1167,14 @@
       <pre class="lines">
 
 
-66
-67
-68
-69
-70</pre>
+72
+73
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assigns'>assigns</span>
   <span class='id identifier rubyid_collect_assigns'>collect_assigns</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='kw'>do</span>
@@ -1144,12 +1258,12 @@
       <pre class="lines">
 
 
-88
-89
-90</pre>
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_children'>children</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span>
@@ -1174,12 +1288,12 @@
       <pre class="lines">
 
 
-62
-63
-64</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_children_including_self'>children_including_self</span>
   <span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_unshift'>unshift</span> <span class='kw'>self</span>
@@ -1204,13 +1318,13 @@
       <pre class="lines">
 
 
-110
-111
-112
-113</pre>
+116
+117
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_collect_assigns'>collect_assigns</span>
   <span class='id identifier rubyid_mine'>mine</span> <span class='op'>=</span> <span class='ivar'>@assign</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='ivar'>@value</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1236,14 +1350,14 @@
       <pre class="lines">
 
 
-120
-121
-122
-123
-124</pre>
+126
+127
+128
+129
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_children'>find_children</span><span class='lparen'>(</span><span class='id identifier rubyid_collection'>collection</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_collection'>collection</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_matcher'>matcher</span><span class='op'>|</span>
@@ -1270,12 +1384,12 @@
       <pre class="lines">
 
 
-84
-85
-86</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='id identifier rubyid_to_s'>to_s</span>
@@ -1323,13 +1437,13 @@
       <pre class="lines">
 
 
-115
-116
-117
-118</pre>
+121
+122
+123
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matchable!'>matchable!</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>object does not respond to :===</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:===</span>
@@ -1378,12 +1492,12 @@
       <pre class="lines">
 
 
-58
-59
-60</pre>
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matched?'>matched?</span>
   <span class='ivar'>@matched</span>
@@ -1444,12 +1558,12 @@
       <pre class="lines">
 
 
-104
-105
-106</pre>
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matching?'>matching?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span>
@@ -1474,12 +1588,12 @@
       <pre class="lines">
 
 
-72
-73
-74</pre>
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_a'>to_a</span>
   <span class='id identifier rubyid_assigns'>assigns</span>
@@ -1527,12 +1641,12 @@
       <pre class="lines">
 
 
-92
-93
-94</pre>
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span>
@@ -1557,47 +1671,15 @@
       <pre class="lines">
 
 
-46
-47
-48</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='op'>|</span><span class='lparen'>(</span><span class='id identifier rubyid_matcher'>matcher</span><span class='rparen'>)</span>
   <span class='const'>Or</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_matcher'>matcher</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="~-instance_method">
-  
-    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>~</strong> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-37
-38
-39
-40</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/algebrick/matchers/abstract.rb', line 37</span>
-
-<span class='kw'>def</span> <span class='op'>~</span>
-  <span class='ivar'>@assign</span> <span class='op'>=</span> <span class='kw'>true</span>
-  <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1609,7 +1691,7 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Dec 18 10:34:19 2014 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
+  Generated on Mon Jan 12 18:47:50 2015 by <a href='http://blog.pitr.ch'>pitr.ch</a> with
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.2).
 </div>
