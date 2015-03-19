@@ -20,6 +20,12 @@ module Algebrick
     end
 
     def match(value, *cases)
+      success, result = match? value, *cases
+      raise "no match for (#{value.class}) '#{value}' by any of #{cases.map(&:first).join ', '}" unless success
+      result
+    end
+
+    def match?(value, *cases)
       cases = if cases.size == 1 && cases.first.is_a?(Hash)
                 cases.first
               else
@@ -27,9 +33,9 @@ module Algebrick
               end
 
       cases.each do |matcher, block|
-        return Matching.match_value matcher, block if matcher === value
+        return true, Matching.match_value(matcher, block) if matcher === value
       end
-      raise "no match for (#{value.class}) '#{value}' by any of #{cases.map(&:first).join ', '}"
+      [false, nil]
     end
 
     def on(matcher, value = nil, &block)
