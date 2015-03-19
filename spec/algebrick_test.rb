@@ -730,6 +730,26 @@ Named[
         serializer.load(from).must_equal to
       end
     end
+
+    describe 'no name types' do
+      WithNoName = Algebrick.type do |t|
+        fields a: String, v: t
+        variants t,
+                 type { |it| variants TrueClass, FalseClass, it },
+                 type { fields string: String },
+                 atom
+      end
+
+      it 'prints reasonably' do
+        assert_equal 'WithNoName(WithNoName(a: String, v: WithNoName) | (TrueClass | FalseClass | (recursive)) | (string: String) | nameless-atom)',
+                     WithNoName.to_s
+        assert_equal '(TrueClass | FalseClass | (recursive))', WithNoName.variants[1].to_s
+        assert_equal '(string: String)', WithNoName.variants[2].to_s
+        assert_equal 'nameless-atom', WithNoName.variants[3].to_s
+
+      end
+    end
+
   end
 
 end

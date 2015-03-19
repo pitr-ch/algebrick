@@ -26,7 +26,7 @@ module Algebrick
     end
 
     def name
-      super || @name || 'NoName'
+      super || @name || nil
     end
 
     def to_m(*args)

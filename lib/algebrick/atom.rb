@@ -39,7 +39,7 @@ module Algebrick
     end
 
     def to_s
-      name
+      name || 'nameless-atom'
     end
 
     def pretty_print(q)
