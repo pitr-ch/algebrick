@@ -21,6 +21,21 @@
 # TODO gemmify reclude
 # TODO gemmify typecheck
 
+# TODO add default field values
+# Person = Algebrick.type do
+#   fields! age:     Integer,
+#           address: [Maybe[String], None]#,
+#           # address: Maybe[String] >> None
+#
+#   field! :age, Integer
+#   field! :address, Maybe[String], None
+# end
+# Person[1]
+# Person[1, Some['Praha']]
+
+# TODO use benevolent deserializer to allow:
+# Person[address: Address[name: 'asd']]
+# Person[address: { name: 'asd' }]
 
 # Provides Algebraic types and pattern matching
 #

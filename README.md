@@ -6,7 +6,7 @@ Typed structs on steroids based on algebraic types and pattern matching seamless
 
 -   Documentation: <http://blog.pitr.ch/algebrick>
 -   Source: <https://github.com/pitr-ch/algebrick>
--   Blog: <http://blog.pitr.ch/blog/categories/algebrick/>
+-   Blog: <http://blog.pitr.ch/tag/algebrick.html>
 
 ## What is it good for?
 

@@ -669,6 +669,31 @@ Named[
     it { List.(any, List) === List[1, Empty] }
   end
 
+  describe 'LinkedList' do
+    specify do
+      Algebrick::List.build(Integer, 1, 2).must_equal(
+          Algebrick::List[Integer][
+              value: 1,
+              next:  Algebrick::List[Integer][
+                         value: 2,
+                         next:  Algebrick::Types::EmptyList]]
+      )
+      assert_equal %w[1 2],
+                   Algebrick::List.build(Integer, 1, 2).map(&:to_s)
+    end
+
+    TreeList = Algebrick.type do
+      fields! tag: String, trees: Algebrick::List[Tree]
+    end
+
+    specify do
+      assert_equal 'TreeList(tag: String, trees: Algebrick::Types::List[Tree(Empty | Leaf | Node)])',
+                   TreeList.to_s
+      assert_equal 'TreeList[tag: tag, trees: Algebrick::Types::List[Tree(Empty | Leaf | Node)][value: Node[Empty, Empty], next: Algebrick::Types::EmptyList]]',
+                   TreeList['tag', Algebrick::List.build(Tree, Node[Empty, Empty])].to_s
+    end
+  end
+
   require 'algebrick/serializer'
 
   describe 'serializer' do
@@ -730,6 +755,26 @@ Named[
         serializer.load(from).must_equal to
       end
     end
+
+    describe 'no name types' do
+      WithNoName = Algebrick.type do |t|
+        fields a: String, v: t
+        variants t,
+                 type { |it| variants TrueClass, FalseClass, it },
+                 type { fields string: String },
+                 atom
+      end
+
+      it 'prints reasonably' do
+        assert_equal 'WithNoName(WithNoName(a: String, v: WithNoName) | (TrueClass | FalseClass | (recursive)) | (string: String) | nameless-atom)',
+                     WithNoName.to_s
+        assert_equal '(TrueClass | FalseClass | (recursive))', WithNoName.variants[1].to_s
+        assert_equal '(string: String)', WithNoName.variants[2].to_s
+        assert_equal 'nameless-atom', WithNoName.variants[3].to_s
+
+      end
+    end
+
   end
 
 end

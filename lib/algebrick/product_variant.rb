@@ -25,8 +25,8 @@ module Algebrick
 
     def initialize(name, &definition)
       super(name, &definition)
-      @to_be_kind_of = []
-      @final_variants  = false
+      @to_be_kind_of  = []
+      @final_variants = false
     end
 
     def set_fields(fields_or_hash)
@@ -105,7 +105,7 @@ module Algebrick
     def apply_be_kind_of
       @to_be_kind_of.each do |type|
         @constructor.send :include, type if @constructor
-        variants.each { |v| v.be_kind_of type unless v == self } if @variants
+        variants.each { |v| v.be_kind_of type if v != self && v.respond_to?(:be_kind_of) } if @variants
       end
     end
 
@@ -137,12 +137,12 @@ module Algebrick
               if variant == self
                 product_to_s
               else
-                variant.name
+                sub_type variant
               end
             end.join(' | ') +
             ')'
       when :variant
-        "#{name}(#{variants.map(&:name).join ' | '})"
+        "#{name}(#{variants.map { |v| sub_type v }.join ' | '})"
       else
         raise
       end
@@ -180,6 +180,12 @@ module Algebrick
                      fields.map(&:name)
                    end
       "#{name}(#{fields_str.join ', '})"
+    end
+
+    def sub_type(type)
+      return type.name unless type.name.nil?
+      return '(recursive)' if type == self # FIXME: will not catch deeper recursions
+      return type.to_s
     end
 
     def add_field_names(names)
