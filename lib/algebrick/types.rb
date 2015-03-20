@@ -32,25 +32,37 @@ module Algebrick
       variants TrueClass, FalseClass
     end
 
-    LinkedList = Algebrick.type(:value_type) do |list|
+    List = Algebrick.type(:value_type) do |list|
       fields! value: :value_type, next: list
-      variants EmptyLinkedList = atom, list
+      variants EmptyList = atom, list
     end
 
-    module LinkedList
+    module List
       include Enumerable
 
       def each(&block)
+        return to_enum unless block_given?
+
         it = self
         loop do
-          break if LinkedListEmpty === it
+          break if EmptyList === it
           block.call it.value
           it = it.next
         end
+
+        self
       end
 
-      def self.empty
-        LinkedListEmpty
+      def next?
+        self.next != EmptyList
+      end
+
+      def empty?
+        !next?
+      end
+
+      def self.build(type, *items)
+        items.reverse_each.reduce(EmptyList) { |list, item| self[type][item, list] }
       end
     end
   end

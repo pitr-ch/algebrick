@@ -669,6 +669,31 @@ Named[
     it { List.(any, List) === List[1, Empty] }
   end
 
+  describe 'LinkedList' do
+    specify do
+      Algebrick::List.build(Integer, 1, 2).must_equal(
+          Algebrick::List[Integer][
+              value: 1,
+              next:  Algebrick::List[Integer][
+                         value: 2,
+                         next:  Algebrick::Types::EmptyList]]
+      )
+      assert_equal %w[1 2],
+                   Algebrick::List.build(Integer, 1, 2).map(&:to_s)
+    end
+
+    TreeList = Algebrick.type do
+      fields! tag: String, trees: Algebrick::List[Tree]
+    end
+
+    specify do
+      assert_equal 'TreeList(tag: String, trees: Algebrick::Types::List[Tree(Empty | Leaf | Node)])',
+                   TreeList.to_s
+      assert_equal 'TreeList[tag: tag, trees: Algebrick::Types::List[Tree(Empty | Leaf | Node)][value: Node[Empty, Empty], next: Algebrick::Types::EmptyList]]',
+                   TreeList['tag', Algebrick::List.build(Tree, Node[Empty, Empty])].to_s
+    end
+  end
+
   require 'algebrick/serializer'
 
   describe 'serializer' do
