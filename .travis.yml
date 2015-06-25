@@ -6,4 +6,4 @@ rvm:
   - 2.2
   - jruby-19mode
   - jruby-head
-script: bundle exec ruby spec/algebrick_test.rb
+script: bundle exec ruby test/algebrick_test.rb

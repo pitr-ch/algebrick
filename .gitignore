@@ -3,6 +3,5 @@
 .ruby-version
 .idea
 .yardoc
-playground
 yardoc
 *.gem
