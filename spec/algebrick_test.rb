@@ -371,24 +371,24 @@ Named[
     module PTree
       def depth
         match self,
-              PEmpty >> 0,
-              PLeaf >> 1,
-              PNode.(~any, ~any) >-> left, right do
+              (on PEmpty, 0),
+              (on PLeaf, 1),
+              (on PNode.(~any, ~any) do |left, right|
                 1 + [left.depth, right.depth].max
-              end
+              end)
       end
     end
 
     PTree[String].module_eval do
       def glue
         match self,
-              PEmpty >> '',
-              PLeaf.(value: ~any) >-> v { v },
-              PNode.(~any, ~any) >-> l, r { l.glue + r.glue }
+              (on PEmpty, ''),
+              on(PLeaf.(value: ~any)) { |v| v },
+              on(PNode.(~any, ~any)) { |l, r| l.glue + r.glue }
       end
     end
 
-    it { [PTree, PLeaf, PNode].all? { |pt| pt > Algebrick::ParametrizedType } }
+    it { [PTree, PLeaf, PNode].all? { |pt| Algebrick::ParametrizedType < pt } }
 
     it { PLeaf[Integer].to_s.must_equal 'PLeaf[Integer](value: Integer)' }
     it { PNode[Integer].to_s.must_equal 'PNode[Integer](left: PTree[Integer], right: PTree[Integer])' }
@@ -464,10 +464,10 @@ Named[
     describe 'match' do
       it 'returns value from executed block' do
         r = Algebrick.match Empty,
-                            Empty >-> { 1 }
+                            (on Empty, 1)
         r.must_equal 1
-        r = Algebrick.match(Empty,
-                            on(Empty) { 1 })
+        r = Algebrick.match Empty,
+                            (on Empty, 1)
         r.must_equal 1
       end
 
@@ -489,7 +489,7 @@ Named[
 
       it 'raises when no match' do
         -> { Algebrick.match Empty,
-                             Leaf.(any) >-> {} }.must_raise RuntimeError
+                             on(Leaf.(any)) {} }.must_raise RuntimeError
       end
 
       it 'does not pass any values when no matcher' do
