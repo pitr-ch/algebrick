@@ -1,8 +1,9 @@
 language: ruby
 rvm:
   - 1.9.3
-  - 2.0.0
-  - 2.1.2
-  - 2.2.0
+  - 2.0
+  - 2.1
+  - 2.2
   - jruby-19mode
-script: bundle exec ruby spec/algebrick_test.rb
+  - jruby-head
+script: bundle exec ruby test/algebrick_test.rb
