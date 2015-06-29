@@ -5,3 +5,4 @@
 .yardoc
 yardoc
 *.gem
+Gemfile.lock
