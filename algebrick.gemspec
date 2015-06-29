@@ -16,8 +16,7 @@ Gem::Specification.new do |s|
   s.license          = 'Apache License 2.0'
   s.test_files       = Dir['spec/algebrick_test.rb']
 
-  %w(minitest minitest-reporters turn pry yard kramdown multi_json json).each do |gem|
-    s.add_development_dependency gem, '>= 0'
-  end
+  s.add_development_dependency 'minitest'
+  s.add_development_dependency 'minitest-reporters'
 end
 

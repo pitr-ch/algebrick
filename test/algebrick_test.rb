@@ -19,7 +19,6 @@ MiniTest::Reporters.use!
 
 require 'pp'
 require 'algebrick'
-require 'pry'
 
 class Module
   # Return any modules we +extend+
