@@ -12,22 +12,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-require 'bundler/setup'
 require 'minitest/autorun'
 require 'minitest/reporters'
 MiniTest::Reporters.use!
 
 require 'pp'
 require 'algebrick'
-
-class Module
-  # Return any modules we +extend+
-  def extended_modules
-    class << self
-      self
-    end.included_modules
-  end
-end
 
 describe 'AlgebrickTest' do
   i_suck_and_my_tests_are_order_dependent!
