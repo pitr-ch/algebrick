@@ -39,6 +39,12 @@ module Algebrick
         @fields == other.fields
       end
 
+      alias_method :eql?, :==
+
+      def hash
+        [self.class, @fields].hash
+      end
+
       def self.type
         @type || raise
       end

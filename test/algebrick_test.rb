@@ -108,6 +108,9 @@ describe 'AlgebrickTest' do
     it { assert Empty === Empty }
     it { eval(Empty.to_s).must_equal Empty }
     it { eval(Empty.inspect).must_equal Empty }
+
+    it { assert Empty.hash == Empty.hash }
+    it { assert Empty.eql?(Empty) }
   end
 
   describe 'product' do
@@ -124,6 +127,8 @@ describe 'AlgebrickTest' do
     it { eval(Leaf[1].inspect).must_equal Leaf[1] }
     it { eval(Node[Leaf[1], Empty].to_s).must_equal Node[Leaf[1], Empty] }
     it { eval(Node[Leaf[1], Empty].inspect).must_equal Node[Leaf[1], Empty] }
+    it { assert Leaf[1].hash == Leaf[1].hash }
+    it { assert Leaf[1].eql?(Leaf[1]) }
 
     it 'field assign' do
       value = Leaf[1].value
@@ -225,6 +230,8 @@ describe 'AlgebrickTest' do
     it { assert List === List[1, Empty] }
     it { assert List === Empty }
     it { assert List[1, Empty].kind_of? List }
+    it { assert List[1, Empty].hash == List[1, Empty].hash }
+    it { assert List[1, Empty].eql?(List[1, Empty]) }
   end
 
   describe 'inspecting' do
@@ -612,6 +619,8 @@ Named[
       it "equals #{tree1}" do
         refute tree1.object_id == tree2.object_id, [tree1.object_id, tree2.object_id] unless tree1 == Empty
         assert tree1 == tree2
+        assert tree1.hash == tree2.hash
+        assert tree1.eql?(tree2)
       end
     end
   end
