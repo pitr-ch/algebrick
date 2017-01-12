@@ -561,6 +561,8 @@ Named[
 
       BTree.(value: any)                   => BTree[1, Empty, Empty],
       BTree.(value: 1)                     => BTree[1, Empty, Empty],
+      BTree                                => Empty,
+      !BTree.()                            => Empty,
       Named.(b: false)                     => Named[a: 1, b: false],
       !Named.(b: false)                    => Named[a: 1, b: true],
 
