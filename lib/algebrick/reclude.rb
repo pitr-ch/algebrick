@@ -17,14 +17,19 @@ module Algebrick
   #noinspection RubySuperCallWithoutSuperclassInspection
   module Reclude
     def included(base)
-      included_into << base
+      used_by << base
+      super(base)
+    end
+
+    def extended(base)
+      used_by << base
       super(base)
     end
 
     def include(*modules)
       super(*modules)
       modules.reverse.each do |module_being_included|
-        included_into.each do |mod|
+        used_by.each do |mod|
           mod.send :include, module_being_included
         end
       end
@@ -32,8 +37,8 @@ module Algebrick
 
     private
 
-    def included_into
-      @included_into ||= []
+    def used_by
+      @used_by ||= []
     end
   end
 end
