@@ -2,6 +2,7 @@
 .bundle
 .ruby-version
 .idea
+*.iml
 .yardoc
 yardoc
 *.gem
