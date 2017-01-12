@@ -70,9 +70,9 @@ module Algebrick
       end
 
       def assigns
-        collect_assigns.tap do
-          return yield *assigns if block_given?
-        end
+        assigns = collect_assigns
+        return yield *assigns if block_given?
+        assigns
       end
 
       def to_a

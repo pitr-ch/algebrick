@@ -3,7 +3,6 @@
 --verbose
 --main=README_FULL.md
 --output-dir=./yardoc/
---asset ./doc
 --markup-provider kramdown
 --markup markdown
 --title=Algebrick

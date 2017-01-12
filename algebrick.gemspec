@@ -10,13 +10,15 @@ Gem::Specification.new do |s|
   s.authors          = ['Petr Chalupa']
   s.email            = 'git+algebrick@pitr.ch'
   s.homepage         = 'https://github.com/pitr-ch/algebrick'
-  s.extra_rdoc_files = %w(LICENSE.txt README.md README_FULL.md VERSION) + Dir['doc/*.rb'] & git_files
+  s.extra_rdoc_files = %w(LICENSE.txt README.md README_FULL.md VERSION) + Dir['doc/*out.rb'] & git_files
   s.files            = Dir['lib/**/*.rb'] & git_files
   s.require_paths    = %w(lib)
-  s.license          = 'Apache License 2.0'
+  s.license          = 'Apache-2.0'
   s.test_files       = Dir['spec/algebrick_test.rb']
 
-  s.add_development_dependency 'minitest'
-  s.add_development_dependency 'minitest-reporters'
+  s.add_development_dependency 'minitest', '~> 5.10'
+  s.add_development_dependency 'minitest-reporters', '~> 1.1'
+  s.add_development_dependency 'yard', '~> 0.9'
+  s.add_development_dependency 'kramdown', '~> 1.13'
 end
 
