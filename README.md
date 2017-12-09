@@ -1,6 +1,6 @@
 # Algebrick
 
-[![Build Status](https://travis-ci.org/pitr-ch/algebrick.png?branch=master)](https://travis-ci.org/pitr-ch/algebrick)
+[![Build Status](https://travis-ci.org/pitr-ch/algebrick.svg?branch=master)](https://travis-ci.org/pitr-ch/algebrick)
 
 Typed structs on steroids based on algebraic types and pattern matching seamlessly integrating with standard Ruby features.
 
