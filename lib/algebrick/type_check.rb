@@ -18,7 +18,9 @@ module Algebrick
     # FIND: type checking of collections?
 
     def Type?(value, *types)
-      types.any? { |t| value.is_a? t }
+      types.any? do |t|
+        value.is_a?(t) || value.class.name.objectize.ancestors.include?(t)
+      end
     end
 
     def Type!(value, *types)
@@ -53,6 +55,15 @@ module Algebrick
     def self.error(value, message, types)
       raise TypeError,
             "Value (#{value.class}) '#{value}' #{message} any of: #{types.join('; ')}."
+    end
+  end
+
+  class ::String
+    def objectize
+      self.split("::").reduce(Object) do |o, token|
+        /(.*)\(.*\)/ =~ token
+        o.const_get($1 || token)
+      end
     end
   end
 end

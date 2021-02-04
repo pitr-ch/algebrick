@@ -31,6 +31,23 @@ describe 'AlgebrickTest' do
       variants Empty, Leaf
     end
 
+    ATime = type do |_|
+      variants ::Time, ::NilClass
+    end
+
+    class ::FakeTime
+       class << self
+          def name
+             "Time"
+          end
+       end
+
+       def is_a?(klass)
+         klass == ::Time || super
+       end
+       alias_method :kind_of?, :is_a?
+    end
+
     Tree.set_variants Node
 
     BTree = type do |btree|
@@ -214,6 +231,17 @@ describe 'AlgebrickTest' do
     describe 'a klass as a variant' do
       MaybeString = Algebrick.type { variants Empty, String }
       it { 'a'.must_be_kind_of MaybeString }
+    end
+  end
+
+  describe 'variant for fake class' do
+    it { ATime.must_be_kind_of Algebrick::ProductVariant }
+    it { assert ATime.variants === [Time, NilClass] }
+    it { assert FakeTime.name === "Time" }
+    it { FakeTime.new.is_a?(Time) }
+    it do
+      extend Algebrick::TypeCheck
+      assert Type?(FakeTime.new, ATime) === true
     end
   end
 
